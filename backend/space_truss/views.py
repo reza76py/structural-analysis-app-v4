@@ -5,6 +5,12 @@ from .models import Node
 from .serializers import NodeSerializer
 
 class NodeView(APIView):
+
+    def get(self, request):
+        nodes = Node.objects.all()
+        serializer = NodeSerializer(nodes, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
         nodes_data = request.data.get("nodes", [])  # Extract nodes list from request
 

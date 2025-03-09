@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/styles_nodesForm.css";
 
@@ -18,6 +18,7 @@ type NodeType = {
 const NodesForm = () => {
     const [nodes, setNodes] = useState<NodeType[]>([]);
     const [coordinates, setCoordinates] = useState<CoordinatesType>({x: "", y: "", z: ""});
+    const [dbNodes, setDbNodes] = useState<NodeType[]>([]);
 
 
     // Handle input changes
@@ -36,6 +37,20 @@ const NodesForm = () => {
         setNodes([...nodes, {id: nodes.length + 1, x: parseInt(x), y: parseInt(y), z: parseInt(z)}]);
         setCoordinates({x: "", y: "", z: ""});
     };
+
+
+    // Fetch saved nodes from MySQL
+    const fetchNodes = async(): Promise<void> => {
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/api/nodes/");
+            setDbNodes(response.data);
+            
+        } catch (error) {
+            console.error("Error fetching nodes:", error);
+        }
+    };
+
+    useEffect(() => { fetchNodes(); }, []);
 
 
     // Delete a node from the list
@@ -103,6 +118,16 @@ const NodesForm = () => {
                     Save Nodes
                 </button>
             )}
+            
+            {/* Display Fetched Nodes from MySQL */}
+            <h3 className="db-nodes-list">Saved Nodes:</h3>
+            <ul className="db-nodes-list">
+                {dbNodes.map(({ id, x, y, z }) => (
+                <li key={id} className="db-node-item">
+                    ({x}, {y}, {z})
+                </li>
+                ))}
+            </ul>
 
             <button className="delete-all-btn" onClick={handleDeleteAllNodes}>
                 Delete All Nodes
