@@ -1,0 +1,49 @@
+# General
+*.log
+*.pyc
+__pycache__/
+*.DS_Store
+*.env
+
+# Python
+venv/
+*.pyc
+__pycache__/
+*.pyo
+
+# Django
+db.sqlite3
+*.sqlite3
+staticfiles/
+media/
+local_settings.py
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# React
+build/
+coverage/
+
+# VS Code
+.vscode/
+
+# IDEs and editors
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-specific files
+Thumbs.db
+.DS_Store

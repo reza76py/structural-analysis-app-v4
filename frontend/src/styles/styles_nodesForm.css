@@ -1,0 +1,23 @@
+.nodes-form-container {
+    @apply bg-slate-300 p-4 rounded-lg w-56 shadow-md;
+}
+
+.form-title {
+    @apply text-slate-900 text-center font-bold text-lg mb-3;
+}
+
+.input-group {
+    @apply border-2 border-gray-300 rounded-md p-2 w-full mb-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 h-8;
+}
+
+.add-node-btn {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md w-full h-8 transition flex items-center justify-center;
+}
+
+.node-item {
+    @apply flex justify-between items-center bg-white p-2 rounded-lg mt-3 h-7 shadow-sm border border-gray-300;
+}
+
+.delete-node-btn {
+    @apply bg-red-500 hover:bg-red-600 text-white font-bold rounded-full h-4 w-6 flex items-center justify-center transition shadow-md;
+}
