@@ -19,10 +19,14 @@ const NodesForm = () => {
     const [nodes, setNodes] = useState<NodeType[]>([]);
     const [coordinates, setCoordinates] = useState<CoordinatesType>({x: "", y: "", z: ""});
 
+
+    // Handle input changes
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setCoordinates({...coordinates, [e.target.name]: e.target.value});
     };
 
+
+    // Add node to the list
     const handleAddNode = (): void => {
         const {x, y, z} = coordinates;
         if (x === "" || y === "" || z === "") {
@@ -33,14 +37,47 @@ const NodesForm = () => {
         setCoordinates({x: "", y: "", z: ""});
     };
 
+
+    // Delete a node from the list
     const handleDeleteNode = (id: number): void => {
         const updatedNodes = nodes.filter((node) => node.id !== id);
         const reindexedNodes = updatedNodes.map((node, index) => ({...node, id: index + 1}));
         setNodes(reindexedNodes);
     };
 
+    // Save nodes to MySQL
+    const handleSaveNodes = async (): Promise<void> => {
+        if (nodes.length === 0) {
+        alert("No nodes to save!");
+        return;
+        }
 
+        try {
+        const response = await axios.post("http://127.0.0.1:8000/api/nodes/", { nodes });
 
+        if (response.status === 201) {
+            alert("Nodes saved successfully!");
+            setNodes([]); // Clear nodes after successful save
+        }
+        } catch (error) {
+        console.error("Error saving nodes:", error);
+        alert("Failed to save nodes.");
+        }
+    };
+
+    // DELETE ALL Nodes from MySQL
+    const handleDeleteAllNodes = async (): Promise<void> => {
+        try {
+        await axios.delete("http://127.0.0.1:8000/api/nodes/");
+        alert("All nodes deleted successfully!");
+        setNodes([]); // Clear UI
+        } catch (error) {
+        console.error("Error deleting nodes:", error);
+        alert("Failed to delete all nodes.");
+        }
+    };
+
+    
     return (
         <div className="nodes-form-container">
             <h2 className="form-title">Enter Node Coordinates</h2>
@@ -60,6 +97,16 @@ const NodesForm = () => {
                     </li>
                 ))}
             </ul>
+
+            {nodes.length > 0 && (
+                <button className="save-nodes-btn" onClick={handleSaveNodes}>
+                    Save Nodes
+                </button>
+            )}
+
+            <button className="delete-all-btn" onClick={handleDeleteAllNodes}>
+                Delete All Nodes
+            </button>
 
         </div>
     );

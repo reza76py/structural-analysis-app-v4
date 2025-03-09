@@ -21,3 +21,12 @@
 .delete-node-btn {
     @apply bg-red-500 hover:bg-red-600 text-white font-bold rounded-full h-4 w-6 flex items-center justify-center transition shadow-md;
 }
+
+.save-nodes-btn {
+    @apply bg-green-500 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-green-600 transition;
+}
+
+.delete-all-btn {
+    @apply bg-red-600 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-red-700 transition;
+  }
+  
