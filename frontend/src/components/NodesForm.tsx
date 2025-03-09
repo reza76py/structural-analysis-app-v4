@@ -73,6 +73,7 @@ const NodesForm = () => {
         if (response.status === 201) {
             alert("Nodes saved successfully!");
             setNodes([]); // Clear nodes after successful save
+            fetchNodes();  // ✅ Fetch updated nodes list from DB
         }
         } catch (error) {
         console.error("Error saving nodes:", error);
@@ -83,12 +84,13 @@ const NodesForm = () => {
     // DELETE ALL Nodes from MySQL
     const handleDeleteAllNodes = async (): Promise<void> => {
         try {
-        await axios.delete("http://127.0.0.1:8000/api/nodes/");
-        alert("All nodes deleted successfully!");
-        setNodes([]); // Clear UI
+            await axios.delete("http://127.0.0.1:8000/api/nodes/");
+            alert("All nodes deleted successfully!");
+            setDbNodes([]);  // ✅ Immediately clears saved nodes
+            setNodes([]);  // ✅ Clears any unsaved input nodes too
         } catch (error) {
-        console.error("Error deleting nodes:", error);
-        alert("Failed to delete all nodes.");
+            console.error("Error deleting nodes:", error);
+            alert("Failed to delete all nodes.");
         }
     };
 
@@ -119,19 +121,25 @@ const NodesForm = () => {
                 </button>
             )}
             
-            {/* Display Fetched Nodes from MySQL */}
-            <h3 className="db-nodes-list">Saved Nodes:</h3>
-            <ul className="db-nodes-list">
-                {dbNodes.map(({ id, x, y, z }) => (
-                <li key={id} className="db-node-item">
-                    ({x}, {y}, {z})
-                </li>
-                ))}
-            </ul>
+            {dbNodes.length > 0 && (
+                <>
+                    <h3 className="db-nodes-list">Saved Nodes:</h3>
+                    <ul className="db-nodes-list">
+                        {dbNodes.map(({ id, x, y, z }) => (
+                        <li key={id} className="db-node-item">
+                            ({x}, {y}, {z})
+                        </li>
+                        ))}
+                    </ul>
 
-            <button className="delete-all-btn" onClick={handleDeleteAllNodes}>
-                Delete All Nodes
-            </button>
+                    <button className="delete-all-btn" onClick={handleDeleteAllNodes}>
+                        Delete All Nodes
+                    </button>                
+                
+                </>
+            )}
+
+
 
         </div>
     );
