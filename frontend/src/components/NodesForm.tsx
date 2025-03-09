@@ -71,7 +71,6 @@ const NodesForm = () => {
         const response = await axios.post("http://127.0.0.1:8000/api/nodes/", { nodes });
 
         if (response.status === 201) {
-            alert("Nodes saved successfully!");
             setNodes([]); // Clear nodes after successful save
             fetchNodes();  // ✅ Fetch updated nodes list from DB
         }
@@ -85,7 +84,6 @@ const NodesForm = () => {
     const handleDeleteAllNodes = async (): Promise<void> => {
         try {
             await axios.delete("http://127.0.0.1:8000/api/nodes/");
-            alert("All nodes deleted successfully!");
             setDbNodes([]);  // ✅ Immediately clears saved nodes
             setNodes([]);  // ✅ Clears any unsaved input nodes too
         } catch (error) {
