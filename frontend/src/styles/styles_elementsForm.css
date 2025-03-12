@@ -3,17 +3,25 @@
 }
 
 .elements-form-container {
-    @apply bg-gray-100 p-4 rounded-lg shadow-md mt-4;
+    @apply bg-gray-500 p-4 rounded-lg shadow-md mt-2;
 }
 
 .elements-title {
-    @apply text-xl font-bold mb-2 text-gray-700;
+    @apply text-sm font-bold mb-2 text-gray-700;
+}
+
+p {
+    @apply text-white text-sm;
 }
 
 select {
-    @apply block w-full p-2 border rounded-md mt-2 text-gray-700;
+    @apply block w-full p-0.5 border rounded-md mt-1 text-gray-700 text-sm;
 }
 
 label {
-    @apply text-gray-600 font-semibold mt-2 block;
+    @apply text-gray-800 font-semibold mt-1 block text-sm;
+}
+
+.create-element-btn {
+    @apply bg-blue-500 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-blue-600 transition;
 }
