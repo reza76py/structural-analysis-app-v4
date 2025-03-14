@@ -3,25 +3,33 @@
 }
 
 .elements-form-container {
-    @apply bg-gray-500 p-4 rounded-lg shadow-md mt-2;
+    @apply bg-slate-300 rounded-lg shadow-md;
 }
 
 .elements-title {
-    @apply text-sm font-bold mb-2 text-gray-700;
+    @apply text-slate-900 text-center font-bold text-lg mb-3;
 }
 
-p {
-    @apply text-white text-sm;
+.select-group {
+    @apply border-2 border-gray-300 rounded-md p-2 w-full mb-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 h-8;
 }
 
-select {
-    @apply block w-full p-0.5 border rounded-md mt-1 text-gray-700 text-sm;
+.save-element-btn {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md w-full h-8 transition flex items-center justify-center;
 }
 
-label {
-    @apply text-gray-800 font-semibold mt-1 block text-sm;
+.element-item {
+    @apply flex justify-between items-center bg-white p-2 rounded-lg mt-3 h-7 shadow-sm border border-gray-300;
 }
 
-.create-element-btn {
-    @apply bg-blue-500 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-blue-600 transition;
+.delete-element-btn {
+    @apply bg-red-500 hover:bg-red-600 text-white font-bold rounded-full h-4 w-6 flex items-center justify-center transition shadow-md;
+}
+
+.delete-all-elements-btn {
+    @apply bg-red-600 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-red-700 transition;
+}
+
+.db-elements-list {
+    @apply text-sm text-gray-500 mt-2;
 }

@@ -7,3 +7,11 @@ class Node(models.Model):
 
     def __str__(self):
         return f"Node({self.x}, {self.y}, {self.z})"
+
+class Elements(models.Model):
+    startNode = models.CharField(max_length=50)
+    endNode = models.CharField(max_length=50)
+    length = models.FloatField()
+
+    def __str__(self):
+        return f"Element from {self.startNode} to {self.endNode} (Length: {self.length})"
