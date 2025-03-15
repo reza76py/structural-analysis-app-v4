@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react";
-import "../styles/styles_elementsForm.css";
 import axios from "axios";
+import "../styles/styles_elementsForm.css";
 
 type NodeType = {
     id: number;
@@ -21,15 +21,26 @@ type ElementsFormProps = {
 };
 
 const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
-    const [selectedStartNode, setSelectedStartNode] = useState<string>("");
-    const [selectedEndNode, setSelectedEndNode] = useState<string>("");
+    const [selectedNodes, setSelectedNodes] = useState({
+        start: "",
+        end: ""
+    });
     const [dbElements, setDbElements] = useState<ElementType[]>([]);
-    const [isSaving, setIsSaving] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [showForm, setShowForm] = useState(true); // ✅ Hide form after saving
+    const [loadingState, setLoadingState] = useState({
+        saving: false,
+        deleting: false
+    });
+    const [showForm, setShowForm] = useState(true);
 
-    // ✅ Fetch saved elements from MySQL
-    const fetchElements = async () => {
+    const handleNodeSelection = (e: React.ChangeEvent<HTMLSelectElement>, nodeType: "start" | "end"): void => {
+        setSelectedNodes(prev => ({ ...prev, [nodeType]: e.target.value }));
+    };
+
+    const resetSelections = (): void => {
+        setSelectedNodes({ start: "", end: "" });
+    };
+
+    const fetchElements = async (): Promise<void> => {
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/elements/");
             setDbElements(response.data.elements);
@@ -38,109 +49,122 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
         }
     };
 
-    useEffect(() => {
-        fetchElements();
-    }, []);
-
-    // ✅ Hide form when elements exist
-    useEffect(() => {
-        if (dbElements.length > 0) {
-            setShowForm(false);
-        }
-    }, [dbElements]);
-
-    // Filter nodes for "End Node" dropdown to exclude the selected Start Node
-    const filteredEndNodes = nodes.filter(({ x, y, z }) => `${x},${y},${z}` !== selectedStartNode);
-
-    // ✅ Save elements to MySQL
-    const handleSaveElement = async () => {
-        if (!selectedStartNode || !selectedEndNode) {
+    const persistElement = async (): Promise<void> => {
+        if (!selectedNodes.start || !selectedNodes.end) {
             alert("Please select both start and end nodes.");
             return;
         }
 
-        setIsSaving(true);
+        setLoadingState(prev => ({ ...prev, saving: true }));
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/elements/", {
-                startNode: selectedStartNode,
-                endNode: selectedEndNode,
+            await axios.post("http://127.0.0.1:8000/api/elements/", {
+                startNode: selectedNodes.start,
+                endNode: selectedNodes.end,
             });
-
-            if (response.status === 201) {
-                fetchElements(); // ✅ Refresh elements list after saving
-                setShowForm(false); // ✅ Hide form after saving
-            }
+            await fetchElements();
+            resetSelections();
         } catch (error) {
             console.error("Error saving element:", error);
         }
 
-        setTimeout(() => setIsSaving(false), 500);
+        setTimeout(() => setLoadingState(prev => ({ ...prev, saving: false })), 500);
     };
 
-    // ✅ Delete All Elements from MySQL
-    const handleDeleteAllElements = async () => {
-        setIsDeleting(true);
+    const deleteAllElements = async (): Promise<void> => {
+        setLoadingState(prev => ({ ...prev, deleting: true }));
+        
         try {
             await axios.delete("http://127.0.0.1:8000/api/elements/");
             setDbElements([]);
-            setShowForm(true); // ✅ Show form again when all elements are deleted
+            setShowForm(true);
         } catch (error) {
             console.error("Error deleting elements:", error);
         }
-        setTimeout(() => setIsDeleting(false), 500);
+
+        setTimeout(() => setLoadingState(prev => ({ ...prev, deleting: false })), 500);
     };
+
+    useEffect(() => {
+        fetchElements();
+    }, []);
+
+    const filteredEndNodes = nodes.filter(({ x, y, z }) => 
+        `${x},${y},${z}` !== selectedNodes.start
+    );
 
     return (
         <div className="elements-form-container">
-            {/* ✅ Show form only if no elements exist */}
             {showForm && (
                 <>
-                    <h2 className="elements-title">Create Elements</h2>
-                    <p>Select two nodes to form an element.</p>
+                    <h2 className="form-title">Create Elements</h2>
+                    <p className="db-nodes-list">Select two nodes to form an element.</p>
 
-                    <label>Start Node:</label>
-                    <select className="select-group" onChange={(e) => setSelectedStartNode(e.target.value)} value={selectedStartNode}>
-                        <option value="">Select Start Node</option>
-                        {nodes.map(({ x, y, z }) => (
-                            <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
-                                ({x}, {y}, {z})
-                            </option>
-                        ))}
-                    </select>
+                    <div className="input-group">
+                        <select
+                            value={selectedNodes.start}
+                            onChange={(e) => handleNodeSelection(e, "start")}
+                        >
+                            <option value="">Select Start Node</option>
+                            {nodes.map(({ x, y, z }) => (
+                                <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
+                                    ({x}, {y}, {z})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <label>End Node:</label>
-                    <select className="select-group" onChange={(e) => setSelectedEndNode(e.target.value)} value={selectedEndNode}>
-                        <option value="">Select End Node</option>
-                        {filteredEndNodes.map(({ x, y, z }) => (
-                            <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
-                                ({x}, {y}, {z})
-                            </option>
-                        ))}
-                    </select>
+                    <div className="input-group">
+                        <select
+                            value={selectedNodes.end}
+                            onChange={(e) => handleNodeSelection(e, "end")}
+                        >
+                            <option value="">Select End Node</option>
+                            {filteredEndNodes.map(({ x, y, z }) => (
+                                <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
+                                    ({x}, {y}, {z})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <button className="save-element-btn" onClick={handleSaveElement}>
-                        {isSaving ? "Saving..." : "Save Element"}
-                    </button>
+                    <div className="action-buttons">
+                        <button
+                            className="save-nodes-btn"
+                            onClick={persistElement}
+                            disabled={loadingState.saving}
+                        >
+                            {loadingState.saving ? "Saving..." : "Add Element"}
+                        </button>
+                        <button
+                            className="delete-all-btn"
+                            onClick={() => setShowForm(false)}
+                        >
+                            Element Ended
+                        </button>
+                    </div>
                 </>
             )}
 
-            {/* ✅ Show Saved Elements as Text from MySQL */}
             {dbElements.length > 0 && (
-                <>
-                    <h3 className="db-elements-list">Saved Elements:</h3>
-                    <ul className="elements-list">
+                <div className="saved-records">
+                    <h3 className="db-nodes-list">Saved Elements:</h3>
+                    <ul className="nodes-list">
                         {dbElements.map(({ id, startNode, endNode, length }) => (
-                            <li key={id} className="element-item">
+                            <li key={id} className="node-item">
                                 ({startNode} → {endNode}) - Length: {length.toFixed(2)}
                             </li>
                         ))}
                     </ul>
 
-                    <button className="delete-all-elements-btn" onClick={handleDeleteAllElements}>
-                        {isDeleting ? "Deleting..." : "Delete All Elements"}
+                    <button
+                        className="delete-all-btn"
+                        onClick={deleteAllElements}
+                        disabled={loadingState.deleting}
+                    >
+                        {loadingState.deleting ? "Deleting..." : "Delete All Elements"}
                     </button>
-                </>
+                </div>
             )}
         </div>
     );
