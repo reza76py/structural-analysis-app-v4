@@ -13,3 +13,24 @@
 .add-support-btn {
     @apply bg-green-500 hover:bg-green-700 text-white font-semibold rounded-md w-full h-8 transition flex items-center justify-center mt-4;
 }
+
+.saved-supports {
+    @apply mt-4 bg-slate-100 p-3 rounded-lg;
+}
+
+.supports-list {
+    @apply space-y-2 mt-2 shadow-sm shadow-sm bottom-2 border-gray-300 text-sm;
+}
+
+.support-node {
+    @apply font-medium text-gray-700;
+}
+
+
+.support-item {
+    @apply bg-white p-2 rounded-lg mt-2 shadow-sm border border-gray-300 text-sm;
+}
+
+.delete-all-btn {
+    @apply bg-red-600 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-red-700 transition;
+}

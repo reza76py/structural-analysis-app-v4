@@ -15,3 +15,15 @@ class Elements(models.Model):
 
     def __str__(self):
         return f"Element from {self.startNode} to {self.endNode} (Length: {self.length})"
+    
+
+
+class Support(models.Model):
+    node_coordinate = models.CharField(max_length=50, unique=True)  # Store as "x,y,z"
+    type = models.CharField(max_length=10, choices=[("Pinned", "Pinned"), ("Fixed", "Fixed"), ("Roller", "Roller")])
+    x_restrained = models.BooleanField(default=False)
+    y_restrained = models.BooleanField(default=False)
+    z_restrained = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Support at {self.node_coordinate} ({self.type})"
