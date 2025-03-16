@@ -37,3 +37,34 @@
 .saved-records {
     @apply mt-4;
 }
+
+/* Add these new styles */
+.element-item {
+    @apply bg-white p-2 rounded-lg mt-2 shadow-sm border border-gray-300 text-sm;
+}
+
+.element-pair {
+    @apply font-medium text-gray-700;
+}
+
+.element-length {
+    @apply ml-4 text-gray-500 text-xs;
+}
+
+/* Modify existing styles */
+.saved-records {
+    @apply mt-4 bg-slate-100 p-3 rounded-lg;
+}
+
+.db-nodes-list {
+    @apply text-sm text-gray-700 font-semibold mb-2;
+}
+
+.nodes-list {
+    @apply space-y-2;
+}
+
+/* Update elements container */
+.elements-form-container {
+    @apply bg-slate-300 p-4 rounded-lg w-64 shadow-md;
+}

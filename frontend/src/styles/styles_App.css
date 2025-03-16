@@ -1,0 +1,14 @@
+/* styles_App.css */
+.app-container {
+    /* Tailwind handles most styles, add custom ones if needed */
+  }
+  
+  .visualization-section {
+    position: relative;
+  }
+  
+  .visualization-section canvas {
+    width: 100% !important;
+    height: 100% !important;
+    outline: none;
+  }

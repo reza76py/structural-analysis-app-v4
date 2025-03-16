@@ -18,9 +18,10 @@ type ElementType = {
 
 type ElementsFormProps = {
     nodes: NodeType[];
+    onUpdate: (elements: ElementType[]) => void;
 };
 
-const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
+const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
     const [selectedNodes, setSelectedNodes] = useState({
         start: "",
         end: ""
@@ -32,63 +33,81 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
     });
     const [showForm, setShowForm] = useState(true);
 
-    const handleNodeSelection = (e: React.ChangeEvent<HTMLSelectElement>, nodeType: "start" | "end"): void => {
-        setSelectedNodes(prev => ({ ...prev, [nodeType]: e.target.value }));
-    };
-
-    const resetSelections = (): void => {
-        setSelectedNodes({ start: "", end: "" });
-    };
-
+    // Fetch elements from API
     const fetchElements = async (): Promise<void> => {
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/elements/");
             setDbElements(response.data.elements);
+            onUpdate(response.data.elements); // Update parent component
         } catch (error) {
             console.error("Error fetching elements:", error);
         }
     };
 
+    // Handle node selection changes
+    const handleNodeSelection = (e: React.ChangeEvent<HTMLSelectElement>, nodeType: "start" | "end"): void => {
+        setSelectedNodes(prev => ({ ...prev, [nodeType]: e.target.value }));
+    };
+
+    // Save new element
     const persistElement = async (): Promise<void> => {
         if (!selectedNodes.start || !selectedNodes.end) {
             alert("Please select both start and end nodes.");
             return;
         }
 
+        // Check for duplicates
+        const exists = dbElements.some(element => 
+            (element.startNode === selectedNodes.start && element.endNode === selectedNodes.end) ||
+            (element.startNode === selectedNodes.end && element.endNode === selectedNodes.start)
+        );
+
+        if (exists) {
+            alert("This element already exists!");
+            return;
+        }
+
         setLoadingState(prev => ({ ...prev, saving: true }));
 
         try {
-            await axios.post("http://127.0.0.1:8000/api/elements/", {
+            const response = await axios.post("http://127.0.0.1:8000/api/elements/", {
                 startNode: selectedNodes.start,
                 endNode: selectedNodes.end,
             });
-            await fetchElements();
-            resetSelections();
+
+            if (response.status === 201) {
+                await fetchElements();
+                setSelectedNodes({ start: "", end: "" });
+            }
         } catch (error) {
             console.error("Error saving element:", error);
+        } finally {
+            setTimeout(() => setLoadingState(prev => ({ ...prev, saving: false })), 500);
         }
-
-        setTimeout(() => setLoadingState(prev => ({ ...prev, saving: false })), 500);
     };
 
+    // Delete all elements
     const deleteAllElements = async (): Promise<void> => {
         setLoadingState(prev => ({ ...prev, deleting: true }));
         
         try {
             await axios.delete("http://127.0.0.1:8000/api/elements/");
             setDbElements([]);
+            onUpdate([]); // Fixed prop name here
             setShowForm(true);
         } catch (error) {
             console.error("Error deleting elements:", error);
+        } finally {
+            setTimeout(() => setLoadingState(prev => ({ ...prev, deleting: false })), 500);
         }
-
-        setTimeout(() => setLoadingState(prev => ({ ...prev, deleting: false })), 500);
     };
 
+    // Initial fetch
     useEffect(() => {
         fetchElements();
     }, []);
 
+    // Filter end nodes to exclude selected start node
     const filteredEndNodes = nodes.filter(({ x, y, z }) => 
         `${x},${y},${z}` !== selectedNodes.start
     );
@@ -104,6 +123,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
                         <select
                             value={selectedNodes.start}
                             onChange={(e) => handleNodeSelection(e, "start")}
+                            disabled={loadingState.saving}
                         >
                             <option value="">Select Start Node</option>
                             {nodes.map(({ x, y, z }) => (
@@ -118,6 +138,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
                         <select
                             value={selectedNodes.end}
                             onChange={(e) => handleNodeSelection(e, "end")}
+                            disabled={loadingState.saving}
                         >
                             <option value="">Select End Node</option>
                             {filteredEndNodes.map(({ x, y, z }) => (
@@ -132,15 +153,15 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
                         <button
                             className="save-nodes-btn"
                             onClick={persistElement}
-                            disabled={loadingState.saving}
+                            disabled={loadingState.saving || !selectedNodes.start || !selectedNodes.end}
                         >
                             {loadingState.saving ? "Saving..." : "Add Element"}
                         </button>
                         <button
-                            className="delete-all-btn"
+                            className="secondary-btn"
                             onClick={() => setShowForm(false)}
                         >
-                            Element Ended
+                            Close Form
                         </button>
                     </div>
                 </>
@@ -151,8 +172,13 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes }) => {
                     <h3 className="db-nodes-list">Saved Elements:</h3>
                     <ul className="nodes-list">
                         {dbElements.map(({ id, startNode, endNode, length }) => (
-                            <li key={id} className="node-item">
-                                ({startNode} → {endNode}) - Length: {length.toFixed(2)}
+                            <li key={id} className="element-item">
+                                <span className="element-pair">
+                                    ({startNode} → {endNode})
+                                </span>
+                                <span className="element-length">
+                                    Length: {length.toFixed(2)}
+                                </span>
                             </li>
                         ))}
                     </ul>
