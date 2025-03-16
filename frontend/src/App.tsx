@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 import NodesForm from "./components/NodesForm";
 import Scene3D from "./components/Scene3D";
-import './styles/styles_App.css';
+import SupportsForm from "./components/SupportsForm";  // ✅ Import SupportsForm
+import "./styles/styles_App.css";
 
 function App() {
   const [visualizationNodes, setVisualizationNodes] = useState<
@@ -21,6 +22,7 @@ function App() {
             setVisualizationElements(elements);
           }}
         />
+        <SupportsForm />  {/* ✅ Add SupportsForm here */}
       </div>
       
       {/* Visualization Section */}
