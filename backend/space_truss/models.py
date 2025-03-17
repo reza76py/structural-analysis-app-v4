@@ -20,10 +20,9 @@ class Elements(models.Model):
 
 class Support(models.Model):
     node_coordinate = models.CharField(max_length=50, unique=True)  # Store as "x,y,z"
-    type = models.CharField(max_length=10, choices=[("Pinned", "Pinned"), ("Fixed", "Fixed"), ("Roller", "Roller")])
     x_restrained = models.BooleanField(default=False)
     y_restrained = models.BooleanField(default=False)
     z_restrained = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Support at {self.node_coordinate} ({self.type})"
+        return f"Support at {self.node_coordinate} (x: {self.x_restrained}, y: {self.y_restrained}, z: {self.z_restrained})"

@@ -11,4 +11,4 @@ class NodeSerializer(serializers.ModelSerializer):
 class SupportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Support
-        fields = ["id", "node_coordinate", "type", "x_restrained", "y_restrained", "z_restrained"]
+        fields = ["id", "node_coordinate", "x_restrained", "y_restrained", "z_restrained"]

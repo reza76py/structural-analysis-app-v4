@@ -12,41 +12,29 @@ class SupportView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print("Received request data:", request.data)  # ✅ Debugging log
-
+        """Save a new support with x, y, and z constraints"""
         node_coordinate = request.data.get("node_coordinate")
-        support_type = request.data.get("type")
+        x_restrained = request.data.get("x_restrained", False)
+        y_restrained = request.data.get("y_restrained", False)
+        z_restrained = request.data.get("z_restrained", False)
 
-        if not node_coordinate or not support_type:
-            print("❌ Missing required fields!")  # ✅ Debugging log
-            return Response({"error": "Please provide node coordinate and support type"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        print(f"✅ Support type received: {support_type}")
-
-        restraints = {
-            "Pinned": {"x_restrained": True, "y_restrained": True, "z_restrained": True},
-            "Fixed": {"x_restrained": True, "y_restrained": True, "z_restrained": True},
-            "Roller": {"x_restrained": False, "y_restrained": True, "z_restrained": False},
-        }
-
-        if support_type not in restraints:
-            print("❌ Invalid support type:", support_type)  # ✅ Debugging log
-            return Response({"error": "Invalid support type."}, status=status.HTTP_400_BAD_REQUEST)
+        # Validate input
+        if not node_coordinate:
+            return Response({"error": "Node coordinate is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         support_data = {
             "node_coordinate": node_coordinate,
-            "type": support_type,
-            **restraints[support_type],
+            "x_restrained": x_restrained,
+            "y_restrained": y_restrained,
+            "z_restrained": z_restrained,
         }
 
         serializer = SupportSerializer(data=support_data)
 
         if serializer.is_valid():
             serializer.save()
-            print("✅ Support saved successfully:", support_data)  # ✅ Debugging log
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        print("❌ Serializer errors:", serializer.errors)  # ✅ Debugging log
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
