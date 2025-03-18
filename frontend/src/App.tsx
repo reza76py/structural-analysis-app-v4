@@ -2,6 +2,7 @@ import { useState } from "react";
 import NodesForm from "./components/NodesForm";
 import Scene3D from "./components/Scene3D";
 import SupportsForm from "./components/SupportsForm";  // ✅ Import SupportsForm
+import LoadsForm from "./components/LoadsForm";
 import "./styles/styles_App.css";
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
           nodes={visualizationNodes} 
           elements={visualizationElements} 
         />
+      </div>
+
+      <div>
+          <LoadsForm />
       </div>
     </div>
   );

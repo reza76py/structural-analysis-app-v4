@@ -1,0 +1,49 @@
+.loads-form-container {
+    @apply bg-gray-100 p-4 rounded-lg shadow-md w-80;
+}
+
+.input-group {
+    @apply mb-3;
+}
+
+.load-inputs {
+    @apply mt-4 space-y-2;
+}
+
+.load-inputs label {
+    @apply block text-gray-700 font-medium;
+}
+
+.load-inputs input {
+    @apply w-full border rounded-md p-2;
+}
+
+.add-load-btn {
+    @apply bg-green-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3;
+}
+
+
+.saved-loads {
+    @apply bg-white p-3 rounded-lg shadow-md mt-4;
+}
+
+.loads-list {
+    @apply space-y-2;
+}
+
+.load-item {
+    @apply border p-3 rounded-md flex flex-col gap-1;
+}
+
+.load-values {
+    @apply flex gap-4 font-semibold text-gray-700;
+}
+
+.delete-all-btn {
+    @apply bg-red-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3;
+}
+
+
+.load-inputs input:focus {
+    @apply border-blue-500 ring-2 ring-blue-300;
+}

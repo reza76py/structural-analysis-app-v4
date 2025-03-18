@@ -26,3 +26,13 @@ class Support(models.Model):
 
     def __str__(self):
         return f"Support at {self.node_coordinate} (x: {self.x_restrained}, y: {self.y_restrained}, z: {self.z_restrained})"
+
+
+class Load(models.Model):
+    node_coordinate = models.CharField(max_length=50, unique=True)  # Store as "x,y,z"
+    Fx = models.FloatField(default=0.0)
+    Fy = models.FloatField(default=0.0)
+    Fz = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"Load at {self.node_coordinate} (Fx: {self.Fx}, Fy: {self.Fy}, Fz: {self.Fz})"
