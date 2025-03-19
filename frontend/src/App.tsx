@@ -9,9 +9,11 @@ function App() {
   const [visualizationNodes, setVisualizationNodes] = useState<
     { x: number; y: number; z: number }[]
   >([]);
+  console.log("Nodes for visualization:", visualizationNodes);
   const [visualizationElements, setVisualizationElements] = useState<
     { startNode: string; endNode: string }[]
   >([]);
+  console.log("Elements for visualization:", visualizationElements);
 
   return (
     <div className="app-container min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-gray-100">
@@ -27,12 +29,10 @@ function App() {
       </div>
       
       {/* Visualization Section */}
-      <div className="visualization-section flex-1 rounded-lg shadow-lg bg-white overflow-hidden">
-        <Scene3D 
-          nodes={visualizationNodes} 
-          elements={visualizationElements} 
-        />
+      <div className="visualization-section flex-1 p-4 bg-white rounded-lg shadow-lg border border-gray-300">
+        <Scene3D nodes={visualizationNodes} elements={visualizationElements} />
       </div>
+
 
       <div>
           <LoadsForm />

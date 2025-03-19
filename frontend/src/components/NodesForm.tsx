@@ -55,14 +55,17 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const fetchNodes = async (): Promise<void> => {
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/nodes/");
+            console.log("✅ Fetched Nodes from API:", response.data); // ✅ Debug log
+            
             setDbNodes(response.data);
+    
             // Update visualization with current elements
             onUpdate(
                 response.data.map(n => ({ x: n.x, y: n.y, z: n.z })),
                 [] // Initialize with empty elements
             );
         } catch (error) {
-            console.error("Error fetching nodes:", error);
+            console.error("❌ Error fetching nodes:", error);
         }
     };
 
