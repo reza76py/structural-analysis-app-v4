@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..models import Node, Elements
+from ..models import Node, Elements, Support, Load
 from ..serializers import NodeSerializer
 
 class NodeView(APIView):
@@ -28,5 +28,7 @@ class NodeView(APIView):
     def delete(self, request):
         Elements.objects.all().delete()
         Node.objects.all().delete()  # Delete all nodes from MySQL
+        Support.objects.all().delete()
+        Load.objects.all().delete()
         return Response({"message": "All nodes deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 

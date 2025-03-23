@@ -1,41 +1,39 @@
 import { useState } from "react";
 import NodesForm from "./components/NodesForm";
-import Scene3D from "./components/Scene3D";
-import SupportsForm from "./components/SupportsForm";  // ✅ Import SupportsForm
+import SupportsForm from "./components/SupportsForm";  // ✅ Optional if you're using it
 import LoadsForm from "./components/LoadsForm";
+import Scene3D from "./components/Scene3D";  // ✅ Make sure this import exists
 import "./styles/styles_App.css";
 
 function App() {
   const [visualizationNodes, setVisualizationNodes] = useState<
     { x: number; y: number; z: number }[]
   >([]);
-  console.log("Nodes for visualization:", visualizationNodes);
+
   const [visualizationElements, setVisualizationElements] = useState<
     { startNode: string; endNode: string }[]
   >([]);
+
+  console.log("Nodes for visualization:", visualizationNodes);
   console.log("Elements for visualization:", visualizationElements);
 
   return (
     <div className="app-container min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-gray-100">
-      {/* Form Section */}
+      {/* Left Side - Forms */}
       <div className="form-section w-full lg:w-96 bg-white rounded-lg shadow-lg p-4 overflow-y-auto">
-        <NodesForm 
+        <NodesForm
           onUpdate={(nodes, elements) => {
             setVisualizationNodes(nodes);
             setVisualizationElements(elements);
           }}
         />
-        <SupportsForm />  {/* ✅ Add SupportsForm here */}
-      </div>
-      
-      {/* Visualization Section */}
-      <div className="visualization-section flex-1 p-4 bg-white rounded-lg shadow-lg border border-gray-300">
-        <Scene3D nodes={visualizationNodes} elements={visualizationElements} />
+        <LoadsForm />
+        {/* <SupportsForm /> ← Uncomment when needed */}
       </div>
 
-
-      <div>
-          <LoadsForm />
+      {/* Right Side - 3D Visualization */}
+      <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
+        <Scene3D nodes={visualizationNodes} />
       </div>
     </div>
   );

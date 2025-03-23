@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, useEffect } from "react";
 import axios from "axios";
 import ElementsForm from "./ElementsForm";
+import Scene3D from "./Scene3D";
 import "../styles/styles_nodesForm.css";
 import "../styles/styles_elementsForm.css";
 
@@ -184,6 +185,8 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                     }}
                 />
             )}
+            
+
         </div>
     );
 };
