@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import Scene3DNodes from "./Scene3DNodes"; // ✅ Import nodes renderer
+import Scene3DNodes from "./Scene3DNodes";
 
 type Scene3DProps = {
   nodes: Array<{ x: number; y: number; z: number }>;
@@ -8,22 +8,19 @@ type Scene3DProps = {
 
 const Scene3D = ({ nodes }: Scene3DProps) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const [showAxes, setShowAxes] = useState<boolean>(false); // ✅ Toggle state
 
   useEffect(() => {
-    // Guard: make sure the DOM and nodes are ready
     if (!mountRef.current || !nodes || nodes.length === 0) return;
 
-    // ✅ Clean up previous canvas
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
     }
 
-    // ✅ Scene setup
     const scene = new THREE.Scene();
 
-    // ✅ Camera setup
     const camera = new THREE.PerspectiveCamera(
-      100,
+      75,
       mountRef.current.clientWidth / mountRef.current.clientHeight,
       0.1,
       1000
@@ -31,7 +28,6 @@ const Scene3D = ({ nodes }: Scene3DProps) => {
     camera.position.set(10, 10, 10);
     camera.lookAt(0, 0, 0);
 
-    // ✅ Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
       mountRef.current.clientWidth,
@@ -40,31 +36,46 @@ const Scene3D = ({ nodes }: Scene3DProps) => {
     renderer.setClearColor(0xf0f0f0);
     mountRef.current.appendChild(renderer.domElement);
 
-    // ✅ Lighting
     const light = new THREE.AmbientLight(0xffffff, 1);
     scene.add(light);
 
-    // ✅ Render nodes (spheres) using the modular file
-    Scene3DNodes({ nodes, scene }); // 🧠 We treat it like a utility for now
+    // ✅ Conditionally add Axes Helper
+    let axesHelper: THREE.AxesHelper | null = null;
+    if (showAxes) {
+      axesHelper = new THREE.AxesHelper(5);
+      scene.add(axesHelper);
+    }
 
-    // ✅ Render the scene once
+    // ✅ Render the nodes
+    Scene3DNodes({ nodes, scene });
+
     renderer.render(scene, camera);
 
-    // ✅ Cleanup
     return () => {
       renderer.dispose();
       while (mountRef.current?.firstChild) {
         mountRef.current.removeChild(mountRef.current.firstChild);
       }
     };
-  }, [nodes]);
+  }, [nodes, showAxes]); // ✅ re-run when axes toggle
 
   return (
-    <div
-      ref={mountRef}
-      className="scene-container"
-      style={{ width: "100%", height: "400px", background: "#e0e0e0" }}
-    />
+    <div className="scene-wrapper">
+      {/* ✅ The Button */}
+      <button
+        onClick={() => setShowAxes((prev) => !prev)}
+        className="toggle-axes-btn"
+      >
+        {showAxes ? "Hide Axes" : "Show Axes"}
+      </button>
+
+      {/* ✅ The 3D Container */}
+      <div
+        ref={mountRef}
+        className="scene-container"
+        style={{ width: "100%", height: "400px", background: "#e0e0e0" }}
+      />
+    </div>
   );
 };
 
