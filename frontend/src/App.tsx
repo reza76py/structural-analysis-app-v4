@@ -33,7 +33,11 @@ function App() {
 
       {/* Right Side - 3D Visualization */}
       <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
-        <Scene3D nodes={visualizationNodes} />
+        <Scene3D 
+        nodes={visualizationNodes}
+        elements={visualizationElements}
+        />
+        
       </div>
     </div>
   );

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import Scene3DNodes from "./Scene3DNodes";
+import Scene3DElements from "./Scene3DElements"; 
 import "../styles/styles_scene3d.css";
 
 type Scene3DProps = {
   nodes: Array<{ x: number; y: number; z: number }>;
+  elements: Array<{ startNode: string; endNode: string }>;
 };
 
 type ViewMode = "default" | "xy" | "xz" | "yz";
 
-const Scene3D = ({ nodes }: Scene3DProps) => {
+const Scene3D = ({ nodes, elements }: Scene3DProps) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [showAxes, setShowAxes] = useState<boolean>(false);
   const [showGrid, setShowGrid] = useState<boolean>(false);
@@ -87,6 +89,8 @@ const Scene3D = ({ nodes }: Scene3DProps) => {
 
     // ✅ Render nodes
     Scene3DNodes({ nodes, scene });
+    Scene3DElements({ elements, scene });
+
 
     // ✅ Render the scene
     renderer.render(scene, camera);
