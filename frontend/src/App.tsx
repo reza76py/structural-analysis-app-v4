@@ -14,6 +14,17 @@ function App() {
     { startNode: string; endNode: string }[]
   >([]);
 
+  const [visualizationSupports, setVisualizationSupports] = useState<
+  {
+    id: number;
+    node_coordinate: string;
+    x_restrained: boolean;
+    y_restrained: boolean;
+    z_restrained: boolean;
+  }[]
+>([]);
+
+
   console.log("Nodes for visualization:", visualizationNodes);
   console.log("Elements for visualization:", visualizationElements);
 
@@ -27,6 +38,8 @@ function App() {
             setVisualizationElements(elements);
           }}
         />
+        <SupportsForm onUpdate={setVisualizationSupports} />
+
         <LoadsForm />
         {/* <SupportsForm /> ← Uncomment when needed */}
       </div>
@@ -36,6 +49,7 @@ function App() {
         <Scene3D 
         nodes={visualizationNodes}
         elements={visualizationElements}
+        supports={visualizationSupports}
         />
         
       </div>
