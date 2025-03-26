@@ -3,6 +3,7 @@ import * as THREE from "three";
 import Scene3DNodes from "./Scene3DNodes";
 import Scene3DElements from "./Scene3DElements"; 
 import Scene3DSupports from "./Scene3DSupports";
+import Scene3DLoads from "./Scene3DLoads";
 import "../styles/styles_scene3d.css";
 
 type Scene3DProps = {
@@ -15,11 +16,17 @@ type Scene3DProps = {
     y_restrained: boolean;
     z_restrained: boolean;
   }>;
+  loads: Array<{
+    node_coordinate: string;
+    Fx: number;
+    Fy: number;
+    Fz: number;
+  }>;
 };
 
 type ViewMode = "default" | "xy" | "xz" | "yz";
 
-const Scene3D = ({ nodes, elements, supports }: Scene3DProps) => {
+const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [showAxes, setShowAxes] = useState<boolean>(false);
   const [showGrid, setShowGrid] = useState<boolean>(false);
@@ -99,6 +106,7 @@ const Scene3D = ({ nodes, elements, supports }: Scene3DProps) => {
     Scene3DNodes({ nodes, scene });
     Scene3DElements({ elements, scene });
     Scene3DSupports({ supports, scene });
+    Scene3DLoads( scene, loads );
 
 
     // ✅ Render the scene
@@ -110,7 +118,7 @@ const Scene3D = ({ nodes, elements, supports }: Scene3DProps) => {
         mountRef.current.removeChild(mountRef.current.firstChild);
       }
     };
-  }, [nodes, showAxes, showGrid, viewMode]);
+  }, [nodes, loads, showAxes, showGrid, viewMode]);
 
   return (
     <div className="scene-wrapper">

@@ -21,8 +21,20 @@ function App() {
     x_restrained: boolean;
     y_restrained: boolean;
     z_restrained: boolean;
-  }[]
->([]);
+    }[]
+  >([]);
+
+  const [visualizationLoads, setVisualizationLoads] = useState<
+  {
+    node_coordinate: string;
+    Fx: number;
+    Fy: number;
+    Fz: number;
+    }[]
+  >([]);
+
+
+
 
 
   console.log("Nodes for visualization:", visualizationNodes);
@@ -40,16 +52,18 @@ function App() {
         />
         <SupportsForm onUpdate={setVisualizationSupports} />
 
-        <LoadsForm />
+        <LoadsForm onUpdate={setVisualizationLoads} />
+
         {/* <SupportsForm /> ← Uncomment when needed */}
       </div>
 
       {/* Right Side - 3D Visualization */}
       <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
         <Scene3D 
-        nodes={visualizationNodes}
-        elements={visualizationElements}
-        supports={visualizationSupports}
+          nodes={visualizationNodes}
+          elements={visualizationElements}
+          supports={visualizationSupports}
+          loads={visualizationLoads}  // ✅ Add this line
         />
         
       </div>
