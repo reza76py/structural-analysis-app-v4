@@ -2,7 +2,11 @@ import { useState } from "react";
 import NodesForm from "./components/NodesForm";
 import SupportsForm from "./components/SupportsForm";  // ✅ Optional if you're using it
 import LoadsForm from "./components/LoadsForm";
-import Scene3D from "./components/Scene3D";  // ✅ Make sure this import exists
+import Scene3D from "./components/Scene3D";
+import DirectionCosinesTable from "./components/DirectionCosinesTable";
+import TransformationMatrixTable from "./components/TransformationMatrixTable";
+
+
 import "./styles/styles_App.css";
 
 function App() {
@@ -65,8 +69,12 @@ function App() {
           supports={visualizationSupports}
           loads={visualizationLoads}  // ✅ Add this line
         />
+        <DirectionCosinesTable />
+        <TransformationMatrixTable />
         
       </div>
+          
+          
     </div>
   );
 }
