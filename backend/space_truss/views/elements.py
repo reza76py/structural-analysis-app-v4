@@ -15,6 +15,8 @@ class ElementView(APIView):
     def post(self, request):
         start_node_str = request.data.get("startNode")
         end_node_str = request.data.get("endNode")
+        area = request.data.get("area", 1.0)
+        youngs_modulus = request.data.get("youngs_modulus", 1.0)
 
         if not start_node_str or not end_node_str:
             return Response({"error": "Both startNode and endNode are required."}, status=status.HTTP_400_BAD_REQUEST)
@@ -30,14 +32,18 @@ class ElementView(APIView):
         element = Elements.objects.create(
             startNode=start_node_str,
             endNode=end_node_str,
-            length=length
+            length=length,
+            area=area,
+            youngs_modulus=youngs_modulus
         )
 
         return Response({
             "message": "Element saved successfully",
             "startNode": start_node_str,
             "endNode": end_node_str,
-            "length": length
+            "length": length,
+            "area": area,
+            "youngs_modulus": youngs_modulus,
         }, status=status.HTTP_201_CREATED)
 
     def delete(self, request):

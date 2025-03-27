@@ -12,6 +12,9 @@ class Elements(models.Model):
     startNode = models.CharField(max_length=50)
     endNode = models.CharField(max_length=50)
     length = models.FloatField()
+    area = models.FloatField(default=1.0)
+    youngs_modulus = models.FloatField(default=1.0)
+
 
     def __str__(self):
         return f"Element from {self.startNode} to {self.endNode} (Length: {self.length})"

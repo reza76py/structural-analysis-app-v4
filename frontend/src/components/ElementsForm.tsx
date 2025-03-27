@@ -14,6 +14,8 @@ type ElementType = {
     startNode: string;
     endNode: string;
     length: number;
+    area: number;
+    youngs_modulus: number;
 };
 
 type ElementsFormProps = {
@@ -32,6 +34,11 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         deleting: false
     });
     const [showForm, setShowForm] = useState(true);
+
+    const [elementProps, setElementProps] = useState({
+        area: 1.0,
+        youngs_modulus: 1.0,
+    });    
 
     // Fetch elements from API
     const fetchElements = async (): Promise<void> => {
@@ -73,6 +80,8 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
             const response = await axios.post("http://127.0.0.1:8000/api/elements/", {
                 startNode: selectedNodes.start,
                 endNode: selectedNodes.end,
+                area: elementProps.area,
+                youngs_modulus: elementProps.youngs_modulus,
             });
 
             if (response.status === 201) {
@@ -149,6 +158,31 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         </select>
                     </div>
 
+                    <div className="input-group">
+                        <label>Area (A):</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            value={elementProps.area}
+                            onChange={(e) =>
+                            setElementProps({ ...elementProps, area: parseFloat(e.target.value) || 1 })
+                            }
+                        />
+                        </div>
+
+                        <div className="input-group">
+                        <label>Young's Modulus (E):</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            value={elementProps.youngs_modulus}
+                            onChange={(e) =>
+                            setElementProps({ ...elementProps, youngs_modulus: parseFloat(e.target.value) || 1 })
+                            }
+                        />
+                        </div>
+
+
                     <div className="action-buttons">
                         <button
                             className="save-nodes-btn"
@@ -171,13 +205,13 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                 <div className="saved-records">
                     <h3 className="db-nodes-list">Saved Elements:</h3>
                     <ul className="nodes-list">
-                        {dbElements.map(({ id, startNode, endNode, length }) => (
+                        {dbElements.map(({ id, startNode, endNode, length, area, youngs_modulus }) => (
                             <li key={id} className="element-item">
                                 <span className="element-pair">
                                     ({startNode} → {endNode})
                                 </span>
                                 <span className="element-length">
-                                    Length: {length.toFixed(2)}
+                                    Length: {length.toFixed(2)} | A: {area} | E: {youngs_modulus}
                                 </span>
                             </li>
                         ))}
