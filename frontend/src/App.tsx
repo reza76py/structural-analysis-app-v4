@@ -5,6 +5,9 @@ import LoadsForm from "./components/LoadsForm";
 import Scene3D from "./components/Scene3D";
 import DirectionCosinesTable from "./components/DirectionCosinesTable";
 import TransformationMatrixTable from "./components/TransformationMatrixTable";
+import ElementStiffnessMatrices from "./components/ElementStiffnessMatrices";
+import GlobalStiffnessMatrix from "./components/GlobalStiffnessMatrix";
+
 
 
 import "./styles/styles_App.css";
@@ -71,6 +74,8 @@ function App() {
         />
         <DirectionCosinesTable />
         <TransformationMatrixTable />
+        <ElementStiffnessMatrices />
+        <GlobalStiffnessMatrix />
         
       </div>
           

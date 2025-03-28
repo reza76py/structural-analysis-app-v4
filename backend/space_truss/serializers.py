@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Node, Support, Load
+from .models import Node, Support, Load, Elements
 
 class NodeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,3 +18,9 @@ class LoadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Load
         fields = ["id", "node_coordinate", "Fx", "Fy", "Fz"]
+
+
+class ElementsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Elements
+        fields = ['id', 'startNode', 'endNode', 'length', 'area', 'youngs_modulus']

@@ -5,12 +5,20 @@ from ..models import Elements
 from ..calculations.element_length import calculate_element_length
 from ..calculations.direction_cosines import calculate_direction_cosines
 from ..calculations.transformation_matrix import build_transformation_matrix
+from ..serializers import ElementsSerializer
+from ..calculations.local_stiffness_matrix import calculate_local_stiffness_matrix
+from ..calculations.global_stiffness_matrix import assemble_global_stiffness_matrix
+from ..calculations.generate_dof_indices import generate_dof_indices
+
+import numpy as np
 
 class ElementView(APIView):
 
     def get(self, request):
-        elements = Elements.objects.all().values("id", "startNode", "endNode", "length")
-        return Response({"elements": list(elements)}, status=status.HTTP_200_OK)
+        elements = Elements.objects.all()
+        serializer = ElementsSerializer(elements, many=True)
+        return Response({"elements": serializer.data}, status=status.HTTP_200_OK)
+
 
     def post(self, request):
         start_node_str = request.data.get("startNode")
@@ -102,3 +110,57 @@ class ElementTransformationMatrixView(APIView):
             })
 
         return Response({"transformation_matrices": results}, status=status.HTTP_200_OK)
+    
+
+class ElementLocalStiffnessMatrixView(APIView):
+    def get(self, request):
+        elements = Elements.objects.all().values("id", "startNode", "endNode", "length", "area", "youngs_modulus")
+        results = []
+
+        for element in elements:
+            try:
+                k_local = calculate_local_stiffness_matrix(
+                    area=float(element["area"]),
+                    E=float(element["youngs_modulus"]),
+                    L=float(element["length"])
+                )
+
+                results.append({
+                    "id": element["id"],
+                    "startNode": element["startNode"],
+                    "endNode": element["endNode"],
+                    "k_local": k_local.tolist()
+                })
+            except Exception as e:
+                results.append({
+                    "id": element["id"],
+                    "error": str(e)
+                })
+
+        return Response({"local_stiffness_matrices": results}, status=status.HTTP_200_OK)
+    
+
+
+
+class ElementGlobalStiffnessMatrixView(APIView):
+    def get(self, request):
+        elements_qs = Elements.objects.all()
+        elements = []
+
+        # Build list of element dictionaries with necessary info
+        for element in elements_qs:
+            elements.append({
+                "startNode": element.startNode,
+                "endNode": element.endNode,
+                "area": element.area,
+                "youngs_modulus": element.youngs_modulus,
+                "length": element.length,
+                "dof_indices": generate_dof_indices(element.startNode, element.endNode),
+            })
+
+        total_dofs = len(set(idx for el in elements for idx in el["dof_indices"]))
+        S = assemble_global_stiffness_matrix(elements, total_dofs)
+        
+        return Response({
+            "global_stiffness_matrix": S.tolist()
+        }, status=status.HTTP_200_OK)    
