@@ -1,9 +1,13 @@
 from django.urls import path
-from .views.nodes import NodeView  # ✅ Import Node API
+from .views.nodes import NodeView
 from .views.elements import ElementView, ElementDirectionCosinesView, ElementTransformationMatrixView, ElementLocalStiffnessMatrixView, ElementGlobalStiffnessPerElementView
-from .views.supports import SupportView  # ✅ Import Support API
-from .views.loads import LoadView  # ✅ Import Load API
+from .views.supports import SupportView
+from .views.loads import LoadView
 from .views.elements import ElementLocalStiffnessMatrixView
+from .views.dof_indices import ElementDOFIndicesView
+from .views.load_vector import LoadVectorView
+
+
 
 
 urlpatterns = [
@@ -15,5 +19,8 @@ urlpatterns = [
     path("api/elements/transformation-matrix/", ElementTransformationMatrixView.as_view(), name="element-transformation-matrix"),
     path("api/elements/local-stiffness/", ElementLocalStiffnessMatrixView.as_view(), name="element-local-stiffness"),
     path("api/elements/global-stiffness-per-element/", ElementGlobalStiffnessPerElementView.as_view(), name="element-global-stiffness-per-element"),
+    path("api/dof-indices/", ElementDOFIndicesView.as_view(), name="element-dof-indices"),
+    path("api/load-vector/", LoadVectorView.as_view(), name="load-vector"),
+
 
 ]

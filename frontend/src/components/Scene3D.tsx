@@ -98,7 +98,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
     // ✅ Axes
     let axesHelper: THREE.AxesHelper | null = null;
     if (showAxes) {
-      axesHelper = new THREE.AxesHelper(5);
+      axesHelper = new THREE.AxesHelper();
       scene.add(axesHelper);
     }
 

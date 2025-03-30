@@ -1,32 +1,26 @@
-def generate_dof_indices(startNode: str, endNode: str) -> list[int]:
+def generate_dof_indices(start_node: str, end_node: str) -> list[int]:
     """
-    Generates global DOF indices [a, b, c, d, e, f] for an element
-    based on the node coordinates.
-
-    Each node has 3 DOFs: x, y, z → global index = node_index * 3 + offset
-
-    Parameters:
-    - startNode: string like "0,0,0"
-    - endNode: string like "6,0,8"
-
-    Returns:
-    - list of 6 integers: [a,b,c,d,e,f]
+    Given start and end node coordinates as strings ("x,y,z"),
+    return a list of 6 DOF indices [a, b, c, d, e, f] corresponding to:
+    - start node DOFs: [a, b, c]
+    - end node DOFs:   [d, e, f]
     """
-    def coord_to_index(coord: str) -> int:
-        # Map each unique node coordinate to an index
-        if coord not in coord_to_index.node_map:
-            coord_to_index.node_map[coord] = len(coord_to_index.node_map)
-        return coord_to_index.node_map[coord]
-    
-    # Static map to preserve node order across calls
-    if not hasattr(coord_to_index, "node_map"):
-        coord_to_index.node_map = {}
+    def get_node_index(node_str: str) -> int:
+        """Maps node coordinate string to a unique index."""
+        if node_str not in generate_dof_indices.node_map:
+            generate_dof_indices.node_map[node_str] = len(generate_dof_indices.node_map)
+        return generate_dof_indices.node_map[node_str]
 
-    start_index = coord_to_index(startNode)
-    end_index = coord_to_index(endNode)
+    start_idx = get_node_index(start_node)
+    end_idx = get_node_index(end_node)
 
-    # Global DOFs for 3D truss: 3 per node
-    start_dofs = [start_index * 3 + i for i in range(3)]
-    end_dofs = [end_index * 3 + i for i in range(3)]
+    # Each node has 3 DOFs: [x, y, z]
+    dof = [
+        3 * start_idx, 3 * start_idx + 1, 3 * start_idx + 2,
+        3 * end_idx,   3 * end_idx + 1,   3 * end_idx + 2,
+    ]
+    return dof
 
-    return start_dofs + end_dofs
+
+# Static mapping from node string to index
+generate_dof_indices.node_map = {}
