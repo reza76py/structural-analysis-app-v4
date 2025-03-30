@@ -7,7 +7,7 @@ from ..calculations.direction_cosines import calculate_direction_cosines
 from ..calculations.transformation_matrix import build_transformation_matrix
 from ..serializers import ElementsSerializer
 from ..calculations.local_stiffness_matrix import calculate_local_stiffness_matrix
-from ..calculations.global_stiffness_matrix import assemble_global_stiffness_matrix
+from ..calculations.global_stiffness_matrix import compute_element_global_stiffness
 from ..calculations.generate_dof_indices import generate_dof_indices
 
 import numpy as np
@@ -142,25 +142,32 @@ class ElementLocalStiffnessMatrixView(APIView):
 
 
 
-class ElementGlobalStiffnessMatrixView(APIView):
+class ElementGlobalStiffnessPerElementView(APIView):
     def get(self, request):
-        elements_qs = Elements.objects.all()
-        elements = []
+        elements = Elements.objects.all().values("id", "startNode", "endNode", "area", "youngs_modulus", "length")
+        results = []
 
-        # Build list of element dictionaries with necessary info
-        for element in elements_qs:
-            elements.append({
-                "startNode": element.startNode,
-                "endNode": element.endNode,
-                "area": element.area,
-                "youngs_modulus": element.youngs_modulus,
-                "length": element.length,
-                "dof_indices": generate_dof_indices(element.startNode, element.endNode),
-            })
+        for el in elements:
+            try:
+                k_global = compute_element_global_stiffness(
+                    startNode=el["startNode"],
+                    endNode=el["endNode"],
+                    area=float(el["area"]),
+                    youngs_modulus=float(el["youngs_modulus"]),
+                    length=float(el["length"])
+                )
 
-        total_dofs = len(set(idx for el in elements for idx in el["dof_indices"]))
-        S = assemble_global_stiffness_matrix(elements, total_dofs)
-        
-        return Response({
-            "global_stiffness_matrix": S.tolist()
-        }, status=status.HTTP_200_OK)    
+                results.append({
+                    "id": el["id"],
+                    "startNode": el["startNode"],
+                    "endNode": el["endNode"],
+                    "k_global": k_global.tolist()
+                })
+
+            except Exception as e:
+                results.append({
+                    "id": el["id"],
+                    "error": str(e)
+                })
+
+        return Response({"element_global_stiffness_matrices": results}, status=status.HTTP_200_OK)

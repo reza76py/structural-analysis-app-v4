@@ -1,0 +1,47 @@
+.matrix-display {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .matrix-block {
+    margin-bottom: 24px;
+    padding: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .matrix-block h4 {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  
+  .matrix-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 14px;
+  }
+  
+  .matrix-table tr:nth-child(even) {
+    background-color: #f0f0f0;
+  }
+  
+  .form-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 16px;
+  }
+  
