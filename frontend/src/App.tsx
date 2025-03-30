@@ -8,6 +8,9 @@ import TransformationMatrixTable from "./components/TransformationMatrixTable";
 import ElementStiffnessMatrices from "./components/ElementStiffnessMatrices";
 import GlobalStiffnessMatrix from "./components/GlobalStiffnessMatrix";
 import DofIndicesTable from "./components/DofIndicesTable";
+import ElementDOFMapping from "./components/ElementDOFMapping";
+import AssembledMatrix from "./components/AssembledMatrix";
+
 
 
 
@@ -79,6 +82,9 @@ function App() {
         <ElementStiffnessMatrices />
         <GlobalStiffnessMatrix />
         <DofIndicesTable />
+        <ElementDOFMapping />
+        <AssembledMatrix />
+        
 
         
       </div>

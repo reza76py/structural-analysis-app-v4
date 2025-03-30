@@ -1,26 +1,24 @@
+from ..models import Node
+
 def generate_dof_indices(start_node: str, end_node: str) -> list[int]:
     """
-    Given start and end node coordinates as strings ("x,y,z"),
-    return a list of 6 DOF indices [a, b, c, d, e, f] corresponding to:
-    - start node DOFs: [a, b, c]
-    - end node DOFs:   [d, e, f]
+    Given start and end node strings ("x,y,z"),
+    return a list of global DOF indices [a, b, c, d, e, f] for the element.
+    Uses consistent node ordering based on the database.
     """
-    def get_node_index(node_str: str) -> int:
-        """Maps node coordinate string to a unique index."""
-        if node_str not in generate_dof_indices.node_map:
-            generate_dof_indices.node_map[node_str] = len(generate_dof_indices.node_map)
-        return generate_dof_indices.node_map[node_str]
+    def normalize(coord_str: str) -> str:
+        parts = coord_str.split(",")
+        return ",".join([str(float(p)) for p in parts])
 
-    start_idx = get_node_index(start_node)
-    end_idx = get_node_index(end_node)
+    all_nodes = Node.objects.all()
+    ordered = [normalize(f"{n.x},{n.y},{n.z}") for n in all_nodes]
+    node_index_map = {coord: i for i, coord in enumerate(ordered)}
 
-    # Each node has 3 DOFs: [x, y, z]
+    i_start = node_index_map[normalize(start_node)]
+    i_end = node_index_map[normalize(end_node)]
+
     dof = [
-        3 * start_idx, 3 * start_idx + 1, 3 * start_idx + 2,
-        3 * end_idx,   3 * end_idx + 1,   3 * end_idx + 2,
+        3 * i_start, 3 * i_start + 1, 3 * i_start + 2,
+        3 * i_end,   3 * i_end + 1,   3 * i_end + 2,
     ]
     return dof
-
-
-# Static mapping from node string to index
-generate_dof_indices.node_map = {}
