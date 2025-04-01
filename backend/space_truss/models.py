@@ -39,3 +39,11 @@ class Load(models.Model):
 
     def __str__(self):
         return f"Load at {self.node_coordinate} (Fx: {self.Fx}, Fy: {self.Fy}, Fz: {self.Fz})"
+
+
+class AssembledGlobalStiffnessMatrix(models.Model):
+    data = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Assembled Global Stiffness Matrix @ {self.created_at}"

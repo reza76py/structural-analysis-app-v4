@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/styles_scene3D.css";
 
 const AssembledMatrix: FC = () => {
   const [matrix, setMatrix] = useState<number[][]>([]);
@@ -8,10 +7,10 @@ const AssembledMatrix: FC = () => {
   useEffect(() => {
     const fetchMatrix = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/elements/global-stiffness/");
-        setMatrix(response.data.global_stiffness_matrix);
+        const response = await axios.get("http://127.0.0.1:8000/api/assemble-global-stiffness/");
+        setMatrix(response.data.matrix); // We'll adjust this key next step based on API response shape
       } catch (error) {
-        console.error("Error fetching global stiffness matrix:", error);
+        console.error("Failed to fetch matrix:", error);
       }
     };
 
@@ -19,30 +18,19 @@ const AssembledMatrix: FC = () => {
   }, []);
 
   return (
-    <div className="transformation-matrix-section">
+    <div>
       <h2 className="form-title">Assembled Global Stiffness Matrix [K]</h2>
-      <div className="matrix-scroll-container">
-        <table className="matrix-table">
-          <thead>
-            <tr>
-              <th></th>
-              {matrix[0]?.map((_, colIndex) => (
-                <th key={colIndex}>DOF {colIndex + 1}</th>
+      <table className="matrix-table">
+        <tbody>
+          {matrix.map((row, i) => (
+            <tr key={i}>
+              {row.map((val, j) => (
+                <td key={j}>{val.toFixed(2)}</td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {matrix.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                <th>DOF {rowIndex + 1}</th>
-                {row.map((val, colIndex) => (
-                  <td key={colIndex}>{val.toFixed(2)}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
