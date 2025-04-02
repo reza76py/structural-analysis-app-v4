@@ -10,6 +10,10 @@ import GlobalStiffnessMatrix from "./components/GlobalStiffnessMatrix";
 import DofIndicesTable from "./components/DofIndicesTable";
 import ElementDOFMapping from "./components/ElementDOFMapping";
 import AssembledMatrix from "./components/AssembledMatrix";
+import BoundaryConditionsResult from "./components/BoundaryConditionsResult"; // ✅ Optional if you're using it
+import SolveDisplacement from "./components/SolveDisplacement"; // ✅ Optional if you're using it
+import ReactionForces from "./components/ReactionForces";
+import InternalAxialForces from "./components/InternalAxialForces"; // ✅ Optional if you're using it
 
 
 
@@ -84,6 +88,10 @@ function App() {
         <DofIndicesTable />
         <ElementDOFMapping />
         <AssembledMatrix />
+        <BoundaryConditionsResult />
+        <SolveDisplacement />
+        <ReactionForces />
+        <InternalAxialForces />
         
 
         
