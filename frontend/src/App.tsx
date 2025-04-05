@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import NodesForm from "./components/NodesForm";
 import SupportsForm from "./components/SupportsForm";  // ✅ Optional if you're using it
 import LoadsForm from "./components/LoadsForm";
@@ -96,7 +97,28 @@ function App() {
 
         
       </div>
-          
+
+      <button
+        className="reset-btn mt-4 bg-red-600 text-white px-4 py-2 rounded"
+        onClick={async () => {
+          if (window.confirm("⚠️ Are you sure you want to delete ALL data?")) {
+            try {
+              await axios.delete("http://127.0.0.1:8000/api/nodes/");
+              setVisualizationNodes([]);
+              setVisualizationElements([]);
+              setVisualizationSupports([]);
+              setVisualizationLoads([]);
+              alert("✅ Workspace reset!");
+            } catch (error) {
+              console.error("❌ Error resetting workspace:", error);
+              alert("❌ Failed to reset workspace.");
+            }
+          }
+        }}
+      >
+        🗑 Reset Workspace
+      </button>
+                
           
     </div>
   );
