@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 import * as THREE from "three";
 import Scene3DNodes from "./Scene3DNodes";
 import Scene3DElements from "./Scene3DElements"; 
@@ -77,6 +79,13 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
     renderer.setClearColor(0xf0f0f0);
     mountRef.current.appendChild(renderer.domElement);
 
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.enableZoom = true;
+    controls.enablePan = true;
+
+
     const light = new THREE.AmbientLight(0xffffff, 1);
     scene.add(light);
 
@@ -109,9 +118,14 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
     Scene3DLoads( scene, loads );
 
 
-    // ✅ Render the scene
-    renderer.render(scene, camera);
+    const animate = () => {
+      requestAnimationFrame(animate);
+      controls.update(); // Required for damping
+      renderer.render(scene, camera);
+    };
+    animate();
 
+    
     return () => {
       renderer.dispose();
       while (mountRef.current?.firstChild) {
