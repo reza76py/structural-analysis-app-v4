@@ -26,24 +26,26 @@ type ElementsFormProps = {
 const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
     const [selectedNodes, setSelectedNodes] = useState({
         start: "",
-        end: ""
+        end: "",
     });
     const [dbElements, setDbElements] = useState<ElementType[]>([]);
     const [loadingState, setLoadingState] = useState({
         saving: false,
-        deleting: false
+        deleting: false,
     });
     const [showForm, setShowForm] = useState(true);
 
     const [elementProps, setElementProps] = useState({
         area: 1.0,
         youngs_modulus: 1.0,
-    });    
+    });
 
     // Fetch elements from API
     const fetchElements = async (): Promise<void> => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/elements/");
+            const response = await axios.get(
+                "http://127.0.0.1:8000/api/elements/",
+            );
             setDbElements(response.data.elements);
             onUpdate(response.data.elements); // Update parent component
         } catch (error) {
@@ -52,8 +54,11 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
     };
 
     // Handle node selection changes
-    const handleNodeSelection = (e: React.ChangeEvent<HTMLSelectElement>, nodeType: "start" | "end"): void => {
-        setSelectedNodes(prev => ({ ...prev, [nodeType]: e.target.value }));
+    const handleNodeSelection = (
+        e: React.ChangeEvent<HTMLSelectElement>,
+        nodeType: "start" | "end",
+    ): void => {
+        setSelectedNodes((prev) => ({ ...prev, [nodeType]: e.target.value }));
     };
 
     // Save new element
@@ -64,9 +69,12 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         }
 
         // Check for duplicates
-        const exists = dbElements.some(element => 
-            (element.startNode === selectedNodes.start && element.endNode === selectedNodes.end) ||
-            (element.startNode === selectedNodes.end && element.endNode === selectedNodes.start)
+        const exists = dbElements.some(
+            (element) =>
+                (element.startNode === selectedNodes.start &&
+                    element.endNode === selectedNodes.end) ||
+                (element.startNode === selectedNodes.end &&
+                    element.endNode === selectedNodes.start),
         );
 
         if (exists) {
@@ -74,15 +82,18 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
             return;
         }
 
-        setLoadingState(prev => ({ ...prev, saving: true }));
+        setLoadingState((prev) => ({ ...prev, saving: true }));
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/elements/", {
-                startNode: selectedNodes.start,
-                endNode: selectedNodes.end,
-                area: elementProps.area,
-                youngs_modulus: elementProps.youngs_modulus,
-            });
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/elements/",
+                {
+                    startNode: selectedNodes.start,
+                    endNode: selectedNodes.end,
+                    area: elementProps.area,
+                    youngs_modulus: elementProps.youngs_modulus,
+                },
+            );
 
             if (response.status === 201) {
                 await fetchElements();
@@ -91,14 +102,17 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         } catch (error) {
             console.error("Error saving element:", error);
         } finally {
-            setTimeout(() => setLoadingState(prev => ({ ...prev, saving: false })), 500);
+            setTimeout(
+                () => setLoadingState((prev) => ({ ...prev, saving: false })),
+                500,
+            );
         }
     };
 
     // Delete all elements
     const deleteAllElements = async (): Promise<void> => {
-        setLoadingState(prev => ({ ...prev, deleting: true }));
-        
+        setLoadingState((prev) => ({ ...prev, deleting: true }));
+
         try {
             await axios.delete("http://127.0.0.1:8000/api/elements/");
             setDbElements([]);
@@ -107,7 +121,10 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         } catch (error) {
             console.error("Error deleting elements:", error);
         } finally {
-            setTimeout(() => setLoadingState(prev => ({ ...prev, deleting: false })), 500);
+            setTimeout(
+                () => setLoadingState((prev) => ({ ...prev, deleting: false })),
+                500,
+            );
         }
     };
 
@@ -117,8 +134,8 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
     }, []);
 
     // Filter end nodes to exclude selected start node
-    const filteredEndNodes = nodes.filter(({ x, y, z }) => 
-        `${x},${y},${z}` !== selectedNodes.start
+    const filteredEndNodes = nodes.filter(
+        ({ x, y, z }) => `${x},${y},${z}` !== selectedNodes.start,
     );
 
     return (
@@ -126,7 +143,9 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
             {showForm && (
                 <>
                     <h2 className="form-title">Create Elements</h2>
-                    <p className="db-nodes-list">Select two nodes to form an element.</p>
+                    <p className="db-nodes-list">
+                        Select two nodes to form an element.
+                    </p>
 
                     <div className="input-group">
                         <select
@@ -136,7 +155,10 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         >
                             <option value="">Select Start Node</option>
                             {nodes.map(({ x, y, z }) => (
-                                <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
+                                <option
+                                    key={`${x},${y},${z}`}
+                                    value={`${x},${y},${z}`}
+                                >
                                     ({x}, {y}, {z})
                                 </option>
                             ))}
@@ -151,7 +173,10 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         >
                             <option value="">Select End Node</option>
                             {filteredEndNodes.map(({ x, y, z }) => (
-                                <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
+                                <option
+                                    key={`${x},${y},${z}`}
+                                    value={`${x},${y},${z}`}
+                                >
                                     ({x}, {y}, {z})
                                 </option>
                             ))}
@@ -165,29 +190,39 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                             step="0.01"
                             value={elementProps.area}
                             onChange={(e) =>
-                            setElementProps({ ...elementProps, area: parseFloat(e.target.value) || 1 })
+                                setElementProps({
+                                    ...elementProps,
+                                    area: parseFloat(e.target.value) || 1,
+                                })
                             }
                         />
-                        </div>
+                    </div>
 
-                        <div className="input-group">
+                    <div className="input-group">
                         <label>Young's Modulus (E):</label>
                         <input
                             type="number"
                             step="0.01"
                             value={elementProps.youngs_modulus}
                             onChange={(e) =>
-                            setElementProps({ ...elementProps, youngs_modulus: parseFloat(e.target.value) || 1 })
+                                setElementProps({
+                                    ...elementProps,
+                                    youngs_modulus:
+                                        parseFloat(e.target.value) || 1,
+                                })
                             }
                         />
-                        </div>
-
+                    </div>
 
                     <div className="action-buttons">
                         <button
                             className="save-nodes-btn"
                             onClick={persistElement}
-                            disabled={loadingState.saving || !selectedNodes.start || !selectedNodes.end}
+                            disabled={
+                                loadingState.saving ||
+                                !selectedNodes.start ||
+                                !selectedNodes.end
+                            }
                         >
                             {loadingState.saving ? "Saving..." : "Add Element"}
                         </button>
@@ -205,16 +240,26 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                 <div className="saved-records">
                     <h3 className="db-nodes-list">Saved Elements:</h3>
                     <ul className="nodes-list">
-                        {dbElements.map(({ id, startNode, endNode, length, area, youngs_modulus }) => (
-                            <li key={id} className="element-item">
-                                <span className="element-pair">
-                                    ({startNode} → {endNode})
-                                </span>
-                                <span className="element-length">
-                                    Length: {length.toFixed(2)} | A: {area} | E: {youngs_modulus}
-                                </span>
-                            </li>
-                        ))}
+                        {dbElements.map(
+                            ({
+                                id,
+                                startNode,
+                                endNode,
+                                length,
+                                area,
+                                youngs_modulus,
+                            }) => (
+                                <li key={id} className="element-item">
+                                    <span className="element-pair">
+                                        ({startNode} → {endNode})
+                                    </span>
+                                    <span className="element-length">
+                                        Length: {length.toFixed(2)} | A: {area}{" "}
+                                        | E: {youngs_modulus}
+                                    </span>
+                                </li>
+                            ),
+                        )}
                     </ul>
 
                     <button
@@ -222,7 +267,9 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         onClick={deleteAllElements}
                         disabled={loadingState.deleting}
                     >
-                        {loadingState.deleting ? "Deleting..." : "Delete All Elements"}
+                        {loadingState.deleting
+                            ? "Deleting..."
+                            : "Delete All Elements"}
                     </button>
                 </div>
             )}

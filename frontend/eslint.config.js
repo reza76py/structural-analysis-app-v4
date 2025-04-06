@@ -1,28 +1,36 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import pluginReact from 'eslint-plugin-react';
+import prettier from 'eslint-config-prettier';
 
-export default tseslint.config(
-  { ignores: ['dist'] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+export default defineConfig([
+    {
+        files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+        languageOptions: {
+            globals: globals.browser,
+        },
+        plugins: {
+            js,
+            react: pluginReact,
+        },
+        rules: {
+            // 4-space indentation rules
+            indent: ['error', 4],
+            'react/jsx-indent': ['error', 4],
+            'react/jsx-indent-props': ['error', 4],
+            // Prettier disables conflicting rules
+            ...prettier.rules,
+        },
+        settings: {
+            react: {
+                version: 'detect',
+            },
+        },
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
-  },
-)
+    // TypeScript support
+    ...tseslint.configs.recommended,
+    // React recommended
+    pluginReact.configs.flat.recommended,
+]);

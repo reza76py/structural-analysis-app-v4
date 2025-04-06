@@ -35,7 +35,9 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
     useEffect(() => {
         const fetchNodes = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/nodes/");
+                const response = await axios.get(
+                    "http://127.0.0.1:8000/api/nodes/",
+                );
                 setNodes(response.data);
             } catch (error) {
                 console.error("Error fetching nodes:", error);
@@ -44,7 +46,9 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
 
         const fetchSupports = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/supports/");
+                const response = await axios.get(
+                    "http://127.0.0.1:8000/api/supports/",
+                );
                 setSupports(response.data);
                 onUpdate(response.data);
             } catch (error) {
@@ -61,7 +65,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
     };
 
     const handleToggle = (direction: "x" | "y" | "z") => {
-        setRestrictions(prev => ({ ...prev, [direction]: !prev[direction] }));
+        setRestrictions((prev) => ({ ...prev, [direction]: !prev[direction] }));
     };
 
     const handleAddSupport = async () => {
@@ -72,12 +76,15 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
 
         setLoading(true);
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/supports/", {
-                node_coordinate: selectedNode,
-                x_restrained: restrictions.x,
-                y_restrained: restrictions.y,
-                z_restrained: restrictions.z,
-            });
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/supports/",
+                {
+                    node_coordinate: selectedNode,
+                    x_restrained: restrictions.x,
+                    y_restrained: restrictions.y,
+                    z_restrained: restrictions.z,
+                },
+            );
 
             const newSupports = [...supports, response.data];
             setSupports(newSupports);
@@ -119,19 +126,42 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
             </div>
 
             <div className="toggle-group">
-                <button className={`toggle-btn ${restrictions.x ? "active" : ""}`} 
-                    onClick={() => handleToggle("x")} type="button">X</button>
-                <button className={`toggle-btn ${restrictions.y ? "active" : ""}`} 
-                    onClick={() => handleToggle("y")} type="button">Y</button>
-                <button className={`toggle-btn ${restrictions.z ? "active" : ""}`} 
-                    onClick={() => handleToggle("z")} type="button">Z</button>
+                <button
+                    className={`toggle-btn ${restrictions.x ? "active" : ""}`}
+                    onClick={() => handleToggle("x")}
+                    type="button"
+                >
+                    X
+                </button>
+                <button
+                    className={`toggle-btn ${restrictions.y ? "active" : ""}`}
+                    onClick={() => handleToggle("y")}
+                    type="button"
+                >
+                    Y
+                </button>
+                <button
+                    className={`toggle-btn ${restrictions.z ? "active" : ""}`}
+                    onClick={() => handleToggle("z")}
+                    type="button"
+                >
+                    Z
+                </button>
             </div>
 
-            <button className="add-support-btn" onClick={handleAddSupport} disabled={loading}>
+            <button
+                className="add-support-btn"
+                onClick={handleAddSupport}
+                disabled={loading}
+            >
                 {loading ? "Saving..." : "Add Support"}
             </button>
 
-            <button className="delete-btn" onClick={handleDeleteAllSupports} disabled={loading}>
+            <button
+                className="delete-btn"
+                onClick={handleDeleteAllSupports}
+                disabled={loading}
+            >
                 {loading ? "Deleting..." : "Delete All Supports"}
             </button>
 
@@ -143,9 +173,27 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                             <li key={support.id} className="support-item">
                                 <span>Node: {support.node_coordinate}</span>
                                 <div className="support-restrictions">
-                                    <span className={support.x_restrained ? "active" : ""}>X</span>
-                                    <span className={support.y_restrained ? "active" : ""}>Y</span>
-                                    <span className={support.z_restrained ? "active" : ""}>Z</span>
+                                    <span
+                                        className={
+                                            support.x_restrained ? "active" : ""
+                                        }
+                                    >
+                                        X
+                                    </span>
+                                    <span
+                                        className={
+                                            support.y_restrained ? "active" : ""
+                                        }
+                                    >
+                                        Y
+                                    </span>
+                                    <span
+                                        className={
+                                            support.z_restrained ? "active" : ""
+                                        }
+                                    >
+                                        Z
+                                    </span>
                                 </div>
                             </li>
                         ))}

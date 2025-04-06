@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import ElementsForm from "./ElementsForm";
 import Scene3D from "./Scene3D";
@@ -21,13 +22,17 @@ type CoordinatesType = {
 type NodesFormProps = {
     onUpdate: (
         nodes: Array<{ x: number; y: number; z: number }>,
-        elements: Array<{ startNode: string; endNode: string }>
+        elements: Array<{ startNode: string; endNode: string }>,
     ) => void;
 };
 
 const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const [nodes, setNodes] = useState<NodeType[]>([]);
-    const [coordinates, setCoordinates] = useState<CoordinatesType>({ x: "", y: "", z: "" });
+    const [coordinates, setCoordinates] = useState<CoordinatesType>({
+        x: "",
+        y: "",
+        z: "",
+    });
     const [dbNodes, setDbNodes] = useState<NodeType[]>([]);
     const [isSaving, setIsSaving] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -43,27 +48,32 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
             alert("Please enter all coordinates");
             return;
         }
-        const newNodes = [...nodes, { 
-            id: nodes.length + 1, 
-            x: parseInt(x), 
-            y: parseInt(y), 
-            z: parseInt(z) 
-        }];
+        const newNodes = [
+            ...nodes,
+            {
+                id: nodes.length + 1,
+                x: parseInt(x),
+                y: parseInt(y),
+                z: parseInt(z),
+            },
+        ];
         setNodes(newNodes);
         setCoordinates({ x: "", y: "", z: "" });
     };
 
     const fetchNodes = async (): Promise<void> => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/nodes/");
+            const response = await axios.get(
+                "http://127.0.0.1:8000/api/nodes/",
+            );
             console.log("✅ Fetched Nodes from API:", response.data); // ✅ Debug log
-            
+
             setDbNodes(response.data);
-    
+
             // Update visualization with current elements
             onUpdate(
-                response.data.map(n => ({ x: n.x, y: n.y, z: n.z })),
-                [] // Initialize with empty elements
+                response.data.map((n) => ({ x: n.x, y: n.y, z: n.z })),
+                [], // Initialize with empty elements
             );
         } catch (error) {
             console.error("❌ Error fetching nodes:", error);
@@ -72,7 +82,10 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
     const handleDeleteNode = (id: number): void => {
         const updatedNodes = nodes.filter((node) => node.id !== id);
-        const reindexedNodes = updatedNodes.map((node, index) => ({ ...node, id: index + 1 }));
+        const reindexedNodes = updatedNodes.map((node, index) => ({
+            ...node,
+            id: index + 1,
+        }));
         setNodes(reindexedNodes);
     };
 
@@ -81,7 +94,10 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
         setIsSaving(true);
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/nodes/", { nodes });
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/nodes/",
+                { nodes },
+            );
             if (response.status === 201) {
                 setNodes([]);
                 await fetchNodes();
@@ -108,22 +124,42 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
         }
     };
 
-    useEffect(() => { 
-        fetchNodes(); 
+    useEffect(() => {
+        fetchNodes();
     }, []);
 
     return (
         <div className="nodes-form-container">
-            {!showElementForm && <h2 className="form-title">Enter Node Coordinates</h2>}
+            {!showElementForm && (
+                <h2 className="form-title">Enter Node Coordinates</h2>
+            )}
 
             {!showElementForm && (
                 <div>
-                    <input className="input-group" type="number" name="x" placeholder="x" 
-                        value={coordinates.x} onChange={handleInputChange} />
-                    <input className="input-group" type="number" name="y" placeholder="y" 
-                        value={coordinates.y} onChange={handleInputChange} />
-                    <input className="input-group" type="number" name="z" placeholder="z" 
-                        value={coordinates.z} onChange={handleInputChange} />
+                    <input
+                        className="input-group"
+                        type="number"
+                        name="x"
+                        placeholder="x"
+                        value={coordinates.x}
+                        onChange={handleInputChange}
+                    />
+                    <input
+                        className="input-group"
+                        type="number"
+                        name="y"
+                        placeholder="y"
+                        value={coordinates.y}
+                        onChange={handleInputChange}
+                    />
+                    <input
+                        className="input-group"
+                        type="number"
+                        name="z"
+                        placeholder="z"
+                        value={coordinates.z}
+                        onChange={handleInputChange}
+                    />
                     <button className="add-node-btn" onClick={handleAddNode}>
                         Add Node
                     </button>
@@ -134,7 +170,10 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                 {nodes.map(({ id, x, y, z }) => (
                     <li key={id} className="node-item">
                         Node {id}: ({x}, {y}, {z})
-                        <button className="delete-node-btn" onClick={() => handleDeleteNode(id)}>
+                        <button
+                            className="delete-node-btn"
+                            onClick={() => handleDeleteNode(id)}
+                        >
                             X
                         </button>
                     </li>
@@ -146,7 +185,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                     {isSaving ? "Saving..." : "Save Nodes"}
                 </button>
             )}
-            
+
             {dbNodes.length > 0 && (
                 <>
                     <h3 className="db-nodes-list">Saved Nodes:</h3>
@@ -158,35 +197,39 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                         ))}
                     </ul>
 
-                    <button className="delete-all-btn" onClick={handleDeleteAllNodes}>
+                    <button
+                        className="delete-all-btn"
+                        onClick={handleDeleteAllNodes}
+                    >
                         {isDeleting ? "Deleting..." : "Delete All Nodes"}
                     </button>
 
-                    <button className="add-element-btn" onClick={() => setShowElementForm(true)}>
+                    <button
+                        className="add-element-btn"
+                        onClick={() => setShowElementForm(true)}
+                    >
                         Add Element
                     </button>
                 </>
             )}
 
             {showElementForm && dbNodes.length > 0 && (
-                <ElementsForm 
-                    nodes={dbNodes} 
+                <ElementsForm
+                    nodes={dbNodes}
                     onUpdate={(elements) => {
                         // Convert elements to the correct format
-                        const formattedElements = elements.map(e => ({
+                        const formattedElements = elements.map((e) => ({
                             startNode: e.startNode,
-                            endNode: e.endNode
+                            endNode: e.endNode,
                         }));
                         // Update visualization with latest nodes and elements
                         onUpdate(
-                            dbNodes.map(n => ({ x: n.x, y: n.y, z: n.z })),
-                            formattedElements
+                            dbNodes.map((n) => ({ x: n.x, y: n.y, z: n.z })),
+                            formattedElements,
                         );
                     }}
                 />
             )}
-            
-
         </div>
     );
 };
