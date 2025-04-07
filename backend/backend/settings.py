@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'space_truss',
     'rest_framework',
     'corsheaders',
+    'file_input',
 ]
 
 MIDDLEWARE = [
