@@ -17,7 +17,13 @@ class PDFUploadView(APIView):
         if serializer.is_valid():
             uploaded_file = serializer.validated_data['file']
 
+            print("📥 File received:", uploaded_file.name)
+
             try:
+                print("🔍 Content type:", uploaded_file.content_type)
+
+                uploaded_file.seek(0)
+
                 # 1. Extract coordinates from PDF
                 extracted_nodes = pdf_processor.extract_coordinates_from_pdf(uploaded_file)
 
@@ -31,7 +37,9 @@ class PDFUploadView(APIView):
                 # 3. Save each new node
                 for node in extracted_nodes:
                     Node.objects.create(
-                        coordinate=f"{node['x']},{node['y']},{node['z']}"
+                        x=node['x'],
+                        y=node['y'],
+                        z=node['z']
                     )
 
                 return Response({

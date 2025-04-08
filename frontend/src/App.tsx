@@ -15,8 +15,8 @@ import AssembledMatrix from "./components/AssembledMatrix";
 import BoundaryConditionsResult from "./components/BoundaryConditionsResult"; // ✅ Optional if you're using it
 import SolveDisplacement from "./components/SolveDisplacement"; // ✅ Optional if you're using it
 import ReactionForces from "./components/ReactionForces";
-import InternalAxialForces from "./components/InternalAxialForces"; // ✅ Optional if you're using it
-
+import InternalAxialForces from "./components/InternalAxialForces";
+import FileUploadForm from "./components/load/FileUploadForm";
 import "./styles/styles_App.css";
 
 function App() {
@@ -54,6 +54,7 @@ function App() {
         <div className="app-container min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-gray-100">
             {/* Left Side - Forms */}
             <div className="form-section w-full lg:w-96 bg-white rounded-lg shadow-lg p-4 overflow-y-auto">
+                <FileUploadForm />
                 <NodesForm
                     onUpdate={(nodes, elements) => {
                         setVisualizationNodes(nodes);
