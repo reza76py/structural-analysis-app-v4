@@ -1,5 +1,3 @@
-// src/components/load/FileUploadForm.tsx
-
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -27,13 +25,17 @@ const FileUploadForm = () => {
     let endpoint = "";
 
     switch (ext) {
-        case "pdf":
-          endpoint = "/file/upload/pdf/"; // ✅ Full correct path
-          break;
-        default:
-          setUploadStatus("❌ Only PDF files are supported right now.");
-          return;
-      }
+      case "pdf":
+        endpoint = "/file/upload/pdf/";
+        break;
+      case "xlsx":
+      case "xls":
+        endpoint = "/file/upload/excel/";
+        break;
+      default:
+        setUploadStatus(`❌ Unsupported file type: ${ext}`);
+        return;
+    }
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -55,10 +57,10 @@ const FileUploadForm = () => {
 
   return (
     <div className="bg-white p-4 rounded shadow mb-4">
-      <h2 className="text-lg font-semibold mb-2">📁 Upload Node Coordinates in PDF</h2>
+      <h2 className="text-lg font-semibold mb-2">📁 Upload Node Coordinates in EXCL</h2>
       <input
         type="file"
-        accept=".pdf,.xlsx,.xls,.txt"
+        accept=".pdf,.xlsx,.xls"
         onChange={handleFileChange}
         className="mb-2"
       />

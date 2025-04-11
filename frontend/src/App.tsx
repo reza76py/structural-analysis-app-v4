@@ -17,6 +17,7 @@ import SolveDisplacement from "./components/SolveDisplacement"; // ✅ Optional 
 import ReactionForces from "./components/ReactionForces";
 import InternalAxialForces from "./components/InternalAxialForces";
 import FileUploadForm from "./components/load/FileUploadForm";
+import FileUploadFormExl from "./components/load/FileUploadFormExl";
 import "./styles/styles_App.css";
 
 function App() {
@@ -54,7 +55,11 @@ function App() {
         <div className="app-container min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-gray-100">
             {/* Left Side - Forms */}
             <div className="form-section w-full lg:w-96 bg-white rounded-lg shadow-lg p-4 overflow-y-auto">
-                <FileUploadForm />
+                <div className="mb-4">
+                    <h2 className="text-lg font-bold mb-2">📂 Load Node Coordinates from File</h2>
+                    <FileUploadForm />      {/* PDF Upload */}
+                    <FileUploadFormExl />   {/* Excel Upload */}
+                </div>
                 <NodesForm
                     onUpdate={(nodes, elements) => {
                         setVisualizationNodes(nodes);
