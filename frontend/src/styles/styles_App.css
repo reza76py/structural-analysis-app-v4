@@ -12,7 +12,7 @@
 }
 
 .flex-1 {
-  @apply bg-green-500 rounded-lg shadow-lg;
+  @apply rounded-lg shadow-lg;
 }
 
 .btn-reset {
@@ -67,4 +67,14 @@
 
 .internalAxialForces {
   @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+}
+
+
+
+.btn-tables-wrap{
+  @apply flex justify-center items-center gap-2 mt-2;
+}
+
+.btn-tables {
+  @apply bg-blue-500 text-white text-xs px-1 py-2 rounded-md hover:bg-blue-600 transition w-28 h-10;
 }

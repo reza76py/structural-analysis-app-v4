@@ -311,18 +311,18 @@ function App() {
           loads={visualizationLoads}
         />
 
-        <div className="flex flex-wrap gap-2 p-4">
-        <button onClick={() => setShowDirectionCosines(prev => !prev)}>🔢 Direction Cosines</button>
-        <button onClick={() => setShowTransformationMatrix(prev => !prev)}>🧮 Transformation Matrix</button>
-        <button onClick={() => setShowElementStiffness(prev => !prev)}>📐 Element Stiffness</button>
-        <button onClick={() => setShowGlobalStiffness(prev => !prev)}>🌐 Global Stiffness</button>
-        <button onClick={() => setShowDOFIndices(prev => !prev)}>🆔 DOF Indices</button>
-        <button onClick={() => setShowDOFMapping(prev => !prev)}>🔁 DOF Mapping</button>
-        <button onClick={() => setShowAssembledMatrix(prev => !prev)}>🧩 Assembled Matrix</button>
-        <button onClick={() => setShowBoundaryConditions(prev => !prev)}>🚧 Boundary Conditions</button>
-        <button onClick={() => setShowDisplacements(prev => !prev)}>📊 Displacements</button>
-        <button onClick={() => setShowReactions(prev => !prev)}>💥 Reactions</button>
-        <button onClick={() => setShowAxialForces(prev => !prev)}>🧵 Axial Forces</button>
+        <div className="btn-tables-wrap">
+          <button className="btn-tables" onClick={() => setShowDirectionCosines(prev => !prev)}>Direction Cosines</button>
+          <button className="btn-tables" onClick={() => setShowTransformationMatrix(prev => !prev)}>Transformation Matrix</button>
+          <button className="btn-tables" onClick={() => setShowElementStiffness(prev => !prev)}>Element Stiffness</button>
+          <button className="btn-tables" onClick={() => setShowGlobalStiffness(prev => !prev)}>Global Stiffness</button>
+          <button className="btn-tables" onClick={() => setShowDOFIndices(prev => !prev)}>DOF Indices</button>
+          <button className="btn-tables" onClick={() => setShowDOFMapping(prev => !prev)}>DOF Mapping</button>
+          <button className="btn-tables" onClick={() => setShowAssembledMatrix(prev => !prev)}>Assembled Matrix</button>
+          <button className="btn-tables" onClick={() => setShowBoundaryConditions(prev => !prev)}>Boundary Conditions</button>
+          <button className="btn-tables" onClick={() => setShowDisplacements(prev => !prev)}>Displacements</button>
+          <button className="btn-tables" onClick={() => setShowReactions(prev => !prev)}>Reactions</button>
+          <button className="btn-tables" onClick={() => setShowAxialForces(prev => !prev)}>Axial Forces</button>
         </div>
 
         {showDirectionCosines && (
