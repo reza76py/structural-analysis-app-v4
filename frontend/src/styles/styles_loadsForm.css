@@ -1,5 +1,5 @@
-.loads-form-container {
-    @apply bg-gray-100 p-4 rounded-lg shadow-md w-80;
+.loads-form {
+    @apply bg-gray-300 p-4 rounded-lg shadow-md w-full;
 }
 
 .input-group {

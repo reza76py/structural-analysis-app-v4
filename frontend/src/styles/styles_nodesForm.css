@@ -1,7 +1,7 @@
 
 
 .nodes-form-container {
-    @apply bg-slate-500 p-4 rounded-lg w-full shadow-md;
+    @apply bg-slate-700 p-4 rounded-lg w-full shadow-md;
 }
 
 .form-title {

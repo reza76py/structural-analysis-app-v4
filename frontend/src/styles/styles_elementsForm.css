@@ -3,7 +3,7 @@
 }
 
 .elements-form-container {
-    @apply bg-slate-400 p-4 rounded-lg w-56 shadow-md;
+    @apply bg-slate-400 p-4 rounded-lg w-full shadow-md;
 }
 
 .form-title {
@@ -27,7 +27,7 @@
 }
 
 .db-nodes-list {
-    @apply text-sm text-gray-500 mt-2;
+    @apply text-sm text-gray-800 mt-2;
 }
 
 .action-buttons {
@@ -56,15 +56,9 @@
     @apply mt-4 bg-slate-100 p-3 rounded-lg;
 }
 
-.db-nodes-list {
-    @apply text-sm text-gray-700 font-semibold mb-2;
-}
+
 
 .nodes-list {
     @apply space-y-2;
 }
 
-/* Update elements container */
-.elements-form-container {
-    @apply bg-slate-300 p-4 rounded-lg w-64 shadow-md;
-}

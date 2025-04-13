@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../../styles/styles_upload_files.css";
 
 const FileUploadForm = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -56,7 +57,7 @@ const FileUploadForm = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow mb-4">
+    <div className="upload-files">
       <h2 className="text-lg font-semibold mb-2">📁 Upload Node Coordinates in EXCL</h2>
       <input
         type="file"

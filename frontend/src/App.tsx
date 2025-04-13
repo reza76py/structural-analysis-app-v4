@@ -56,7 +56,7 @@ function App() {
             {/* Left Side - Forms */}
             <div className="form-section">
                 <div className="mb-4">
-                    <h2 className="text-lg">📂 Load Node Coordinates from File</h2>
+  
                     <FileUploadForm />      {/* PDF Upload */}
                     <FileUploadFormExl />   {/* Excel Upload */}
                 </div>
@@ -69,6 +69,36 @@ function App() {
                 <SupportsForm onUpdate={setVisualizationSupports} />
 
                 <LoadsForm onUpdate={setVisualizationLoads} />
+
+                <button
+                    className="btn-reset"
+                    onClick={async () => {
+                        if (
+                            window.confirm(
+                                "⚠️ Are you sure you want to delete ALL data?",
+                            )
+                        ) {
+                            try {
+                                await axios.delete(
+                                    "http://127.0.0.1:8000/api/nodes/",
+                                );
+                                setVisualizationNodes([]);
+                                setVisualizationElements([]);
+                                setVisualizationSupports([]);
+                                setVisualizationLoads([]);
+                                alert("✅ Workspace reset!");
+                            } catch (error) {
+                                console.error(
+                                    "❌ Error resetting workspace:",
+                                    error,
+                                );
+                                alert("❌ Failed to reset workspace.");
+                            }
+                        }
+                    }}
+                >
+                    🗑 Reset Workspace
+                </button>
 
                 {/* <SupportsForm /> ← Uncomment when needed */}
             </div>
@@ -94,35 +124,7 @@ function App() {
                 <InternalAxialForces />
             </div>
 
-            <button
-                className="btn-reset"
-                onClick={async () => {
-                    if (
-                        window.confirm(
-                            "⚠️ Are you sure you want to delete ALL data?",
-                        )
-                    ) {
-                        try {
-                            await axios.delete(
-                                "http://127.0.0.1:8000/api/nodes/",
-                            );
-                            setVisualizationNodes([]);
-                            setVisualizationElements([]);
-                            setVisualizationSupports([]);
-                            setVisualizationLoads([]);
-                            alert("✅ Workspace reset!");
-                        } catch (error) {
-                            console.error(
-                                "❌ Error resetting workspace:",
-                                error,
-                            );
-                            alert("❌ Failed to reset workspace.");
-                        }
-                    }
-                }}
-            >
-                🗑 Reset Workspace
-            </button>
+
         </div>
     );
 }

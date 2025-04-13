@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/styles_loadsForm.css";
 
@@ -118,7 +118,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
     };
 
     return (
-        <div className="loads-form-container">
+        <div className="loads-form">
             <h2 className="form-title">Apply Loads</h2>
             <p className="db-nodes-list">Choose a node to apply a load:</p>
 
