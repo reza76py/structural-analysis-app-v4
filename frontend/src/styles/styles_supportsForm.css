@@ -1,5 +1,5 @@
 .supports-form-container {
-    @apply bg-slate-300 p-4 rounded-lg w-56 shadow-md;
+    @apply bg-slate-400 p-4 rounded-lg w-full shadow-md;
 }
 
 .form-title {

@@ -52,11 +52,11 @@ function App() {
     console.log("Elements for visualization:", visualizationElements);
 
     return (
-        <div className="app-container min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-gray-100">
+        <div className="app-container">
             {/* Left Side - Forms */}
-            <div className="form-section w-full lg:w-96 bg-white rounded-lg shadow-lg p-4 overflow-y-auto">
+            <div className="form-section">
                 <div className="mb-4">
-                    <h2 className="text-lg font-bold mb-2">📂 Load Node Coordinates from File</h2>
+                    <h2 className="text-lg">📂 Load Node Coordinates from File</h2>
                     <FileUploadForm />      {/* PDF Upload */}
                     <FileUploadFormExl />   {/* Excel Upload */}
                 </div>
@@ -74,7 +74,7 @@ function App() {
             </div>
 
             {/* Right Side - 3D Visualization */}
-            <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
+            <div className="flex-1">
                 <Scene3D
                     nodes={visualizationNodes}
                     elements={visualizationElements}
@@ -95,7 +95,7 @@ function App() {
             </div>
 
             <button
-                className="reset-btn mt-4 bg-red-600 text-white px-4 py-2 rounded"
+                className="btn-reset"
                 onClick={async () => {
                     if (
                         window.confirm(

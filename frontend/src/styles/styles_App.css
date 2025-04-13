@@ -1,14 +1,20 @@
 /* styles_App.css */
 .app-container {
-    /* Tailwind handles most styles, add custom ones if needed */
+  @apply min-h-screen flex flex-col lg:flex-row gap-4 p-4 bg-black;
   }
-  
-  .visualization-section {
-    position: relative;
-  }
-  
-  .visualization-section canvas {
-    width: 100% !important;
-    height: 100% !important;
-    outline: none;
-  }
+
+.form-section {
+  @apply  w-full lg:w-96 bg-blue-500 rounded-lg shadow-lg p-4 overflow-y-auto;
+}
+
+.text-lg {
+  @apply font-bold mb-2 bg-red-500;
+}
+
+.flex-1 {
+  @apply bg-green-500 rounded-lg shadow-lg p-4;
+}
+
+.btn-reset {
+
+}

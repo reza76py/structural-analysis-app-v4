@@ -121,7 +121,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
             mountRef.current.clientWidth,
             mountRef.current.clientHeight,
         );
-        renderer.setClearColor(0xf0f0f0);
+       
         mountRef.current.appendChild(renderer.domElement);
 
         // 🌀 Controls
@@ -257,7 +257,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
     // ✅ UI Render
     return (
-        <div className="scene-wrapper" style={{ position: "relative" }}>
+        <div>
             {/* 🧭 Controls */}
             <div className="btn-wrapper">
                 <button
@@ -290,15 +290,8 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
             </div>
 
             {/* 🖼️ Scene container */}
-            <div
-                ref={mountRef}
-                className="scene-container"
-                style={{
-                    width: "100%",
-                    height: "400px",
-                    background: "#e0e0e0",
-                }}
-            />
+            <div ref={mountRef} className="scene-container" />
+
 
             {/* 🧭 Gizmo */}
             <canvas
