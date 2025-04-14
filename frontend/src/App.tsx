@@ -1,186 +1,3 @@
-// import React, { useRef, useState } from "react";
-// import axios from "axios";
-// import Draggable from "react-draggable";
-// import NodesForm from "./components/NodesForm";
-// import SupportsForm from "./components/SupportsForm";
-// import LoadsForm from "./components/LoadsForm";
-// import Scene3D from "./components/Scene3D";
-// import DirectionCosinesTable from "./components/DirectionCosinesTable";
-// import TransformationMatrixTable from "./components/TransformationMatrixTable";
-// import ElementStiffnessMatrices from "./components/ElementStiffnessMatrices";
-// import GlobalStiffnessMatrix from "./components/GlobalStiffnessMatrix";
-// import DofIndicesTable from "./components/DofIndicesTable";
-// import ElementDOFMapping from "./components/ElementDOFMapping";
-// import AssembledMatrix from "./components/AssembledMatrix";
-// import BoundaryConditionsResult from "./components/BoundaryConditionsResult";
-// import SolveDisplacement from "./components/SolveDisplacement";
-// import ReactionForces from "./components/ReactionForces";
-// import InternalAxialForces from "./components/InternalAxialForces";
-// import FileUploadForm from "./components/load/FileUploadForm";
-// import FileUploadFormExl from "./components/load/FileUploadFormExl";
-
-// import "./styles/styles_App.css";
-
-// function App() {
-
-
-//   const [visualizationNodes, setVisualizationNodes] = useState<
-//     { x: number; y: number; z: number }[]
-//   >([]);
-
-//   const [visualizationElements, setVisualizationElements] = useState<
-//     { startNode: string; endNode: string }[]
-//   >([]);
-
-//   const [visualizationSupports, setVisualizationSupports] = useState<
-//     {
-//       id: number;
-//       node_coordinate: string;
-//       x_restrained: boolean;
-//       y_restrained: boolean;
-//       z_restrained: boolean;
-//     }[]
-//   >([]);
-
-//   const [visualizationLoads, setVisualizationLoads] = useState<
-//     {
-//       node_coordinate: string;
-//       Fx: number;
-//       Fy: number;
-//       Fz: number;
-//     }[]
-//   >([]);
-
-//   const [showFormPanel, setShowFormPanel] = useState(false);
-//   const formRef = useRef(null);
-
-//   return (
-//     <div className="app-container">
-//       <div className="fixed top-4 left-4 z-50">
-//         <button
-//           className="bg-blue-600 text-white px-4 py-2 rounded shadow"
-//           onClick={() => setShowFormPanel(!showFormPanel)}
-//         >
-//           {showFormPanel ? "❌ Close Input Panel" : "📋 Open Input Panel"}
-//         </button>
-//       </div>
-
-//       {showFormPanel && (
-//         <Draggable nodeRef={formRef} handle=".form-drag-handle">
-//           <div
-//             ref={formRef}
-//             className="form-section fixed top-20 left-10 z-40 bg-white rounded-lg shadow-lg p-4 w-96 max-h-[90vh] overflow-y-auto"
-//           >
-//             <div className="form-drag-handle bg-blue-600 text-white p-2 rounded-t cursor-move mb-2">
-//               🧩 Input Forms (Drag Me)
-//             </div>
-//             <FileUploadForm />
-//             <FileUploadFormExl />
-//             <NodesForm
-//               onUpdate={(nodes, elements) => {
-//                 setVisualizationNodes(nodes);
-//                 setVisualizationElements(elements);
-//               }}
-//             />
-//             <SupportsForm onUpdate={setVisualizationSupports} />
-//             <LoadsForm onUpdate={setVisualizationLoads} />
-//             <button
-//               className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
-//               onClick={async () => {
-//                 if (window.confirm("⚠️ Are you sure you want to delete ALL data?")) {
-//                   try {
-//                     await axios.delete("http://127.0.0.1:8000/api/nodes/");
-//                     setVisualizationNodes([]);
-//                     setVisualizationElements([]);
-//                     setVisualizationSupports([]);
-//                     setVisualizationLoads([]);
-//                     alert("✅ Workspace reset!");
-//                   } catch (error) {
-//                     console.error("❌ Error resetting workspace:", error);
-//                     alert("❌ Failed to reset workspace.");
-//                   }
-//                 }
-//               }}
-//             >
-//               🗑 Reset Workspace
-//             </button>
-//           </div>
-//         </Draggable>
-//       )}
-
-//       <div className="flex-1">
-//         <Scene3D
-//           nodes={visualizationNodes}
-//           elements={visualizationElements}
-//           supports={visualizationSupports}
-//           loads={visualizationLoads}
-//         />
-
-//         <div className="directionCosinesTable">
-//             <DirectionCosinesTable />
-//         </div>
-        
-//         <div className="transformationMatrixTable">
-//             <TransformationMatrixTable />
-//         </div>
-        
-//         <div className="elementStiffnessMatrices">
-//             <ElementStiffnessMatrices />
-//         </div>
-
-//         <div className="globalStiffnessMatrix">
-//             <GlobalStiffnessMatrix />
-//         </div>
-
-//         <div className="dofIndicesTable">
-//             <DofIndicesTable />
-//         </div>
-
-//         <div className="elementDOFMapping">
-//             <ElementDOFMapping />
-//         </div>
-
-//         <div className="assembledMatrix">
-//             <AssembledMatrix />
-//         </div>
-
-//         <div className="boundaryConditionsResult">
-//             <BoundaryConditionsResult />
-//         </div>
-
-//         <div className="solveDisplacement">
-//             <SolveDisplacement />
-//         </div>
-
-//         <div className="reactionForces">
-//             <ReactionForces />
-//         </div>
-
-//         <div className="internalAxialForces">
-//             <InternalAxialForces />
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import Draggable from "react-draggable";
@@ -201,7 +18,6 @@ import ReactionForces from "./components/ReactionForces";
 import InternalAxialForces from "./components/InternalAxialForces";
 import FileUploadForm from "./components/load/FileUploadForm";
 import FileUploadFormExl from "./components/load/FileUploadFormExl";
-
 import "./styles/styles_App.css";
 
 function App() {
@@ -249,6 +65,8 @@ function App() {
   const [showFormPanel, setShowFormPanel] = useState(false);
   const formRef = useRef(null);
 
+
+
   return (
     <div className="app-container">
       <div className="fixed top-4 left-4 z-50">
@@ -280,7 +98,7 @@ function App() {
             <SupportsForm onUpdate={setVisualizationSupports} />
             <LoadsForm onUpdate={setVisualizationLoads} />
             <button
-              className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
+              className="bg-red-600 text-white rounded"
               onClick={async () => {
                 if (window.confirm("⚠️ Are you sure you want to delete ALL data?")) {
                   try {

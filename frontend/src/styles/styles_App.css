@@ -71,10 +71,11 @@
 
 
 
+
 .btn-tables-wrap{
-  @apply flex justify-center items-center gap-2 mt-2;
+  @apply flex justify-center items-center gap-2 bg-black;
 }
 
 .btn-tables {
-  @apply bg-blue-500 text-white text-xs px-1 py-2 rounded-md hover:bg-blue-600 transition w-28 h-10;
+  @apply bg-black text-white text-xs px-1 py-2 rounded-md hover:bg-blue-600 transition w-28 h-10;
 }

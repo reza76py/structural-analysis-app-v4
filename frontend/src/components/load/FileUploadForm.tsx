@@ -56,7 +56,7 @@ const FileUploadForm = () => {
 
   return (
     <div className="upload-files">
-      <h2 className="text-lg font-semibold mb-2">📁 Upload Node Coordinates in PDF</h2>
+      <h2 className="text-lg font-semibold mb-2">Upload Node in PDF</h2>
       <input
         type="file"
         accept=".pdf,.xlsx,.xls,.txt"

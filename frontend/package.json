@@ -12,8 +12,10 @@
   "dependencies": {
     "@types/three": "^0.174.0",
     "axios": "^1.8.2",
+    "framer-motion": "^12.6.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-draggable": "^4.4.6",
     "three": "^0.174.0"
   },
   "devDependencies": {
