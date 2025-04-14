@@ -1,81 +1,70 @@
 /* styles_App.css */
 .app-container {
-  @apply min-h-screen flex flex-col lg:flex-row gap-4 bg-white;
-  }
-
-.form-section {
-  @apply  w-full lg:w-96 bg-blue-500 rounded-lg shadow-lg p-4 overflow-y-auto;
+    @apply h-screen w-screen backdrop-blur-xl flex flex-col lg:flex-row gap-4 bg-blue-300;
 }
 
+
 .text-lg {
-  @apply font-bold mb-2 bg-red-500;
+    @apply font-bold mb-2 bg-red-500;
 }
 
 .flex-1 {
-  @apply rounded-lg shadow-lg;
+    @apply rounded-lg shadow-lg;
 }
 
 .btn-reset {
-  @apply bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition w-full;
-
+    @apply bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition w-full;
 }
 
-
-
-
-
 .directionCosinesTable {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .transformationMatrixTable {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .elementStiffnessMatrices {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .globalStiffnessMatrix {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .dofIndicesTable {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .elementDOFMapping {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .assembledMatrix {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .boundaryConditionsResult {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .solveDisplacement {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
 .reactionForces {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
-
 
 .internalAxialForces {
-  @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
+    @apply w-full bg-white rounded-lg shadow-lg p-4 overflow-y-auto mt-2;
 }
 
-
-
-
-.btn-tables-wrap{
-  @apply flex justify-center items-center gap-2 bg-black;
+.btn-tables-wrap {
+    @apply flex justify-center items-center gap-2 bg-black;
 }
 
 .btn-tables {
-  @apply bg-black text-white text-xs px-1 py-2 rounded-md hover:bg-blue-600 transition w-28 h-10;
-}
+    @apply bg-black text-white text-[10px] px-1 py-2 rounded-md transition w-28 h-10 hover:text-white;
+  }
+  

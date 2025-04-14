@@ -3,7 +3,7 @@
 }
 
 .input-group {
-    @apply mb-3;
+    @apply mb-3 rounded-md;
 }
 
 .load-inputs {
@@ -40,7 +40,7 @@
 }
 
 .delete-all-btn {
-    @apply bg-red-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3;
+    @apply bg-red-600 text-gray-400 text-[10px] text-center font-semibold px-4 py-2 rounded-md w-full mt-3 h-5 flex items-center justify-center;
 }
 
 

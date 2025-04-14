@@ -59,7 +59,6 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
     const [clickedNode, setClickedNode] = useState<THREE.Mesh | null>(null);
 
-
     // 🎯 Raycasting setup
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
@@ -121,7 +120,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
             mountRef.current.clientWidth,
             mountRef.current.clientHeight,
         );
-       
+
         mountRef.current.appendChild(renderer.domElement);
 
         // 🌀 Controls
@@ -195,18 +194,18 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
                 .intersectObjects(scene.children)
                 .find((i) => i.object.userData?.type === "node");
 
-                if (hit) {
-                  const mesh = hit.object as THREE.Mesh;
-                  setClickedNode(mesh);
-                  if (isNodeInfo(mesh.userData)) {
+            if (hit) {
+                const mesh = hit.object as THREE.Mesh;
+                setClickedNode(mesh);
+                if (isNodeInfo(mesh.userData)) {
                     setClickedNodeInfo(mesh.userData);
-                  } else {
-                    setClickedNodeInfo(null);
-                  }
                 } else {
-                  setClickedNode(null);
-                  setClickedNodeInfo(null);
+                    setClickedNodeInfo(null);
                 }
+            } else {
+                setClickedNode(null);
+                setClickedNodeInfo(null);
+            }
         };
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -218,14 +217,14 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
             // 🎯 Hover detection
             raycaster.setFromCamera(mouse, camera);
-            const nodeHit = raycaster.intersectObjects(scene.children).find(
-              i => i.object.userData?.type === "node"
-            );
-            
+            const nodeHit = raycaster
+                .intersectObjects(scene.children)
+                .find((i) => i.object.userData?.type === "node");
+
             if (nodeHit && isNodeInfo(nodeHit.object.userData)) {
-              setHoveredNode(nodeHit.object.userData);
+                setHoveredNode(nodeHit.object.userData);
             } else {
-              setHoveredNode(null);
+                setHoveredNode(null);
             }
 
             // 🎨 Highlight selected node
@@ -291,7 +290,6 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
             {/* 🖼️ Scene container */}
             <div ref={mountRef} className="scene-container" />
-
 
             {/* 🧭 Gizmo */}
             <canvas

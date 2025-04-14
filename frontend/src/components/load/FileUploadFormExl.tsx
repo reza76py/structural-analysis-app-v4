@@ -58,16 +58,16 @@ const FileUploadForm = () => {
 
   return (
     <div className="upload-files">
-      <h2 className="text-lg font-semibold mb-2 ">📁 Upload Node Coordinates in EXCL</h2>
+      <h2 className="text-[10px] font-semibold mb-2 text-white ">Upload Node in EXCL</h2>
       <input
         type="file"
         accept=".pdf,.xlsx,.xls"
         onChange={handleFileChange}
-        className="mb-2"
+        className="mb-2 text-[10px] text-white"
       />
       <br />
       <button
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-blue-600 h-5 text-[10px] text-white px-4 rounded"
         onClick={handleUpload}
       >
         📤 Upload File

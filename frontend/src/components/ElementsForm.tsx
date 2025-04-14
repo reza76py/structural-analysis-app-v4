@@ -227,7 +227,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                             {loadingState.saving ? "Saving..." : "Add Element"}
                         </button>
                         <button
-                            className="secondary-btn"
+                            className="save-nodes-btn"
                             onClick={() => setShowForm(false)}
                         >
                             Close Form
@@ -269,7 +269,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                     >
                         {loadingState.deleting
                             ? "Deleting..."
-                            : "Delete All Elements"}
+                            : "Delete All E"}
                     </button>
                 </div>
             )}

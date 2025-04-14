@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/styles_supportsForm.css";
 
@@ -118,7 +118,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                 <select value={selectedNode} onChange={handleNodeSelection}>
                     <option value="">Select a Node</option>
                     {nodes.map(({ x, y, z }) => (
-                        <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>
+                        <option key={`${x},${y},${z}`} value={`${x},${y},${z}`} className="node-option">
                             ({x}, {y}, {z})
                         </option>
                     ))}
