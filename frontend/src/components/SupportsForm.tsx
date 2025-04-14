@@ -153,7 +153,29 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                 className="add-support-btn"
                 onClick={handleAddSupport}
                 disabled={loading}
-            >
+                >
+                {!loading && (
+                    <svg
+                    className="inline w-5 h-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    >
+                    {/* Vertical wall */}
+                    <line x1="6" y1="4" x2="6" y2="20" stroke="currentColor" strokeWidth="2" />
+
+                    {/* Hatching lines */}
+                    <line x1="6" y1="6" x2="3" y2="3" stroke="currentColor" strokeWidth="2" />
+                    <line x1="6" y1="10" x2="3" y2="7" stroke="currentColor" strokeWidth="2" />
+                    <line x1="6" y1="14" x2="3" y2="11" stroke="currentColor" strokeWidth="2" />
+                    <line x1="6" y1="18" x2="3" y2="15" stroke="currentColor" strokeWidth="2" />
+
+                    {/* Horizontal element */}
+                    <line x1="6" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" />
+                    </svg>
+                )}
                 {loading ? "Saving..." : "Add Support"}
             </button>
 

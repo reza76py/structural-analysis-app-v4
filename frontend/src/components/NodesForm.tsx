@@ -131,6 +131,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
         <div className="nodes-form-container">
             {!showElementForm && (
                 <h2 className="form-title">Enter Node Coordinates</h2>
+                
             )}
 
             {!showElementForm && (
@@ -159,9 +160,23 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                         value={coordinates.z}
                         onChange={handleInputChange}
                     />
-                    <button className="add-node-btn" onClick={handleAddNode}>
-                        Add Node
-                    </button>
+                    <button className="add-node-btn flex items-center gap-2" onClick={handleAddNode}>
+                    <svg
+                        className="w-5 h-5 text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeWidth="2"
+                            d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                        />
+                    </svg>
+                    Add Node
+                </button>
+
                 </div>
             )}
 

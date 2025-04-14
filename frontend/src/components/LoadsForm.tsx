@@ -158,6 +158,33 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
                     />
 
                     <button className="add-load-btn" onClick={handleAddLoad}>
+                        <svg
+                        className="w-6 h-6 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 64 32"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        >
+                        
+                        <line x1="8" y1="24" x2="56" y2="24" stroke="maroon" strokeWidth="3" />
+
+
+                        <line x1="16" y1="5" x2="16" y2="22" />
+                        <line x1="14" y1="20" x2="16" y2="22" />
+                        <line x1="18" y1="20" x2="16" y2="22" />
+
+
+                        <line x1="32" y1="5" x2="32" y2="22" />
+                        <line x1="30" y1="20" x2="32" y2="22" />
+                        <line x1="34" y1="20" x2="32" y2="22" />
+
+
+                        <line x1="48" y1="5" x2="48" y2="22" />
+                        <line x1="46" y1="20" x2="48" y2="22" />
+                        <line x1="50" y1="20" x2="48" y2="22" />
+                        </svg>
+
                         Add Load
                     </button>
                 </div>

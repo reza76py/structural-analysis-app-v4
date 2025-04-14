@@ -11,15 +11,15 @@
 }
 
 .load-inputs label {
-    @apply block text-gray-700 font-medium;
+    @apply block text-gray-500 font-medium text-sm;
 }
 
 .load-inputs input {
-    @apply w-full border rounded-md p-2;
+    @apply w-full border bg-slate-200 rounded-md p-2 text-[10px] h-5;
 }
 
 .add-load-btn {
-    @apply bg-green-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3;
+    @apply bg-green-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3 text-[10px] h-5 flex items-center justify-center;
 }
 
 
@@ -36,7 +36,7 @@
 }
 
 .load-values {
-    @apply flex gap-4 font-semibold text-gray-700;
+    @apply flex gap-2 font-semibold text-[10px] text-gray-700;
 }
 
 .delete-all-btn {
@@ -46,4 +46,8 @@
 
 .load-inputs input:focus {
     @apply border-blue-500 ring-2 ring-blue-300;
+}
+
+.load-node {
+    @apply p-2 text-[10px] shadow-sm;
 }
