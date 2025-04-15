@@ -1,8 +1,19 @@
-/* styles_App.css */
-.app-container {
-    @apply h-screen w-screen backdrop-blur-xl flex flex-col lg:flex-row gap-4 bg-blue-300;
+.access-btn-pnl {
+    @apply bg-blue-500 w-20 flex flex-col items-center justify-center relative z-50 overflow-visible pt-6;
 }
 
+.access-btn {
+    @apply bg-gray-500 m-1 rounded-md text-[10px] w-12 h-5 flex items-center justify-center;
+  }
+
+.tooltip-btn {
+    @apply absolute bottom-5 left-20 -translate-x-1/2 px-2 py-1 text-[10px] text-white bg-black/80 border border-white rounded-sm shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50;
+}  
+
+/* styles_App.css */
+.app-container {
+    @apply h-screen w-screen backdrop-blur-xl flex flex-col lg:flex-row gap-4 bg-blue-300 overflow-visible;
+}
 
 .text-lg {
     @apply font-bold mb-2 bg-red-500;

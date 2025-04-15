@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import axios from "axios";
 import Draggable from "react-draggable";
 import NodesForm from "./components/NodesForm";
@@ -19,6 +20,7 @@ import InternalAxialForces from "./components/InternalAxialForces";
 import FileUploadForm from "./components/load/FileUploadForm";
 import FileUploadFormExl from "./components/load/FileUploadFormExl";
 import "./styles/styles_App.css";
+import ElementsForm from "./components/ElementsForm";
 
 function App() {
     const [showDirectionCosines, setShowDirectionCosines] = useState(false);
@@ -50,9 +52,161 @@ function App() {
     const [showFormPanel, setShowFormPanel] = useState(false);
     const [elementsAdded, setElementsAdded] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
+    const [showNodePanel, setShowNodePanel] = useState(false);
+    const [showElementPanel, setShowElementPanel] = useState(false);
+    const [showSupportPanel, setShowSupportPanel] = useState(false);
+    const [showLoadPanel, setShowLoadPanel] = useState(false);
+
+    const nodeFormRef = useRef<HTMLDivElement>(null);
+    const elementFormRef = useRef<HTMLDivElement>(null);
+    const supportFormRef = useRef<HTMLDivElement>(null);
+    const loadFormRef = useRef<HTMLDivElement>(null);
+
+
+
+
+    useEffect(() => {
+        if (showNodePanel) {
+          setShowFormPanel(false);
+        }
+      }, [showNodePanel]);
+      
 
     return (
         <div className="app-container">
+
+            {/* Access Buttons */}
+            <div className="access-btn-pnl">
+                <div className="relative group">
+                    <button
+                    className="access-btn"
+                    onClick={() => setShowNodePanel(prev => !prev)}
+                    >
+                        <svg
+                        className="w-5 h-5 text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeWidth="2"
+                            d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                        />
+                        </svg>
+                    </button>
+                    
+                    {/* Tooltip positioned within padded area */}
+                    <div className="tooltip-btn">
+                        Nodes inputs
+                    </div>
+                </div>
+
+
+
+                <div className="relative group">
+                    <button 
+                    className="access-btn"
+                    onClick={() => setShowElementPanel(true)}
+                    >
+                        <svg
+                            className="w-5 h-5 text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeWidth="2"
+                                d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                            />
+                        </svg>
+                    </button>
+
+                    <div className="tooltip-btn">
+                        Elements inputs
+                    </div>
+                    
+                </div>
+                
+
+                <div className="relative group">
+                    <button 
+                    className="access-btn"
+                    onClick={() => setShowSupportPanel((prev) => !prev)}
+                    >
+                        <svg
+                            className="inline w-5 h-5 mr-2 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            >
+                            {/* Vertical wall */}
+                            <line x1="6" y1="4" x2="6" y2="20" stroke="currentColor" strokeWidth="2" />
+
+                            {/* Hatching lines */}
+                            <line x1="6" y1="6" x2="3" y2="3" stroke="currentColor" strokeWidth="2" />
+                            <line x1="6" y1="10" x2="3" y2="7" stroke="currentColor" strokeWidth="2" />
+                            <line x1="6" y1="14" x2="3" y2="11" stroke="currentColor" strokeWidth="2" />
+                            <line x1="6" y1="18" x2="3" y2="15" stroke="currentColor" strokeWidth="2" />
+
+                            {/* Horizontal element */}
+                            <line x1="6" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" />
+                        </svg>
+                    </button>
+                    <div className="tooltip-btn">
+                            Supports inputs
+                    </div>
+
+                </div>
+
+                
+
+
+
+                <div className="relative group">
+                    <button 
+                    className="access-btn"
+                    onClick={() => setShowLoadPanel((prev) => !prev)}
+                    >
+                        <svg
+                            className="w-6 h-6 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 64 32"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            >
+                            
+                            <line x1="5" y1="24" x2="59" y2="24" stroke="maroon" strokeWidth="10" />
+
+                            <line x1="16" y1="2" x2="16" y2="22" />
+                            <line x1="14" y1="20" x2="16" y2="22" />
+                            <line x1="18" y1="20" x2="16" y2="22" />
+
+                            <line x1="32" y1="2" x2="32" y2="22" />
+                            <line x1="30" y1="20" x2="32" y2="22" />
+                            <line x1="34" y1="20" x2="32" y2="22" />
+
+                            <line x1="48" y1="2" x2="48" y2="22" />
+                            <line x1="46" y1="20" x2="48" y2="22" />
+                            <line x1="50" y1="20" x2="48" y2="22" />
+                        </svg>
+                    </button>
+                    <div className="tooltip-btn">
+                        Loads inputs
+                    </div>    
+
+                </div>
+
+                
+
+            </div>
             <div className="fixed top-4 left-4 z-50">
                 <button
                     className="bg-blue-300 text-white text-[10px] px-4 py-2 rounded shadow"
@@ -61,6 +215,13 @@ function App() {
                     {showFormPanel ? "❌ Close Input Panel" : "📋 Open Input Panel"}
                 </button>
             </div>
+
+
+            
+
+
+
+
 
             {showFormPanel && (
                 <Draggable nodeRef={formRef as React.RefObject<HTMLElement>} handle=".form-drag-handle">
@@ -117,6 +278,121 @@ function App() {
                     </div>
                 </Draggable>
             )}
+
+            {showNodePanel && (
+            <Draggable
+                nodeRef={nodeFormRef}
+                handle=".form-drag-handle" // ✅ match the working handle
+            >
+                <motion.div
+                ref={nodeFormRef}
+                className="form-section fixed top-24 left-24 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                >
+                {/* 🟦 Add the same drag handle */}
+                <div className="form-drag-handle bg-blue-600 text-white text-xs p-2 cursor-move mb-2">
+                    Drag Panel ↕
+                </div>
+
+
+                {/* ❌ Close Button */}
+                <button
+                    className="text-sm text-red-600 absolute top-2 right-3"
+                    onClick={() => setShowNodePanel(false)}
+                >
+                    ✕
+                </button>
+
+                {/* ✅ Actual Form */}
+                <NodesForm  
+                    onUpdate={(nodes) => {
+                    setVisualizationNodes(nodes);
+                    }}
+                />
+                </motion.div>
+            </Draggable>
+            )}
+
+
+
+            {showElementPanel && (
+            <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
+                <motion.div
+                ref={elementFormRef}
+                className="form-section fixed top-32 left-32 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                >
+                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
+                    Drag Here
+                </div>
+                <button
+                    className="text-sm text-red-600 absolute top-2 right-3"
+                    onClick={() => setShowElementPanel(false)}
+                >
+                    ✕
+                </button>
+                <ElementsForm
+                    nodes={visualizationNodes}
+                    onUpdate={(elements) => setVisualizationElements(elements)}
+                />
+                </motion.div>
+            </Draggable>
+            )}
+
+
+            {showSupportPanel && (
+            <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
+                <motion.div
+                ref={supportFormRef}
+                className="form-section fixed top-36 left-36 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                >
+                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
+                    Drag Here
+                </div>
+                <button
+                    className="text-sm text-red-600 absolute top-2 right-3"
+                    onClick={() => setShowSupportPanel(false)}
+                >
+                    ✕
+                </button>
+                <SupportsForm onUpdate={setVisualizationSupports} />
+                </motion.div>
+            </Draggable>
+            )}
+
+
+            {showLoadPanel && (
+            <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
+                <motion.div
+                ref={loadFormRef}
+                className="form-section fixed top-44 left-44 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                >
+                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
+                    Drag Here
+                </div>
+                <button
+                    className="text-sm text-red-600 absolute top-2 right-3"
+                    onClick={() => setShowLoadPanel(false)}
+                >
+                    ✕
+                </button>
+                <LoadsForm onUpdate={setVisualizationLoads} />
+                </motion.div>
+            </Draggable>
+            )}
+
+
+
 
             <div className="flex-1">
                 <Scene3D
