@@ -207,77 +207,7 @@ function App() {
                 
 
             </div>
-            <div className="fixed top-4 left-4 z-50">
-                <button
-                    className="bg-blue-300 text-white text-[10px] px-4 py-2 rounded shadow"
-                    onClick={() => setShowFormPanel(!showFormPanel)}
-                >
-                    {showFormPanel ? "❌ Close Input Panel" : "📋 Open Input Panel"}
-                </button>
-            </div>
-
-
-            
-
-
-
-
-
-            {showFormPanel && (
-                <Draggable nodeRef={formRef as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                    <div
-                        ref={formRef}
-                        className="form-section fixed top-20 left-10 z-40 rounded-xl shadow-xl p-4 w-52 max-h-[90vh] overflow-y-auto">
-                        <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
-                            
-                        </div>
-                        <FileUploadForm />
-                        <FileUploadFormExl />
-                        {/* Always show NodesForm first */}
-                        <NodesForm
-                            onUpdate={(nodes, elements) => {
-                                setVisualizationNodes(nodes);
-                                setVisualizationElements(elements);
-
-                                // If any elements were added, reveal the rest of the forms
-                                if (elements.length > 0) {
-                                    setElementsAdded(true);
-                                }
-                            }}
-                        />
-
-                        {/* Only show other forms after elements are added */}
-                        {elementsAdded && (
-                            <>
-                                
-                                <SupportsForm onUpdate={setVisualizationSupports} />
-                                <LoadsForm onUpdate={setVisualizationLoads} />
-                                <button
-                                    className="bg-red-600 text-white rounded text-[10px] px-4 py-2 mt-2 w-full h-6 flex items-center justify-center"
-                                    onClick={async () => {
-                                        if (window.confirm("⚠️ Are you sure you want to delete ALL data?")) {
-                                            try {
-                                                await axios.delete("http://127.0.0.1:8000/api/nodes/");
-                                                setVisualizationNodes([]);
-                                                setVisualizationElements([]);
-                                                setVisualizationSupports([]);
-                                                setVisualizationLoads([]);
-                                                setElementsAdded(false);
-                                                alert("✅ Workspace reset!");
-                                            } catch (error) {
-                                                console.error("❌ Error resetting workspace:", error);
-                                                alert("❌ Failed to reset workspace.");
-                                            }
-                                        }
-                                    }}
-                                >
-                                    🗑 Reset Workspace
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </Draggable>
-            )}
+        
 
             {showNodePanel && (
             <Draggable

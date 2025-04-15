@@ -297,7 +297,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
                 style={{
                     position: "absolute",
                     top: 10,
-                    left: 10,
+                    left: 80,
                     width: 80,
                     height: 80,
                     zIndex: 10,
