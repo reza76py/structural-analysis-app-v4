@@ -233,12 +233,6 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                         {isDeleting ? "Deleting..." : "Delete Nodes"}
                     </button>
 
-                    <button
-                        className="add-element-btn"
-                        onClick={() => setShowElementForm(true)}
-                    >
-                        Add Element
-                    </button>
                 </>
             )}
 

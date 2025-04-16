@@ -11,7 +11,7 @@
 }
 
 .form-section {
-    @apply fixed top-24 left-24 z-50 rounded-xl shadow-xl p-4 w-40 max-h-[90vh] overflow-y-auto
+    @apply z-50 rounded-xl shadow-xl p-4 w-40 max-h-[90vh] overflow-y-auto
 }
 
 /* styles_App.css */

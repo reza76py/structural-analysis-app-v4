@@ -1,6 +1,43 @@
 .loads-form {
-    @apply bg-gray-300 p-4 rounded-lg shadow-md w-full;
+    @apply w-full bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
 }
+
+.form-title {
+    @apply text-white text-center text-[8px] mb-3;
+}
+.input-group select {
+    @apply bg-black/40 border-gray-700 rounded-md p-2 w-full text-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-white;
+}
+.load-inputs input {
+    @apply bg-black/40 border-gray-700 rounded-md p-2 w-full text-[10px] h-5 text-white focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+.load-inputs label {
+    @apply text-white text-[10px] mb-1 block;
+}
+.add-load-btn {
+    @apply bg-blue-800 hover:bg-blue-900 text-white font-semibold rounded-md w-full h-5 transition flex items-center justify-center text-[10px];
+}
+.saved-loads {
+    @apply mt-2 space-y-2 max-h-36 overflow-y-auto text-white;
+}
+.loads-list {
+    @apply space-y-2 text-white;
+}
+.load-item {
+    @apply bg-gray-800 text-white text-[8px] rounded-lg mt-2 p-2 border border-gray-300 shadow-sm;
+}
+.load-values {
+    @apply flex gap-2 mt-1 text-[10px];
+}
+.load-node {
+    @apply font-semibold text-gray-100 text-[9px];
+}
+
+
+
+
+
+
 
 .input-group {
     @apply mb-3 rounded-md;
@@ -18,26 +55,16 @@
     @apply w-full border bg-slate-200 rounded-md p-2 text-[10px] h-5;
 }
 
-.add-load-btn {
-    @apply bg-green-500 text-white font-semibold px-4 py-2 rounded-md w-full mt-3 text-[10px] h-5 flex items-center justify-center;
-}
 
 
-.saved-loads {
-    @apply bg-white p-3 rounded-lg shadow-md mt-4;
-}
 
-.loads-list {
-    @apply space-y-2;
-}
 
-.load-item {
-    @apply border p-3 rounded-md flex flex-col gap-1;
-}
 
-.load-values {
-    @apply flex gap-2 font-semibold text-[10px] text-gray-700;
-}
+
+
+
+
+
 
 .delete-all-btn {
     @apply bg-red-600 text-gray-400 text-[10px] text-center font-semibold px-4 py-2 rounded-md w-full mt-3 h-5 flex items-center justify-center;
@@ -49,5 +76,5 @@
 }
 
 .load-node {
-    @apply p-2 text-[10px] shadow-sm;
+    @apply font-semibold text-gray-100 text-[9px];
 }

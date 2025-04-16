@@ -120,7 +120,6 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
     return (
         <div className="loads-form">
             <h2 className="form-title">Apply Loads</h2>
-            <p className="db-nodes-list">Choose a node to apply a load:</p>
 
             <div className="input-group">
                 <select value={selectedNode} onChange={handleNodeSelection}>

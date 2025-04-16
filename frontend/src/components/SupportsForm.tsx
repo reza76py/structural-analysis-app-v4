@@ -189,7 +189,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
 
             {supports.length > 0 && (
                 <div className="saved-supports">
-                    <h3>Saved Supports:</h3>
+                    <h3 className="text-white text-[10px] font-semibold mb-1">Saved Supports:</h3>
                     <ul className="supports-list">
                         {supports.map((support) => (
                             <li key={support.id} className="support-item">

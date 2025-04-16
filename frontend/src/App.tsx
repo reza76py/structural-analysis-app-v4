@@ -61,6 +61,7 @@ function App() {
     const elementFormRef = useRef<HTMLDivElement>(null);
     const supportFormRef = useRef<HTMLDivElement>(null);
     const loadFormRef = useRef<HTMLDivElement>(null);
+    
 
 
 
@@ -216,9 +217,10 @@ function App() {
             >
                 <motion.div
                 ref={nodeFormRef}
-                className="form-section"
+                className="form-section absolute left-[40px] top-[60px]"
+                style={{ width: '180px' }}
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 10, y: 10, x: 10 }}
                 exit={{ opacity: 0, y: -20 }}
                 >
               
@@ -247,16 +249,15 @@ function App() {
             <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={elementFormRef}
-                className="form-section"
+                className="form-section absolute left-[40px] top-[90px]"
+                style={{ width: '250px' }}
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0, x: 180 }}
                 exit={{ opacity: 0, y: -20 }}
                 >
-                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
-                    Drag Here
-                </div>
+
                 <button
-                    className="text-sm text-red-600 absolute top-2 right-3"
+                    className="text-sm text-red-600 absolute top-1 right-1"
                     onClick={() => setShowElementPanel(false)}
                 >
                     ✕
@@ -274,16 +275,15 @@ function App() {
             <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={supportFormRef}
-                className="form-section"
+                className="form-section bg-black h-250px w-150px absolute left-[480px] top-[120px]"
+                style={{ width: '250px' }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 >
-                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
-                    Drag Here
-                </div>
+
                 <button
-                    className="text-sm text-red-600 absolute top-2 right-3"
+                    className="text-sm text-red-600 absolute top-1 right-1"
                     onClick={() => setShowSupportPanel(false)}
                 >
                     ✕
@@ -298,16 +298,15 @@ function App() {
             <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={loadFormRef}
-                className="form-section"
+                className="form-section  bg-black h-250px w-150px absolute left-[750px] top-[120px]"
+                style={{ width: '250px' }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 >
-                <div className="form-drag-handle bg-blue-400/80 rounded-md text-xs p-2 cursor-move mb-2 backdrop-blur-sm">
-                    Drag Here
-                </div>
+
                 <button
-                    className="text-sm text-red-600 absolute top-2 right-3"
+                    className="text-sm text-red-600 absolute top-1 right-1"
                     onClick={() => setShowLoadPanel(false)}
                 >
                     ✕

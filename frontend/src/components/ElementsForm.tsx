@@ -142,10 +142,22 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         <div className="elements-form-container">
             {showForm && (
                 <>
-                    <h2 className="form-title">Create Elements</h2>
-                    <p className="db-nodes-list">
-                        Select two nodes to form an element.
-                    </p>
+                    <h2 className="form-title flex flex-row">
+                    <svg
+                        className="w-5 h-5 text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeWidth="2"
+                            d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                        />
+                        </svg>
+                    <span className="w-auto">Add Nodes</span>
+                </h2>
 
                     <div className="input-group">
                         <select
@@ -251,7 +263,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
             )}
 
             {dbElements.length > 0 && (
-                <div className="saved-records">
+                <div className="saved-records db-nodes-list">
                     <h3 className="db-nodes-list">Saved Elements:</h3>
                     <ul className="nodes-list">
                         {dbElements.map(
