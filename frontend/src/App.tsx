@@ -17,8 +17,8 @@ import BoundaryConditionsResult from "./components/BoundaryConditionsResult";
 import SolveDisplacement from "./components/SolveDisplacement";
 import ReactionForces from "./components/ReactionForces";
 import InternalAxialForces from "./components/InternalAxialForces";
-import FileUploadForm from "./components/load/FileUploadForm";
-import FileUploadFormExl from "./components/load/FileUploadFormExl";
+import UnifiedFileUpload from "./components/load/UnifiedFileUpload";
+
 import "./styles/styles_App.css";
 import ElementsForm from "./components/ElementsForm";
 
@@ -61,6 +61,19 @@ function App() {
     const elementFormRef = useRef<HTMLDivElement>(null);
     const supportFormRef = useRef<HTMLDivElement>(null);
     const loadFormRef = useRef<HTMLDivElement>(null);
+
+    const [showUploadPanel, setShowUploadPanel] = useState(false);
+    const uploadRef = useRef<HTMLDivElement>(null);
+
+    const refreshNodes = async () => {
+        try {
+          const res = await axios.get("http://127.0.0.1:8000/api/nodes/");
+          setVisualizationNodes(res.data);
+        } catch (err) {
+          console.error("❌ Failed to refresh nodes:", err);
+        }
+      };
+
     
 
 
@@ -79,6 +92,17 @@ function App() {
             {/* Access Buttons */}
             <div className="access-btn-pnl">
                 <div className="relative group">
+                    <button
+                        className="access-btn"
+                        onClick={() => setShowUploadPanel(prev => !prev)}
+                    >
+                        📁
+                    </button>
+                    <div className="tooltip-btn">Upload File</div>
+                </div>
+
+
+                <div className="relative group mb-6">
                     <button
                     className="access-btn"
                     onClick={() => setShowNodePanel(prev => !prev)}
@@ -209,6 +233,28 @@ function App() {
 
             </div>
         
+
+            {showUploadPanel && (
+            <Draggable nodeRef={uploadRef} handle=".form-drag-handle">
+                <motion.div
+                ref={uploadRef}
+                className="form-section absolute left-[40px] top-[30px]"
+                style={{ width: '250px' }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                >
+                <button
+                    className="text-sm text-red-600 absolute top-1 right-1"
+                    onClick={() => setShowUploadPanel(false)}
+                >
+                    ✕
+                </button>
+                <UnifiedFileUpload onUploadSuccess={refreshNodes} />
+                </motion.div>
+            </Draggable>
+            )}
+
 
             {showNodePanel && (
             <Draggable

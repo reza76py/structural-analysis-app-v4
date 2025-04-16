@@ -1,14 +1,21 @@
 .access-btn-pnl {
-    @apply bg-black w-20 flex flex-col relative z-50 overflow-visible pt-24;
+    @apply bg-black w-20 flex flex-col relative z-50 overflow-visible pt-10;
 }
 
 .access-btn {
     @apply bg-gray-500 m-1 rounded-md text-[10px] w-12 h-5 flex items-center justify-center;
   }
 
-.tooltip-btn {
-    @apply absolute bottom-5 left-20 -translate-x-1/2 px-2 py-1 text-[10px] text-white bg-black/80 border border-white rounded-sm shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50;
-}
+  .tooltip-btn {
+    @apply absolute left-full ml-2 top-1/2 -translate-y-1/2 
+           w-24 text-center 
+           px-2 py-1 text-[10px] text-white 
+           bg-black/80 border border-white 
+           rounded-sm shadow-md 
+           opacity-0 group-hover:opacity-100 
+           transition-opacity duration-200 
+           pointer-events-none z-50;
+  }
 
 .form-section {
     @apply z-50 rounded-xl shadow-xl p-4 w-40 max-h-[90vh] overflow-y-auto
