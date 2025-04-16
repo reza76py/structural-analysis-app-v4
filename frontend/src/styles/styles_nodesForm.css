@@ -1,37 +1,38 @@
 
-
 .nodes-form-container {
-    @apply bg-white/20 backdrop-blur-md rounded-xl p-3 shadow-lg border border-white/30 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
+    @apply w-[300px] max-w-full bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
 }
 
+
+
 .form-title {
-    @apply text-slate-500 text-center text-[8px] mb-3;
+    @apply text-white text-center text-[8px] mb-3;
 }
 
 .input-group {
-    @apply border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px];
+    @apply bg-black/40 border-gray-700 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px];
 }
 
 .add-node-btn {
-    @apply bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md w-full h-5 transition flex items-center justify-center;
+    @apply bg-blue-800 hover:bg-blue-900 text-white font-semibold rounded-md w-full h-5 py-2 transition flex items-center justify-center;
 }
 
 .node-item {
-    @apply flex justify-between items-center bg-white p-2 rounded-lg mt-3 h-7 shadow-sm border border-gray-300;
+    @apply flex justify-between items-center bg-gray-800 p-2 rounded-lg mt-3 h-5 shadow-sm border border-gray-300;
 }
 
 .delete-node-btn {
-    @apply bg-red-500 hover:bg-red-600 text-white font-bold rounded-full h-4 w-6 flex items-center justify-center transition shadow-md;
+    @apply bg-red-800 hover:bg-red-600 text-white font-bold rounded-full h-3 w-3 flex items-center justify-center transition shadow-md;
 }
 
 .save-nodes-btn {
-    @apply bg-green-500 text-white px-4 py-2 mt-4 w-full rounded-md hover:bg-green-600 transition h-5 text-[10px];
+    @apply bg-green-500 text-gray-500 px-4 space-y-1 pl-2 mt-2 w-full rounded-md hover:bg-green-600 transition h-5 text-[10px];
 }
 
 .delete-all-btn {
-    @apply bg-red-600 text-white px-1 py-1 mt-4 w-full rounded-md hover:bg-red-700 transition;
+    @apply bg-red-600 hover:bg-red-700 text-white px-1 py-2 font-semibold mt-4 w-full rounded-md hover:bg-red-700 transition;
   }
 
 .db-nodes-list {
-    @apply text-[10px] text-gray-800 mt-2 gap-1 p-1 mt-1;
-}  
+    @apply text-[10px] text-gray-500 mt-2 space-y-1 pl-2 max-h-36 overflow-y-auto;
+}

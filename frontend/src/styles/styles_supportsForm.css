@@ -5,7 +5,7 @@
 
 
 .form-title {
-    @apply text-slate-900 text-center font-bold text-[8px] mb-3;
+    @apply text-white text-center font-semibold text-[10px] p-2;
 }
 
 .input-group select {

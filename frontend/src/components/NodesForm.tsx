@@ -130,7 +130,22 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     return (
         <div className="nodes-form-container">
             {!showElementForm && (
-                <h2 className="form-title">Enter Node Coordinates</h2>
+                <h2 className="form-title flex flex-row">
+                    <svg
+                        className="w-5 h-5 text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeWidth="2"
+                            d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                        />
+                        </svg>
+                    <span className="w-auto">Add Nodes</span>
+                </h2>
                 
             )}
 
@@ -183,7 +198,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
             <ul className="nodes-list">
                 {nodes.map(({ id, x, y, z }) => (
                     <li key={id} className="node-item">
-                        Node {id}: ({x}, {y}, {z})
+                        N: ({x}, {y}, {z})
                         <button
                             className="delete-node-btn"
                             onClick={() => handleDeleteNode(id)}
@@ -202,7 +217,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
             {dbNodes.length > 0 && (
                 <>
-                    <h3 className="db-nodes-list">Saved Nodes:</h3>
+                    <h3 className="db-nodes-list">Saved Nodes: {dbNodes.length}</h3>
                     <ul className="db-nodes-list">
                         {dbNodes.map(({ id, x, y, z }) => (
                             <li key={id} className="db-node-item">
@@ -215,7 +230,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
                         className="delete-all-btn"
                         onClick={handleDeleteAllNodes}
                     >
-                        {isDeleting ? "Deleting..." : "Delete All Nodes"}
+                        {isDeleting ? "Deleting..." : "Delete Nodes"}
                     </button>
 
                     <button

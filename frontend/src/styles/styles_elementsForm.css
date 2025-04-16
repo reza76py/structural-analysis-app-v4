@@ -1,5 +1,5 @@
 .add-element-btn {
-    @apply bg-yellow-600 align-middle text-white text-center h-5 mb-2 px-4 py-2 mt-4 w-full rounded-md hover:bg-yellow-600 transition;
+    @apply bg-yellow-500 hover:bg-yellow-600 text-black font-semibold h-5 w-full rounded-md text-[8px] mt-4;
 }
 
 .elements-form-container {
@@ -53,5 +53,5 @@
 }
 
 .nodes-list {
-    @apply space-y-2 text-gray-300;
+    @apply space-y-2 text-gray-300 text-white;
 }

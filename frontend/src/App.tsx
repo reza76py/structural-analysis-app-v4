@@ -216,20 +216,16 @@ function App() {
             >
                 <motion.div
                 ref={nodeFormRef}
-                className="form-section fixed top-24 left-24 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                className="form-section"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 >
-                {/* 🟦 Add the same drag handle */}
-                <div className="form-drag-handle bg-blue-600 text-white text-xs p-2 cursor-move mb-2">
-                    Drag Panel ↕
-                </div>
-
+              
 
                 {/* ❌ Close Button */}
                 <button
-                    className="text-sm text-red-600 absolute top-2 right-3"
+                    className="text-sm text-red-600 absolute top-1 right-1"
                     onClick={() => setShowNodePanel(false)}
                 >
                     ✕
@@ -251,7 +247,7 @@ function App() {
             <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={elementFormRef}
-                className="form-section fixed top-32 left-32 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                className="form-section"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -278,7 +274,7 @@ function App() {
             <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={supportFormRef}
-                className="form-section fixed top-36 left-36 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                className="form-section"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -302,7 +298,7 @@ function App() {
             <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
                 <motion.div
                 ref={loadFormRef}
-                className="form-section fixed top-44 left-44 z-50 rounded-xl shadow-xl p-4 w-72 max-h-[90vh] overflow-y-auto"
+                className="form-section"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
