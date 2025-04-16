@@ -121,8 +121,10 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         <div className="loads-form">
             <h2 className="form-title">Apply Loads</h2>
 
-            <div className="input-group">
-                <select value={selectedNode} onChange={handleNodeSelection}>
+            <div>
+                <select
+                className="input-group"
+                value={selectedNode} onChange={handleNodeSelection}>
                     <option value="">Select a Node</option>
                     {nodes.map(({ x, y, z }) => (
                         <option key={`${x},${y},${z}`} value={`${x},${y},${z}`}>

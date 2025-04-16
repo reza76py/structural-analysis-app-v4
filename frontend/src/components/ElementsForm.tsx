@@ -159,8 +159,9 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                     <span className="w-auto">Add Nodes</span>
                 </h2>
 
-                    <div className="input-group">
+                    <div>
                         <select
+                            className="input-group"
                             value={selectedNodes.start}
                             onChange={(e) => handleNodeSelection(e, "start")}
                             disabled={loadingState.saving}
@@ -177,8 +178,9 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         </select>
                     </div>
 
-                    <div className="input-group">
+                    <div>
                         <select
+                            className="input-group"
                             value={selectedNodes.end}
                             onChange={(e) => handleNodeSelection(e, "end")}
                             disabled={loadingState.saving}
@@ -195,9 +197,10 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         </select>
                     </div>
 
-                    <div className="input-group">
+                    <div >
                         <label>Area (A):</label>
                         <input
+                            className="input-group"
                             type="number"
                             step="0.01"
                             value={elementProps.area}
@@ -210,9 +213,10 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                         />
                     </div>
 
-                    <div className="input-group">
+                    <div >
                         <label>Young's Modulus (E):</label>
                         <input
+                            className="input-group"
                             type="number"
                             step="0.01"
                             value={elementProps.youngs_modulus}

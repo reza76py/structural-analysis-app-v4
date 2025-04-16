@@ -1,6 +1,6 @@
 
 .nodes-form-container {
-    @apply w-[300px] max-w-full bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
+    @apply w-[300px] max-w-full bg-white/20 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
 }
 
 .form-title {

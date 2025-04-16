@@ -114,8 +114,10 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
     return (
         <div className="supports-form-container">
             <h2 className="form-title">Select Support Location</h2>
-            <div className="input-group">
-                <select value={selectedNode} onChange={handleNodeSelection}>
+            <div>
+                <select
+                className="input-group"
+                value={selectedNode} onChange={handleNodeSelection}>
                     <option value="">Select a Node</option>
                     {nodes.map(({ x, y, z }) => (
                         <option key={`${x},${y},${z}`} value={`${x},${y},${z}`} className="node-option">

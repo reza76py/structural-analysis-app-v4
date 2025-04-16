@@ -1,5 +1,5 @@
 .elements-form-container {
-    @apply w-full bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
+    @apply w-full bg-white/15 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/20 transition duration-300 ease-in-out hover:bg-white/30 text-[8px];
 }
 
 .form-title {
@@ -7,7 +7,7 @@
 }
 
 .input-group {
-    @apply bg-black/40 border-gray-700 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px] mb-1;
+    @apply bg-black/80 border-gray-700 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px] mb-1;
 }
 
 
@@ -41,7 +41,7 @@
 }
 
 
-/* Add these new styles */
+
 .element-item {
     @apply flex flex-col bg-gray-800 text-white text-[8px] rounded-lg mt-2 p-2 border border-gray-300 shadow-sm;
 }
@@ -54,7 +54,7 @@
     @apply text-gray-400 text-[8px] mt-1;
 }
 
-/* Modify existing styles */
+
 .saved-records {
     @apply mt-2 space-y-1 max-h-36 overflow-y-auto text-white;
 }
