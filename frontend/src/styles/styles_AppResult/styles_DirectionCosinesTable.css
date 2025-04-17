@@ -1,0 +1,32 @@
+/* 🔳 Wrapper container for the whole result panel content */
+.direction-cosines-container {
+    @apply p-2 text-white text-[10px];
+  }
+  
+  /* 🧮 Table layout and styling */
+  .direction-cosines-table {
+    @apply table-auto w-full border-collapse border border-white/20 text-[10px];
+  }
+  
+  .direction-cosines-table thead {
+    @apply bg-white/10 text-white;
+  }
+  
+  .direction-cosines-table th,
+  .direction-cosines-table td {
+    @apply border border-white/20 px-2 py-1 text-center;
+  }
+  
+  /* 📋 Draggable panel base styling for results */
+  .form-section-tables {
+    @apply absolute top-[140px] left-[340px] 
+           w-[360px] max-h-[180vh] overflow-y-auto
+           bg-white/15 backdrop-blur-md 
+           rounded-xl shadow-xl border border-white/20
+           p-4 z-50 text-white text-[10px];
+  }
+
+  .form-drag-handle {
+    @apply cursor-move font-bold text-center mb-2 p-2;
+  }
+  

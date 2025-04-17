@@ -1,0 +1,3 @@
+.form-section-list {
+    @apply z-50 rounded-xl shadow-xl p-4 w-40 max-h-[90vh] overflow-y-auto absolute left-[100px] top-[100px] bg-white/10 backdrop-blur-md text-white
+}
