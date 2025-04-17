@@ -2,6 +2,9 @@ import React, { useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { motion } from "framer-motion";
 import "../styles/styles_App.css";
+import { Resizable } from "re-resizable";
+import { createPortal } from 'react-dom';
+
 
 // Import all your components
 import DirectionCosinesTable from "./DirectionCosinesTable";
@@ -38,6 +41,7 @@ const AppResult = () => {
   // State management
   const [showMenu, setShowMenu] = useState(false);
   const [openPanels, setOpenPanels] = useState<string[]>([]);
+  const [maximizedPanels, setMaximizedPanels] = useState<string[]>([]);
   
   // Refs management
   const menuRef = useRef<HTMLDivElement>(null);
@@ -57,6 +61,16 @@ const AppResult = () => {
   const closePanel = (key: string) => {
     setOpenPanels(prev => prev.filter(k => k !== key));
   };
+
+  const toggleMaximize = (key: string) => {
+    setMaximizedPanels(prev =>
+      prev.includes(key)
+        ? prev.filter(k => k !== key)
+        : [...prev, key]
+    );
+  };
+  
+  const isPanelMaximized = (key: string) => maximizedPanels.includes(key);
 
   return (
     <div className="result-container">
@@ -111,43 +125,105 @@ const AppResult = () => {
 
 
       {/* Results Panels */}
-      {resultItems.map(({ key, label, Component }) => 
-        openPanels.includes(key) && (
-          <Draggable
-            key={key}
-            nodeRef={panelRefs.current[key]}
-            handle=".form-drag-handle"
-          >
-            
-            <div ref={panelRefs.current[key]}>
-                <motion.div
-                ref={panelRefs.current[key]}
-                className="form-section-tables"
-                style={{ width: "360px" }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                >
-                <div className="form-drag-handle cursor-move font-bold text-center mb-2 p-2">
-                    {label}
-                </div>
-                <button
-                    className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400 transition-colors"
-                    onClick={() => closePanel(key)}
-                    aria-label={`Close ${label} panel`}
-                >
-                    ✕
-                </button>
-                <div className="p-2 overflow-auto max-h-[70vh]">
-                    <Component />
-                </div>
-                </motion.div>
-            </div>
-            
+        {resultItems.map(({ key, label, Component }) => {
+        const isMaximized = isPanelMaximized(key);
+        
+        return (
+            openPanels.includes(key) && (
+            <React.Fragment key={key}>
+                {/* Maximized Panel - Rendered via Portal */}
+                {isMaximized &&
+                createPortal(
+                    <motion.div
+                    className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/90 z-[9999] p-4 overflow-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    >
+                    <div className="form-drag-handle text-center font-bold mb-2">
+                        {label}
+                    </div>
 
-          </Draggable>
-        )
-      )}
+                    {/* Minimize button */}
+                    <div className="absolute top-4 right-8">
+                        <button
+                        onClick={() => toggleMaximize(key)}
+                        className="text-sm text-white hover:text-gray-300"
+                        >
+                        🗗
+                        </button>
+                    </div>
+
+                    {/* Close button */}
+                    <button
+                        className="text-sm text-red-500 absolute top-4 right-4 hover:text-red-400"
+                        onClick={() => closePanel(key)}
+                    >
+                        ✕
+                    </button>
+
+                    {/* Content */}
+                    <div className="p-2 overflow-auto h-[calc(100vh-4rem)]">
+                        <Component />
+                    </div>
+                    </motion.div>,
+                    document.body
+                )}
+
+                {/* Normal Panel */}
+                {!isMaximized && (
+                <Draggable
+                    key={key}
+                    nodeRef={panelRefs.current[key]}
+                    handle=".form-drag-handle"
+                >
+                    <div ref={panelRefs.current[key]}>
+                    <Resizable
+                        defaultSize={{ width: 360, height: 'auto' }}
+                        minWidth={260}
+                        minHeight={150}
+                        enable={{
+                        bottomRight: true,
+                        bottom: true,
+                        right: true,
+                        }}
+                        style={{ position: "relative" }}
+                    >
+                        <motion.div
+                        className="form-section-tables"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        >
+                        <div className="form-drag-handle">
+                            {label}
+                        </div>
+                        <div className="absolute top-1 right-8">
+                            <button
+                            onClick={() => toggleMaximize(key)}
+                            className="text-sm text-white hover:text-gray-300"
+                            >
+                            🗖
+                            </button>
+                        </div>
+                        <button
+                            className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400"
+                            onClick={() => closePanel(key)}
+                        >
+                            ✕
+                        </button>
+                        <div className="p-2 overflow-auto max-h-[70vh]">
+                            <Component />
+                        </div>
+                        </motion.div>
+                    </Resizable>
+                    </div>
+                </Draggable>
+                )}
+            </React.Fragment>
+            )
+        );
+        })}
+
     </div>
   );
 };

@@ -19,6 +19,8 @@
   
   /* 📋 Draggable panel base styling for results */
   .form-section-tables {
+    resize: both;
+    overflow: auto;
     @apply absolute top-[140px] left-[340px] 
            w-[360px] max-h-[180vh] overflow-y-auto
            bg-white/15 backdrop-blur-md 
@@ -28,5 +30,9 @@
 
   .form-drag-handle {
     @apply cursor-move font-bold text-center mb-2 p-2;
+  }
+
+  .maximized-panel {
+    @apply fixed top-0 left-0 bg-black/90 z-[1000] p-4;
   }
   
