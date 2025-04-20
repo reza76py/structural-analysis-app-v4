@@ -3,8 +3,7 @@ import Draggable from "react-draggable";
 import { motion } from "framer-motion";
 import "../styles/styles_App.css";
 import { Resizable } from "re-resizable";
-import { createPortal } from 'react-dom';
-
+import { createPortal } from "react-dom";
 
 // Import all your components
 import DirectionCosinesTable from "./DirectionCosinesTable";
@@ -24,208 +23,247 @@ import "../styles/styles_AppResult/styles_DirectionCosinesTable.css";
 
 // Define result items configuration
 const resultItems = [
-  { key: "directionCosines", label: "Direction Cosines", Component: DirectionCosinesTable },
-  { key: "transformationMatrix", label: "Transformation Matrix", Component: TransformationMatrixTable },
-  { key: "elementStiffness", label: "Element Stiffness", Component: ElementStiffnessMatrices },
-  { key: "globalStiffness", label: "Global Stiffness", Component: GlobalStiffnessMatrix },
-  { key: "dofIndices", label: "DOF Indices", Component: DofIndicesTable },
-  { key: "dofMapping", label: "DOF Mapping", Component: ElementDOFMapping },
-  { key: "assembledMatrix", label: "Assembled Matrix", Component: AssembledMatrix },
-  { key: "boundaryConditions", label: "Boundary Conditions", Component: BoundaryConditionsResult },
-  { key: "displacements", label: "Displacements", Component: SolveDisplacement },
-  { key: "reactions", label: "Reactions", Component: ReactionForces },
-  { key: "axialForces", label: "Axial Forces", Component: InternalAxialForces },
+    {
+        key: "directionCosines",
+        label: "Direction Cosines",
+        Component: DirectionCosinesTable,
+    },
+    {
+        key: "transformationMatrix",
+        label: "Transformation Matrix",
+        Component: TransformationMatrixTable,
+    },
+    {
+        key: "elementStiffness",
+        label: "Element Stiffness",
+        Component: ElementStiffnessMatrices,
+    },
+    {
+        key: "globalStiffness",
+        label: "Global Stiffness",
+        Component: GlobalStiffnessMatrix,
+    },
+    { key: "dofIndices", label: "DOF Indices", Component: DofIndicesTable },
+    { key: "dofMapping", label: "DOF Mapping", Component: ElementDOFMapping },
+    {
+        key: "assembledMatrix",
+        label: "Assembled Matrix",
+        Component: AssembledMatrix,
+    },
+    {
+        key: "boundaryConditions",
+        label: "Boundary Conditions",
+        Component: BoundaryConditionsResult,
+    },
+    {
+        key: "displacements",
+        label: "Displacements",
+        Component: SolveDisplacement,
+    },
+    { key: "reactions", label: "Reactions", Component: ReactionForces },
+    {
+        key: "axialForces",
+        label: "Axial Forces",
+        Component: InternalAxialForces,
+    },
 ] as const;
 
 const AppResult = () => {
-  // State management
-  const [showMenu, setShowMenu] = useState(false);
-  const [openPanels, setOpenPanels] = useState<string[]>([]);
-  const [maximizedPanels, setMaximizedPanels] = useState<string[]>([]);
-  
-  // Refs management
-  const menuRef = useRef<HTMLDivElement>(null);
-  const panelRefs = useRef<Record<string, React.RefObject<HTMLDivElement>>>({});
+    // State management
+    const [showMenu, setShowMenu] = useState(false);
+    const [openPanels, setOpenPanels] = useState<string[]>([]);
+    const [maximizedPanels, setMaximizedPanels] = useState<string[]>([]);
 
-  // Panel control functions
-  const openPanel = (key: string) => {
-    if (!openPanels.includes(key)) {
-      // Initialize ref if it doesn't exist
-      if (!panelRefs.current[key]) {
-        panelRefs.current[key] = React.createRef<HTMLDivElement>();
-      }
-      setOpenPanels(prev => [...prev, key]);
-    }
-  };
-
-  const closePanel = (key: string) => {
-    setOpenPanels(prev => prev.filter(k => k !== key));
-  };
-
-  const toggleMaximize = (key: string) => {
-    setMaximizedPanels(prev =>
-      prev.includes(key)
-        ? prev.filter(k => k !== key)
-        : [...prev, key]
+    // Refs management
+    const menuRef = useRef<HTMLDivElement>(null);
+    const panelRefs = useRef<Record<string, React.RefObject<HTMLDivElement>>>(
+        {},
     );
-  };
-  
-  const isPanelMaximized = (key: string) => maximizedPanels.includes(key);
 
-  return (
-    <div className="result-container">
-      {/* Toggle Button */}
-      <div className="relative group mb-4">
-        <button
-          className="access-btn"
-          onClick={() => setShowMenu(prev => !prev)}
-          aria-label="Toggle results menu"
-        >
-          📊
-        </button>
-        <div className="tooltip-btn">Results</div>
-      </div>
+    // Panel control functions
+    const openPanel = (key: string) => {
+        if (!openPanels.includes(key)) {
+            // Initialize ref if it doesn't exist
+            if (!panelRefs.current[key]) {
+                panelRefs.current[key] = React.createRef<HTMLDivElement>();
+            }
+            setOpenPanels((prev) => [...prev, key]);
+        }
+    };
 
-      {/* Results List Menu */}
-      {showMenu && (
-        <Draggable nodeRef={menuRef} handle=".form-drag-handle">
-            <div ref={menuRef}>
-            <motion.div
-                className="form-section-list"
-                style={{ width: "200px" }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-            >
-                <div className="form-drag-handle">
-                📋 Results List
-                </div>
-                <ul className="space-y-1 text-[10px] p-2">
-                {resultItems.map((item) => (
-                    <li
-                    key={item.key}
-                    className="bg-black/40 hover:bg-white/20 p-1 rounded cursor-pointer transition-colors"
-                    onClick={() => openPanel(item.key)}
-                    >
-                    {item.label}
-                    </li>
-                ))}
-                </ul>
+    const closePanel = (key: string) => {
+        setOpenPanels((prev) => prev.filter((k) => k !== key));
+    };
+
+    const toggleMaximize = (key: string) => {
+        setMaximizedPanels((prev) =>
+            prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
+        );
+    };
+
+    const isPanelMaximized = (key: string) => maximizedPanels.includes(key);
+
+    return (
+        <div className="result-container">
+            {/* Toggle Button */}
+            <div className="relative group mb-4">
                 <button
-                className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400 transition-colors"
-                onClick={() => setShowMenu(false)}
-                aria-label="Close menu"
+                    className="access-btn"
+                    onClick={() => setShowMenu((prev) => !prev)}
+                    aria-label="Toggle results menu"
                 >
-                ✕
+                    📊
                 </button>
-            </motion.div>
+                <div className="tooltip-btn">Results</div>
             </div>
-        </Draggable>
-        )}
 
-
-      {/* Results Panels */}
-        {resultItems.map(({ key, label, Component }) => {
-        const isMaximized = isPanelMaximized(key);
-        
-        return (
-            openPanels.includes(key) && (
-            <React.Fragment key={key}>
-                {/* Maximized Panel - Rendered via Portal */}
-                {isMaximized &&
-                createPortal(
-                    <motion.div
-                    className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/90 z-[9999] p-4 overflow-auto"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    >
-                    <div className="form-drag-handle text-center font-bold mb-2">
-                        {label}
-                    </div>
-
-                    {/* Minimize button */}
-                    <div className="absolute top-4 right-8">
-                        <button
-                        onClick={() => toggleMaximize(key)}
-                        className="text-sm text-white hover:text-gray-300"
-                        >
-                        🗗
-                        </button>
-                    </div>
-
-                    {/* Close button */}
-                    <button
-                        className="text-sm text-red-500 absolute top-4 right-4 hover:text-red-400"
-                        onClick={() => closePanel(key)}
-                    >
-                        ✕
-                    </button>
-
-                    {/* Content */}
-                    <div className="p-2 overflow-auto h-[calc(100vh-4rem)]">
-                        <Component />
-                    </div>
-                    </motion.div>,
-                    document.body
-                )}
-
-                {/* Normal Panel */}
-                {!isMaximized && (
-                <Draggable
-                    key={key}
-                    nodeRef={panelRefs.current[key]}
-                    handle=".form-drag-handle"
-                >
-                    <div ref={panelRefs.current[key]}>
-                    <Resizable
-                        defaultSize={{ width: 360, height: 'auto' }}
-                        minWidth={260}
-                        minHeight={150}
-                        enable={{
-                        bottomRight: true,
-                        bottom: true,
-                        right: true,
-                        }}
-                        style={{ position: "relative" }}
-                    >
+            {/* Results List Menu */}
+            {showMenu && (
+                <Draggable nodeRef={menuRef} handle=".form-drag-handle">
+                    <div ref={menuRef}>
                         <motion.div
-                        className="form-section-tables"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                            className="form-section-list"
+                            style={{ width: "200px" }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
                         >
-                        <div className="form-drag-handle">
-                            {label}
-                        </div>
-                        <div className="absolute top-1 right-8">
+                            <div className="form-drag-handle">
+                                📋 Results List
+                            </div>
+                            <ul className="space-y-1 text-[10px] p-2">
+                                {resultItems.map((item) => (
+                                    <li
+                                        key={item.key}
+                                        className="bg-black/40 hover:bg-white/20 p-1 rounded cursor-pointer transition-colors"
+                                        onClick={() => openPanel(item.key)}
+                                    >
+                                        {item.label}
+                                    </li>
+                                ))}
+                            </ul>
                             <button
-                            onClick={() => toggleMaximize(key)}
-                            className="text-sm text-white hover:text-gray-300"
+                                className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400 transition-colors"
+                                onClick={() => setShowMenu(false)}
+                                aria-label="Close menu"
                             >
-                            🗖
+                                ✕
                             </button>
-                        </div>
-                        <button
-                            className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400"
-                            onClick={() => closePanel(key)}
-                        >
-                            ✕
-                        </button>
-                        <div className="p-2 overflow-auto max-h-[70vh]">
-                            <Component />
-                        </div>
                         </motion.div>
-                    </Resizable>
                     </div>
                 </Draggable>
-                )}
-            </React.Fragment>
-            )
-        );
-        })}
+            )}
 
-    </div>
-  );
+            {/* Results Panels */}
+            {resultItems.map(({ key, label, Component }) => {
+                const isMaximized = isPanelMaximized(key);
+
+                return (
+                    openPanels.includes(key) && (
+                        <React.Fragment key={key}>
+                            {/* Maximized Panel - Rendered via Portal */}
+                            {isMaximized &&
+                                createPortal(
+                                    <motion.div
+                                        className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-black/90 z-[9999] p-4 overflow-auto"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                    >
+                                        <div className="form-drag-handle text-center font-bold mb-2">
+                                            {label}
+                                        </div>
+
+                                        {/* Minimize button */}
+                                        <div className="absolute top-4 right-8">
+                                            <button
+                                                onClick={() =>
+                                                    toggleMaximize(key)
+                                                }
+                                                className="text-sm text-white hover:text-gray-300"
+                                            >
+                                                🗗
+                                            </button>
+                                        </div>
+
+                                        {/* Close button */}
+                                        <button
+                                            className="text-sm text-red-500 absolute top-4 right-4 hover:text-red-400"
+                                            onClick={() => closePanel(key)}
+                                        >
+                                            ✕
+                                        </button>
+
+                                        {/* Content */}
+                                        <div className="p-2 overflow-auto h-[calc(100vh-4rem)]">
+                                            <Component />
+                                        </div>
+                                    </motion.div>,
+                                    document.body,
+                                )}
+
+                            {/* Normal Panel */}
+                            {!isMaximized && (
+                                <Draggable
+                                    key={key}
+                                    nodeRef={panelRefs.current[key]}
+                                    handle=".form-drag-handle"
+                                >
+                                    <div ref={panelRefs.current[key]}>
+                                        <Resizable
+                                            defaultSize={{
+                                                width: 360,
+                                                height: "auto",
+                                            }}
+                                            minWidth={260}
+                                            minHeight={150}
+                                            enable={{
+                                                bottomRight: true,
+                                                bottom: true,
+                                                right: true,
+                                            }}
+                                            style={{ position: "relative" }}
+                                        >
+                                            <motion.div
+                                                className="form-section-tables"
+                                                initial={{ opacity: 0, y: -20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -20 }}
+                                            >
+                                                <div className="form-drag-handle">
+                                                    {label}
+                                                </div>
+                                                <div className="absolute top-1 right-8">
+                                                    <button
+                                                        onClick={() =>
+                                                            toggleMaximize(key)
+                                                        }
+                                                        className="text-sm text-white hover:text-gray-300"
+                                                    >
+                                                        🗖
+                                                    </button>
+                                                </div>
+                                                <button
+                                                    className="text-sm text-red-500 absolute top-1 right-1 hover:text-red-400"
+                                                    onClick={() =>
+                                                        closePanel(key)
+                                                    }
+                                                >
+                                                    ✕
+                                                </button>
+                                                <div className="p-2 overflow-auto max-h-[70vh]">
+                                                    <Component />
+                                                </div>
+                                            </motion.div>
+                                        </Resizable>
+                                    </div>
+                                </Draggable>
+                            )}
+                        </React.Fragment>
+                    )
+                );
+            })}
+        </div>
+    );
 };
 
 export default AppResult;

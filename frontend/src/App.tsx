@@ -25,7 +25,8 @@ import ElementsForm from "./components/ElementsForm";
 
 function App() {
     const [showDirectionCosines, setShowDirectionCosines] = useState(false);
-    const [showTransformationMatrix, setShowTransformationMatrix] = useState(false);
+    const [showTransformationMatrix, setShowTransformationMatrix] =
+        useState(false);
     const [showElementStiffness, setShowElementStiffness] = useState(false);
     const [showGlobalStiffness, setShowGlobalStiffness] = useState(false);
     const [showDOFIndices, setShowDOFIndices] = useState(false);
@@ -35,21 +36,29 @@ function App() {
     const [showDisplacements, setShowDisplacements] = useState(false);
     const [showReactions, setShowReactions] = useState(false);
     const [showAxialForces, setShowAxialForces] = useState(false);
-    const [visualizationNodes, setVisualizationNodes] = useState<{ x: number; y: number; z: number }[]>([]);
-    const [visualizationElements, setVisualizationElements] = useState<{ startNode: string; endNode: string }[]>([]);
-    const [visualizationSupports, setVisualizationSupports] = useState<{
-        id: number;
-        node_coordinate: string;
-        x_restrained: boolean;
-        y_restrained: boolean;
-        z_restrained: boolean;
-    }[]>([]);
-    const [visualizationLoads, setVisualizationLoads] = useState<{
-        node_coordinate: string;
-        Fx: number;
-        Fy: number;
-        Fz: number;
-    }[]>([]);
+    const [visualizationNodes, setVisualizationNodes] = useState<
+        { x: number; y: number; z: number }[]
+    >([]);
+    const [visualizationElements, setVisualizationElements] = useState<
+        { startNode: string; endNode: string }[]
+    >([]);
+    const [visualizationSupports, setVisualizationSupports] = useState<
+        {
+            id: number;
+            node_coordinate: string;
+            x_restrained: boolean;
+            y_restrained: boolean;
+            z_restrained: boolean;
+        }[]
+    >([]);
+    const [visualizationLoads, setVisualizationLoads] = useState<
+        {
+            node_coordinate: string;
+            Fx: number;
+            Fy: number;
+            Fz: number;
+        }[]
+    >([]);
     const [showFormPanel, setShowFormPanel] = useState(false);
     const [elementsAdded, setElementsAdded] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
@@ -68,34 +77,27 @@ function App() {
 
     const refreshNodes = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:8000/api/nodes/");
-          setVisualizationNodes(res.data);
+            const res = await axios.get("http://127.0.0.1:8000/api/nodes/");
+            setVisualizationNodes(res.data);
         } catch (err) {
-          console.error("❌ Failed to refresh nodes:", err);
+            console.error("❌ Failed to refresh nodes:", err);
         }
-      };
-
-    
-
-
-
+    };
 
     useEffect(() => {
         if (showNodePanel) {
-          setShowFormPanel(false);
+            setShowFormPanel(false);
         }
-      }, [showNodePanel]);
-      
+    }, [showNodePanel]);
 
     return (
         <div className="app-container">
-
             {/* Access Buttons */}
             <div className="access-btn-pnl">
                 <div className="relative group">
                     <button
                         className="access-btn"
-                        onClick={() => setShowUploadPanel(prev => !prev)}
+                        onClick={() => setShowUploadPanel((prev) => !prev)}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -104,50 +106,45 @@ function App() {
                             strokeWidth={1.5}
                             stroke="orange"
                             className="w-4 h-4"
-                            >
+                        >
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 d="M3 6.75V6a2.25 2.25 0 012.25-2.25h4.879a2.25 2.25 0 011.591.659l1.621 1.621a2.25 2.25 0 001.591.659H18.75A2.25 2.25 0 0121 9.375v8.25A2.25 2.25 0 0118.75 19.5H5.25A2.25 2.25 0 013 17.625V6.75z"
                             />
-                            </svg>
+                        </svg>
                     </button>
                     <div className="tooltip-btn">Upload File</div>
                 </div>
 
-
                 <div className="relative group mb-6">
                     <button
-                    className="access-btn"
-                    onClick={() => setShowNodePanel(prev => !prev)}
+                        className="access-btn"
+                        onClick={() => setShowNodePanel((prev) => !prev)}
                     >
                         <svg
-                        className="w-5 h-5 text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
+                            className="w-5 h-5 text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
                         >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeWidth="2"
-                            d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                        />
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeWidth="2"
+                                d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                            />
                         </svg>
                     </button>
-                    
+
                     {/* Tooltip positioned within padded area */}
-                    <div className="tooltip-btn">
-                        Nodes inputs
-                    </div>
+                    <div className="tooltip-btn">Nodes inputs</div>
                 </div>
 
-
-
                 <div className="relative group">
-                    <button 
-                    className="access-btn"
-                    onClick={() => setShowElementPanel(true)}
+                    <button
+                        className="access-btn"
+                        onClick={() => setShowElementPanel(true)}
                     >
                         <svg
                             className="w-5 h-5 text-white"
@@ -165,17 +162,13 @@ function App() {
                         </svg>
                     </button>
 
-                    <div className="tooltip-btn">
-                        Elements inputs
-                    </div>
-                    
+                    <div className="tooltip-btn">Elements inputs</div>
                 </div>
-                
 
                 <div className="relative group">
-                    <button 
-                    className="access-btn"
-                    onClick={() => setShowSupportPanel((prev) => !prev)}
+                    <button
+                        className="access-btn"
+                        onClick={() => setShowSupportPanel((prev) => !prev)}
                     >
                         <svg
                             className="inline w-5 h-5 mr-2 text-white"
@@ -184,34 +177,69 @@ function App() {
                             fill="none"
                             stroke="currentColor"
                             strokeWidth={2}
-                            >
+                        >
                             {/* Vertical wall */}
-                            <line x1="6" y1="4" x2="6" y2="20" stroke="currentColor" strokeWidth="2" />
+                            <line
+                                x1="6"
+                                y1="4"
+                                x2="6"
+                                y2="20"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
 
                             {/* Hatching lines */}
-                            <line x1="6" y1="6" x2="3" y2="3" stroke="currentColor" strokeWidth="2" />
-                            <line x1="6" y1="10" x2="3" y2="7" stroke="currentColor" strokeWidth="2" />
-                            <line x1="6" y1="14" x2="3" y2="11" stroke="currentColor" strokeWidth="2" />
-                            <line x1="6" y1="18" x2="3" y2="15" stroke="currentColor" strokeWidth="2" />
+                            <line
+                                x1="6"
+                                y1="6"
+                                x2="3"
+                                y2="3"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
+                            <line
+                                x1="6"
+                                y1="10"
+                                x2="3"
+                                y2="7"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
+                            <line
+                                x1="6"
+                                y1="14"
+                                x2="3"
+                                y2="11"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
+                            <line
+                                x1="6"
+                                y1="18"
+                                x2="3"
+                                y2="15"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
 
                             {/* Horizontal element */}
-                            <line x1="6" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" />
+                            <line
+                                x1="6"
+                                y1="12"
+                                x2="20"
+                                y2="12"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            />
                         </svg>
                     </button>
-                    <div className="tooltip-btn">
-                            Supports inputs
-                    </div>
-
+                    <div className="tooltip-btn">Supports inputs</div>
                 </div>
 
-                
-
-
-
                 <div className="relative group">
-                    <button 
-                    className="access-btn"
-                    onClick={() => setShowLoadPanel((prev) => !prev)}
+                    <button
+                        className="access-btn"
+                        onClick={() => setShowLoadPanel((prev) => !prev)}
                     >
                         <svg
                             className="w-6 h-6 text-white"
@@ -220,9 +248,15 @@ function App() {
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
-                            >
-                            
-                            <line x1="5" y1="24" x2="59" y2="24" stroke="maroon" strokeWidth="10" />
+                        >
+                            <line
+                                x1="5"
+                                y1="24"
+                                x2="59"
+                                y2="24"
+                                stroke="maroon"
+                                strokeWidth="10"
+                            />
 
                             <line x1="16" y1="2" x2="16" y2="22" />
                             <line x1="14" y1="20" x2="16" y2="22" />
@@ -237,142 +271,119 @@ function App() {
                             <line x1="50" y1="20" x2="48" y2="22" />
                         </svg>
                     </button>
-                    <div className="tooltip-btn">
-                        Loads inputs
-                    </div>    
-
+                    <div className="tooltip-btn">Loads inputs</div>
                 </div>
 
                 <div className="access-btn-pnl">
                     ...
                     <AppResult />
                 </div>
-
-
-                
-
             </div>
-        
 
             {showUploadPanel && (
                 <Draggable nodeRef={uploadRef} handle=".form-drag-handle">
                     <div ref={uploadRef}>
-                    <motion.div
-                        className="form-section absolute left-[40px] top-[30px]"
-                        style={{ width: "250px" }}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                    >
-                        {/* ✅ Drag Handle */}
-                        <div className="form-drag-handle">
-                        📁 Upload File
-                        </div>
-
-                        {/* ❌ Close Button */}
-                        <button
-                        className="text-sm text-red-600 absolute top-1 right-1"
-                        onClick={() => setShowUploadPanel(false)}
+                        <motion.div
+                            className="form-section absolute left-[40px] top-[30px]"
+                            style={{ width: "250px" }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
                         >
-                        ✕
-                        </button>
+                            {/* ✅ Drag Handle */}
+                            <div className="form-drag-handle">
+                                📁 Upload File
+                            </div>
 
-                        {/* 📤 Upload Component */}
-                        <UnifiedFileUpload onUploadSuccess={refreshNodes} />
-                    </motion.div>
+                            {/* ❌ Close Button */}
+                            <button
+                                className="text-sm text-red-600 absolute top-1 right-1"
+                                onClick={() => setShowUploadPanel(false)}
+                            >
+                                ✕
+                            </button>
+
+                            {/* 📤 Upload Component */}
+                            <UnifiedFileUpload onUploadSuccess={refreshNodes} />
+                        </motion.div>
                     </div>
                 </Draggable>
-                )}
+            )}
 
-
-
-                {showNodePanel && (
-                <Draggable
-                    nodeRef={nodeFormRef}
-                    handle=".form-drag-handle"
-                >
+            {showNodePanel && (
+                <Draggable nodeRef={nodeFormRef} handle=".form-drag-handle">
                     <div ref={nodeFormRef}>
-                    <motion.div
-                        className="form-section absolute left-[40px] top-[60px]"
-                        style={{ width: "180px" }}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                    >
-                        {/* ✅ Drag Handle */}
-                        <div className="form-drag-handle">
-                        🧱 Node Input
-                        </div>
-
-                        {/* ❌ Close Button */}
-                        <button
-                        className="text-sm text-red-600 absolute top-1 right-1"
-                        onClick={() => setShowNodePanel(false)}
+                        <motion.div
+                            className="form-section absolute left-[40px] top-[60px]"
+                            style={{ width: "180px" }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
                         >
-                        ✕
-                        </button>
+                            {/* ✅ Drag Handle */}
+                            <div className="form-drag-handle">
+                                🧱 Node Input
+                            </div>
 
-                        {/* ✅ Actual Form */}
-                        <NodesForm
-                        onUpdate={(nodes) => {
-                            setVisualizationNodes(nodes);
-                        }}
-                        />
-                    </motion.div>
+                            {/* ❌ Close Button */}
+                            <button
+                                className="text-sm text-red-600 absolute top-1 right-1"
+                                onClick={() => setShowNodePanel(false)}
+                            >
+                                ✕
+                            </button>
+
+                            {/* ✅ Actual Form */}
+                            <NodesForm
+                                onUpdate={(nodes) => {
+                                    setVisualizationNodes(nodes);
+                                }}
+                            />
+                        </motion.div>
                     </div>
                 </Draggable>
-                )}
-
-
-
+            )}
 
             {showElementPanel && (
-            <Draggable
-                nodeRef={elementFormRef}
-                handle=".form-drag-handle"
-            >
-                <div ref={elementFormRef}>
-                <motion.div
-                    className="form-section absolute left-[40px] top-[90px]"
-                    style={{ width: "250px" }}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0, x: 180 }}
-                    exit={{ opacity: 0, y: -20 }}
-                >
-                    {/* ✅ Drag Handle */}
-                    <div className="form-drag-handle">
-                    🧩 Element Input
+                <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
+                    <div ref={elementFormRef}>
+                        <motion.div
+                            className="form-section absolute left-[40px] top-[90px]"
+                            style={{ width: "250px" }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0, x: 180 }}
+                            exit={{ opacity: 0, y: -20 }}
+                        >
+                            {/* ✅ Drag Handle */}
+                            <div className="form-drag-handle">
+                                🧩 Element Input
+                            </div>
+
+                            {/* ❌ Close Button */}
+                            <button
+                                className="text-sm text-red-600 absolute top-1 right-1"
+                                onClick={() => setShowElementPanel(false)}
+                            >
+                                ✕
+                            </button>
+
+                            {/* 🧱 Actual Form */}
+                            <ElementsForm
+                                nodes={visualizationNodes}
+                                onUpdate={(elements) =>
+                                    setVisualizationElements(elements)
+                                }
+                            />
+                        </motion.div>
                     </div>
-
-                    {/* ❌ Close Button */}
-                    <button
-                    className="text-sm text-red-600 absolute top-1 right-1"
-                    onClick={() => setShowElementPanel(false)}
-                    >
-                    ✕
-                    </button>
-
-                    {/* 🧱 Actual Form */}
-                    <ElementsForm
-                    nodes={visualizationNodes}
-                    onUpdate={(elements) => setVisualizationElements(elements)}
-                    />
-                </motion.div>
-                </div>
-            </Draggable>
+                </Draggable>
             )}
-    
-    
-    
-                {/* Support Panel */}
 
+            {/* Support Panel */}
 
-                {showSupportPanel && (
-                    <Draggable
-                        nodeRef={supportFormRef}
-                        handle=".form-drag-handle"
-                    >
-                        <div ref={supportFormRef}>
+            {showSupportPanel && (
+                <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
+                    <div ref={supportFormRef}>
                         <motion.div
                             className="form-section absolute left-[480px] top-[120px]"
                             style={{ width: "250px" }}
@@ -382,32 +393,27 @@ function App() {
                         >
                             {/* ✅ Drag Handle */}
                             <div className="form-drag-handle">
-                            🧷 Support Input
+                                🧷 Support Input
                             </div>
 
                             {/* ❌ Close Button */}
                             <button
-                            className="text-sm text-red-600 absolute top-1 right-1"
-                            onClick={() => setShowSupportPanel(false)}
+                                className="text-sm text-red-600 absolute top-1 right-1"
+                                onClick={() => setShowSupportPanel(false)}
                             >
-                            ✕
+                                ✕
                             </button>
 
                             {/* 🧱 Support Form */}
                             <SupportsForm onUpdate={setVisualizationSupports} />
                         </motion.div>
-                        </div>
-                    </Draggable>
-                    )}
+                    </div>
+                </Draggable>
+            )}
 
-
-
-                    {showLoadPanel && (
-                    <Draggable
-                        nodeRef={loadFormRef}
-                        handle=".form-drag-handle"
-                    >
-                        <div ref={loadFormRef}>
+            {showLoadPanel && (
+                <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
+                    <div ref={loadFormRef}>
                         <motion.div
                             className="form-section absolute left-[750px] top-[120px]"
                             style={{ width: "250px" }}
@@ -417,27 +423,23 @@ function App() {
                         >
                             {/* ✅ Drag Handle */}
                             <div className="form-drag-handle">
-                            🎯 Load Input
+                                🎯 Load Input
                             </div>
 
                             {/* ❌ Close Button */}
                             <button
-                            className="text-sm text-red-600 absolute top-1 right-1"
-                            onClick={() => setShowLoadPanel(false)}
+                                className="text-sm text-red-600 absolute top-1 right-1"
+                                onClick={() => setShowLoadPanel(false)}
                             >
-                            ✕
+                                ✕
                             </button>
 
                             {/* 💼 Loads Form */}
                             <LoadsForm onUpdate={setVisualizationLoads} />
                         </motion.div>
-                        </div>
-                    </Draggable>
-                    )}
-
-
-
-
+                    </div>
+                </Draggable>
+            )}
 
             <div className="flex-1">
                 <Scene3D
@@ -447,32 +449,134 @@ function App() {
                     loads={visualizationLoads}
                 />
 
-                <div className="btn-tables-wrap">
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowDirectionCosines((prev) => !prev)}>Direction Cosines</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowTransformationMatrix((prev) => !prev)}>Transformation Matrix</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowElementStiffness((prev) => !prev)}>Element Stiffness</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowGlobalStiffness((prev) => !prev)}>Global Stiffness</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowDOFIndices((prev) => !prev)}>DOF Indices</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowDOFMapping((prev) => !prev)}>DOF Mapping</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowAssembledMatrix((prev) => !prev)}>Assembled Matrix</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowBoundaryConditions((prev) => !prev)}>Boundary Conditions</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowDisplacements((prev) => !prev)}>Displacements</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowReactions((prev) => !prev)}>Reactions</button>
-                    <button className="btn-tables hover:drop-shadow-glow" onClick={() => setShowAxialForces((prev) => !prev)}>Axial Forces</button>
-                </div>
+                {/* <div className="btn-tables-wrap">
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowDirectionCosines((prev) => !prev)}
+                    >
+                        Direction Cosines
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() =>
+                            setShowTransformationMatrix((prev) => !prev)
+                        }
+                    >
+                        Transformation Matrix
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowElementStiffness((prev) => !prev)}
+                    >
+                        Element Stiffness
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowGlobalStiffness((prev) => !prev)}
+                    >
+                        Global Stiffness
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowDOFIndices((prev) => !prev)}
+                    >
+                        DOF Indices
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowDOFMapping((prev) => !prev)}
+                    >
+                        DOF Mapping
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowAssembledMatrix((prev) => !prev)}
+                    >
+                        Assembled Matrix
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() =>
+                            setShowBoundaryConditions((prev) => !prev)
+                        }
+                    >
+                        Boundary Conditions
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowDisplacements((prev) => !prev)}
+                    >
+                        Displacements
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowReactions((prev) => !prev)}
+                    >
+                        Reactions
+                    </button>
+                    <button
+                        className="btn-tables hover:drop-shadow-glow"
+                        onClick={() => setShowAxialForces((prev) => !prev)}
+                    >
+                        Axial Forces
+                    </button>
+                </div> */}
 
-                {showDirectionCosines && <div className="directionCosinesTable"><DirectionCosinesTable /></div>}
-                {showTransformationMatrix && <div className="transformationMatrixTable"><TransformationMatrixTable /></div>}
-                {showElementStiffness && <div className="elementStiffnessMatrices"><ElementStiffnessMatrices /></div>}
-                {showGlobalStiffness && <div className="globalStiffnessMatrix"><GlobalStiffnessMatrix /></div>}
-                {showDOFIndices && <div className="dofIndicesTable"><DofIndicesTable /></div>}
-                {showDOFMapping && <div className="elementDOFMapping"><ElementDOFMapping /></div>}
-                {showAssembledMatrix && <div className="assembledMatrix"><AssembledMatrix /></div>}
-                {showBoundaryConditions && <div className="boundaryConditionsResult"><BoundaryConditionsResult /></div>}
-                {showDisplacements && <div className="solveDisplacement"><SolveDisplacement /></div>}
-                {showReactions && <div className="reactionForces"><ReactionForces /></div>}
-                {showAxialForces && <div className="internalAxialForces"><InternalAxialForces /></div>}
-                
+                {/* {showDirectionCosines && (
+                    <div className="directionCosinesTable">
+                        <DirectionCosinesTable />
+                    </div>
+                )}
+                {showTransformationMatrix && (
+                    <div className="transformationMatrixTable">
+                        <TransformationMatrixTable />
+                    </div>
+                )}
+                {showElementStiffness && (
+                    <div className="elementStiffnessMatrices">
+                        <ElementStiffnessMatrices />
+                    </div>
+                )}
+                {showGlobalStiffness && (
+                    <div className="globalStiffnessMatrix">
+                        <GlobalStiffnessMatrix />
+                    </div>
+                )}
+                {showDOFIndices && (
+                    <div className="dofIndicesTable">
+                        <DofIndicesTable />
+                    </div>
+                )}
+                {showDOFMapping && (
+                    <div className="elementDOFMapping">
+                        <ElementDOFMapping />
+                    </div>
+                )}
+                {showAssembledMatrix && (
+                    <div className="assembledMatrix">
+                        <AssembledMatrix />
+                    </div>
+                )}
+                {showBoundaryConditions && (
+                    <div className="boundaryConditionsResult">
+                        <BoundaryConditionsResult />
+                    </div>
+                )}
+                {showDisplacements && (
+                    <div className="solveDisplacement">
+                        <SolveDisplacement />
+                    </div>
+                )}
+                {showReactions && (
+                    <div className="reactionForces">
+                        <ReactionForces />
+                    </div>
+                )}
+                {showAxialForces && (
+                    <div className="internalAxialForces">
+                        <InternalAxialForces />
+                    </div>
+                )} */}
             </div>
         </div>
     );

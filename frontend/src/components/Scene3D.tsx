@@ -256,7 +256,7 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
     // ✅ UI Render
     return (
-        <div className="scene3d-wrapper bg-black">
+        <div className="scene3d-wrapper fixed top-0 left-0 w-screen h-screen z-0">
             {/* 🧭 Controls */}
             <div className="btn-wrapper">
                 <button
