@@ -256,36 +256,79 @@ const Scene3D = ({ nodes, elements, supports, loads }: Scene3DProps) => {
 
     // ✅ UI Render
     return (
-        <div className="scene3d-wrapper fixed top-0 left-0 w-screen h-screen z-0">
-            {/* 🧭 Controls */}
+        <div className="scene3d-wrapper fixed top-0 left-0 w-screen h-screen z-0 overflow-hidden">
             <div className="btn-wrapper">
-                <button
-                    onClick={() => setShowAxes((p) => !p)}
-                    className="toggle-axes-btn"
-                >
-                    {showAxes ? "Hide Axes" : "Show Axes"}
-                </button>
-                <button
-                    onClick={() => setShowGrid((p) => !p)}
-                    className="toggle-grid-btn"
-                >
-                    {showGrid ? "Hide Grid" : "Show Grid"}
-                </button>
-                <button onClick={() => setViewMode("xy")} className="view-btn">
-                    XY View
-                </button>
-                <button onClick={() => setViewMode("xz")} className="view-btn">
-                    XZ View
-                </button>
-                <button onClick={() => setViewMode("yz")} className="view-btn">
-                    YZ View
-                </button>
-                <button
-                    onClick={() => setViewMode("default")}
-                    className="view-btn"
-                >
-                    3D View
-                </button>
+                <div className="relative group">
+                    <button
+                        onClick={() => setShowAxes((p) => !p)}
+                        className="btn-scene"
+                    >
+                        🧭
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <button
+                        onClick={() => setShowGrid((p) => !p)}
+                        className="btn-scene"
+                    >
+                        📐
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <button
+                        onClick={() => setViewMode("xy")}
+                        className="btn-scene"
+                    >
+                        XY
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <button
+                        onClick={() => setViewMode("xz")}
+                        className="btn-scene"
+                    >
+                        XZ
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <button
+                        onClick={() => setViewMode("yz")}
+                        className="btn-scene"
+                    >
+                        YZ
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <button
+                        onClick={() => setViewMode("default")}
+                        className="btn-scene"
+                    >
+                        3D
+                    </button>
+                    <div className="tooltip-scene">
+                        {showAxes ? "Hide Axes" : "Show Axes"}
+                    </div>
+                </div>
             </div>
 
             {/* 🖼️ Scene container */}

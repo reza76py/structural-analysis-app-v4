@@ -1,5 +1,5 @@
 .access-btn-pnl {
-    @apply bg-black w-20 flex flex-col relative z-50 overflow-visible pt-10;
+    @apply bg-black w-14 flex flex-col relative z-50 overflow-visible pt-10;
 }
 
 .access-btn {
@@ -23,7 +23,7 @@
 
 /* styles_App.css */
 .app-container {
-    @apply h-screen w-screen backdrop-blur-xl flex flex-col lg:flex-row bg-blue-300 overflow-visible;
+    @apply h-screen w-screen overflow-hidden relative;
 }
 
 .text-lg {
