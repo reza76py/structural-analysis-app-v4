@@ -312,70 +312,72 @@ function App() {
 
             {showNodePanel && (
                 <Draggable nodeRef={nodeFormRef} handle=".form-drag-handle">
-                    <div ref={nodeFormRef}>
-                        <motion.div
-                            className="form-section absolute left-[40px] top-[60px]"
-                            style={{ width: "180px" }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
+                    
+                    <motion.div
+                        ref={nodeFormRef}
+                        className="form-section absolute left-[40px] top-[60px]"
+                        style={{ width: "180px" }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                    >
+                        {/* ✅ Drag Handle */}
+                        <div className="form-drag-handle">
+                            🧱 Node Input
+                        </div>
+
+                        {/* ❌ Close Button */}
+                        <button
+                            className="text-sm text-red-600 absolute top-1 right-1"
+                            onClick={() => setShowNodePanel(false)}
                         >
-                            {/* ✅ Drag Handle */}
-                            <div className="form-drag-handle">
-                                🧱 Node Input
-                            </div>
+                            ✕
+                        </button>
 
-                            {/* ❌ Close Button */}
-                            <button
-                                className="text-sm text-red-600 absolute top-1 right-1"
-                                onClick={() => setShowNodePanel(false)}
-                            >
-                                ✕
-                            </button>
-
-                            {/* ✅ Actual Form */}
-                            <NodesForm
-                                onUpdate={(nodes) => {
-                                    setVisualizationNodes(nodes);
-                                }}
-                            />
-                        </motion.div>
-                    </div>
+                        {/* ✅ Actual Form */}
+                        <NodesForm
+                            onUpdate={(nodes) => {
+                                setVisualizationNodes(nodes);
+                            }}
+                        />
+                    </motion.div>
+                    
                 </Draggable>
             )}
 
             {showElementPanel && (
                 <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
-                    <div ref={elementFormRef}>
-                        <motion.div
-                            className="form-section absolute left-[40px] top-[90px]"
-                            style={{ width: "250px" }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0, x: 180 }}
-                            exit={{ opacity: 0, y: -20 }}
+                    
+                    <motion.div
+                        ref={elementFormRef}
+                        className="form-section absolute left-[40px] top-[90px]"
+                        style={{ width: "250px" }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0, x: 180 }}
+                        exit={{ opacity: 0, y: -20 }}
+                    >
+                        {/* ✅ Drag Handle */}
+                        <div className="form-drag-handle">
+                            🧩 Element Input
+                        </div>
+
+                        {/* ❌ Close Button */}
+                        <button
+                            className="text-sm text-red-600 absolute top-1 right-1"
+                            onClick={() => setShowElementPanel(false)}
                         >
-                            {/* ✅ Drag Handle */}
-                            <div className="form-drag-handle">
-                                🧩 Element Input
-                            </div>
+                            ✕
+                        </button>
 
-                            {/* ❌ Close Button */}
-                            <button
-                                className="text-sm text-red-600 absolute top-1 right-1"
-                                onClick={() => setShowElementPanel(false)}
-                            >
-                                ✕
-                            </button>
-
-                            {/* 🧱 Actual Form */}
-                            <ElementsForm
-                                nodes={visualizationNodes}
-                                onUpdate={(elements) =>
-                                    setVisualizationElements(elements)
-                                }
-                            />
-                        </motion.div>
-                    </div>
+                        {/* 🧱 Actual Form */}
+                        <ElementsForm
+                            nodes={visualizationNodes}
+                            onUpdate={(elements) =>
+                                setVisualizationElements(elements)
+                            }
+                        />
+                    </motion.div>
+                   
                 </Draggable>
             )}
 
@@ -383,8 +385,9 @@ function App() {
 
             {showSupportPanel && (
                 <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
-                    <div ref={supportFormRef}>
+                   
                         <motion.div
+                            ref={supportFormRef}
                             className="form-section absolute left-[480px] top-[120px]"
                             style={{ width: "250px" }}
                             initial={{ opacity: 0, y: -20 }}
@@ -407,14 +410,15 @@ function App() {
                             {/* 🧱 Support Form */}
                             <SupportsForm onUpdate={setVisualizationSupports} />
                         </motion.div>
-                    </div>
+                    
                 </Draggable>
             )}
 
             {showLoadPanel && (
                 <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
-                    <div ref={loadFormRef}>
+                    
                         <motion.div
+                            ref={loadFormRef}
                             className="form-section absolute left-[750px] top-[120px]"
                             style={{ width: "250px" }}
                             initial={{ opacity: 0, y: -20 }}
@@ -437,7 +441,7 @@ function App() {
                             {/* 💼 Loads Form */}
                             <LoadsForm onUpdate={setVisualizationLoads} />
                         </motion.div>
-                    </div>
+                    
                 </Draggable>
             )}
 
@@ -449,7 +453,7 @@ function App() {
                     loads={visualizationLoads}
                 />
 
-                {/* <div className="btn-tables-wrap">
+                <div className="btn-tables-wrap">
                     <button
                         className="btn-tables hover:drop-shadow-glow"
                         onClick={() => setShowDirectionCosines((prev) => !prev)}
@@ -520,9 +524,9 @@ function App() {
                     >
                         Axial Forces
                     </button>
-                </div> */}
+                </div>
 
-                {/* {showDirectionCosines && (
+                {showDirectionCosines && (
                     <div className="directionCosinesTable">
                         <DirectionCosinesTable />
                     </div>
@@ -576,7 +580,7 @@ function App() {
                     <div className="internalAxialForces">
                         <InternalAxialForces />
                     </div>
-                )} */}
+                )}
             </div>
         </div>
     );
