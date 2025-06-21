@@ -1,3 +1,4 @@
+import React from "react";
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,9 +20,13 @@ const InternalAxialForces: FC = () => {
                     "http://127.0.0.1:8000/api/internal-axial-forces/",
                 );
                 setForces(response.data.internal_axial_forces);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 setError("❌ Failed to fetch internal forces.");
-                console.error(err);
+                if (err instanceof Error) {
+                    console.error("Error:", err.message);
+                } else {
+                    console.error("Unknown error:", err);
+                }
             }
         };
 

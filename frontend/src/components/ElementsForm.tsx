@@ -214,7 +214,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
                     </div>
 
                     <div >
-                        <label>Young's Modulus (E):</label>
+                        <label>Youngs Modulus (E):</label>
                         <input
                             className="input-group"
                             type="number"

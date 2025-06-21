@@ -5,11 +5,11 @@ import axios from "axios";
 import "../../styles/styles_upload_files.css";
 
 
-type Props = {
-    onUploadSuccess?: () => void;
-  };
+// type Props = {
+//     onUploadSuccess?: () => void;
+//   };
 
-const UnifiedFileUpload = ({ onUploadSuccess }: Props) => {
+const UnifiedFileUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<string>("");
 
@@ -57,9 +57,13 @@ const UnifiedFileUpload = ({ onUploadSuccess }: Props) => {
         });
   
         setUploadStatus(`✅ ${response.data.message}`);
-    } catch (error: any) {
-      console.error("Upload error:", error);
-      setUploadStatus("❌ Upload failed.");
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error("Upload error:", error.message);
+        } else {
+            console.error("Upload error:", error);
+        }
+        setUploadStatus("❌ Upload failed.");
     }
   };
 

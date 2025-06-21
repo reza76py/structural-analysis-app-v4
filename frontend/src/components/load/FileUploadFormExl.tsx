@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 import "../../styles/styles_upload_files.css";
@@ -50,9 +51,13 @@ const FileUploadForm = () => {
       });
 
       setUploadStatus(`✅ ${response.data.message}`);
-    } catch (error: any) {
-      console.error("Upload error:", error);
-      setUploadStatus("❌ Upload failed.");
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error("Upload error:", error.message);
+        } else {
+            console.error("Upload error:", error);
+        }
+        setUploadStatus("❌ Upload failed.");
     }
   };
 

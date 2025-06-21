@@ -71,7 +71,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
             // Update visualization with current elements
             onUpdate(
-                response.data.map((n) => ({ x: n.x, y: n.y, z: n.z })),
+                response.data.map((n: NodeType) => ({ x: n.x, y: n.y, z: n.z })),
                 [], // Initialize with empty elements
             );
         } catch (error) {
