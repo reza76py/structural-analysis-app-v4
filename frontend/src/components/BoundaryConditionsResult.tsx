@@ -36,7 +36,7 @@ const BoundaryConditionsResult: FC = () => {
                     {K.map((row, i) => (
                         <tr key={i}>
                             {row.map((value, j) => (
-                                <td key={j}>{value.toFixed(2)}</td>
+                                <td className="bg-slate-600" key={j}>{value.toFixed(2)}</td>
                             ))}
                         </tr>
                     ))}
@@ -48,8 +48,8 @@ const BoundaryConditionsResult: FC = () => {
                 <tbody>
                     {P.map((val, i) => (
                         <tr key={i}>
-                            <td>DOF {i + 1}</td>
-                            <td>{val.toFixed(2)}</td>
+                            <td className="bg-slate-600">DOF {i + 1}</td>
+                            <td className="bg-slate-600">{val.toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>

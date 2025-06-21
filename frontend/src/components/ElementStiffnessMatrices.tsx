@@ -33,16 +33,16 @@ const ElementStiffnessMatrices: FC = () => {
         <div className="transformation-matrix-section">
             <h2 className="form-title">Local Stiffness Matrices per Element</h2>
             {matrices.map(({ id, startNode, endNode, k_local }) => (
-                <div key={id} className="matrix-block">
+                <div key={id} className="matrix-block bg-gray-600">
                     <h4>
                         Element {id} ({startNode} → {endNode})
                     </h4>
-                    <table className="matrix-table">
-                        <tbody>
+                    <table className="matrix-table bg-gray-600">
+                        <tbody className="text-sm bg-gray-600">
                             {k_local.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
+                                <tr className="bg-gray-600" key={rowIndex}>
                                     {row.map((val, colIndex) => (
-                                        <td key={colIndex}>{val.toFixed(3)}</td>
+                                        <td className="bg-gray-600" key={colIndex}>{val.toFixed(3)}</td>
                                     ))}
                                 </tr>
                             ))}

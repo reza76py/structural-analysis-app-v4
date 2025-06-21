@@ -61,12 +61,12 @@ const ElementDOFMappingTable: FC = () => {
                 <tbody>
                     {data.map(({ id, startNode, endNode, dof_indices }) => (
                         <tr key={id}>
-                            <td>{id}</td>
-                            <td>
+                            <td className="bg-gray-600">{id}</td>
+                            <td className="bg-gray-600">
                                 {getNodeNumber(startNode)} →{" "}
                                 {getNodeNumber(endNode)}
                             </td>
-                            <td>
+                            <td className="bg-gray-600">
                                 [{dof_indices.map((dof) => dof + 1).join(", ")}]
                             </td>
                         </tr>

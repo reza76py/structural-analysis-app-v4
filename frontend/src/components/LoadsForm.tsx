@@ -291,9 +291,9 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
                                     Node: {node_coordinate}
                                 </span>
                                 <div className="load-values">
-                                    <span>Fx: {Fx} N</span>
-                                    <span>Fy: {Fy} N</span>
-                                    <span>Fz: {Fz} N</span>
+                                    <span>Fx: {Fx.toFixed(1)} N</span>
+                                    <span>Fy: {Fy.toFixed(1)} N</span>
+                                    <span>Fz: {Fz.toFixed(1)} N</span>
                                 </div>
                             </li>
                         ))}

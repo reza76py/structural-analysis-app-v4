@@ -37,7 +37,7 @@ const ElementGlobalStiffnessMatrices = () => {
 
     return (
         <div className="matrix-display">
-            <h2 className="form-title">
+            <h2 className="form-title bg-gray-600">
                 Element-wise Global Stiffness Matrices
             </h2>
             {loading ? (
@@ -48,12 +48,12 @@ const ElementGlobalStiffnessMatrices = () => {
                         <h4>
                             Element {el.id}: ({el.startNode} → {el.endNode})
                         </h4>
-                        <table className="matrix-table">
+                        <table className="matrix-table bg-gray-600">
                             <tbody>
                                 {el.k_global.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
+                                    <tr className="bg-gray-600" key={rowIndex}>
                                         {row.map((val, colIndex) => (
-                                            <td key={colIndex}>
+                                            <td className="bg-gray-600" key={colIndex}>
                                                 {val.toFixed(2)}
                                             </td>
                                         ))}

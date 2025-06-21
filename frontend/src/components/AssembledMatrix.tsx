@@ -27,9 +27,9 @@ const AssembledMatrix: FC = () => {
             <table className="matrix-table">
                 <tbody>
                     {matrix.map((row, i) => (
-                        <tr key={i}>
+                        <tr className="bg-slate-600" key={i}>
                             {row.map((val, j) => (
-                                <td key={j}>{val.toFixed(2)}</td>
+                                <td className="bg-slate-600" key={j}>{val.toFixed(2)}</td>
                             ))}
                         </tr>
                     ))}

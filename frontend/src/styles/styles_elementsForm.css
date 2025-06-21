@@ -7,7 +7,7 @@
 }
 
 .input-group {
-    @apply bg-black/80 border-gray-700 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px] mb-1;
+    @apply bg-white/15 border-gray-700 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 h-5 text-[10px] mb-1;
 }
 
 

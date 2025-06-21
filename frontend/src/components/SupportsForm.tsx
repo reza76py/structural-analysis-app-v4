@@ -181,14 +181,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                 {loading ? "Saving..." : "Add Support"}
             </button>
 
-            <button
-                className="delete-btn"
-                onClick={handleDeleteAllSupports}
-                disabled={loading}
-            >
-                
-                {loading ? "Deleting..." : "Delete All Supports"}
-            </button>
+            
 
             {supports.length > 0 && (
                 <div className="saved-supports">
@@ -225,6 +218,15 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                     </ul>
                 </div>
             )}
+
+            <button
+                className="delete-all-btn"
+                onClick={handleDeleteAllSupports}
+                disabled={loading}
+            >
+                
+                {loading ? "Deleting..." : "Delete All Supports"}
+            </button>
         </div>
     );
 };

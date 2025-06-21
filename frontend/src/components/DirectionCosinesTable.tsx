@@ -37,13 +37,13 @@ const DirectionCosinesTable = () => {
             <table className="table-auto w-full border-collapse border border-gray-300 text-sm">
                 <thead className="bg-gray-200">
                     <tr>
-                        <th className="border px-2 py-1">ID</th>
-                        <th className="border px-2 py-1">Start Node</th>
-                        <th className="border px-2 py-1">End Node</th>
-                        <th className="border px-2 py-1">cosX</th>
-                        <th className="border px-2 py-1">cosY</th>
-                        <th className="border px-2 py-1">cosZ</th>
-                        <th className="border px-2 py-1">Length</th>
+                        <th className="border px-2 py-1 bg-gray-700">ID</th>
+                        <th className="border px-2 py-1 bg-gray-700">Start Node</th>
+                        <th className="border px-2 py-1 bg-gray-700">End Node</th>
+                        <th className="border px-2 py-1 bg-gray-700">cosX</th>
+                        <th className="border px-2 py-1 bg-gray-700">cosY</th>
+                        <th className="border px-2 py-1 bg-gray-700">cosZ</th>
+                        <th className="border px-2 py-1 bg-gray-700">Length</th>
                     </tr>
                 </thead>
                 <tbody>

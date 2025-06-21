@@ -81,10 +81,10 @@ const DofIndicesTable: FC = () => {
                 <tbody>
                     {rows.map(({ dof, node, direction, P_value }) => (
                         <tr key={dof}>
-                            <td>{dof}</td>
-                            <td>{node}</td>
-                            <td>{direction}</td>
-                            <td>{P_value.toFixed(3)}</td>
+                            <td className="bg-slate-700">{dof}</td>
+                            <td className="bg-slate-700">{node}</td>
+                            <td className="bg-slate-700">{direction}</td>
+                            <td className="bg-slate-700">{P_value.toFixed(3)}</td>
                         </tr>
                     ))}
                 </tbody>
