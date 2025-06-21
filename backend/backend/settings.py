@@ -45,8 +45,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # MUST be first!
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'space_truss_db_v4',
         'USER': 'space_truss_db_v4_user',
         'PASSWORD': '9348',
-        'HOST': 'host.docker.internal',
+        'HOST': 'localhost',  # Use 'localhost' for local development
         'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',  # Ensures support for all characters (e.g., emojis, special characters)
@@ -137,5 +137,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Allow React frontend (if using Vite)
+    "http://localhost:5173",  # React default
+    "http://localhost:5174", # Allow React frontend (if using Vite)
 ]

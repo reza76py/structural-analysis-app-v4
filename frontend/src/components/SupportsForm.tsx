@@ -186,6 +186,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
                 onClick={handleDeleteAllSupports}
                 disabled={loading}
             >
+                
                 {loading ? "Deleting..." : "Delete All Supports"}
             </button>
 
