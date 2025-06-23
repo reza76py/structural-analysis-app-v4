@@ -81,12 +81,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'NAME': 'space_truss_db_v4',
+        # 'USER': 'space_truss_db_v4_user',
+        # 'PASSWORD': '9348',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'space_truss_db_v4',
-        'USER': 'space_truss_db_v4_user',
-        'PASSWORD': '9348',
-        'HOST': 'localhost',  # Use 'localhost' for local development
-        'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME', 'space_truss_db_v4'),
+        'USER': os.environ.get('DB_USER', 'space_truss_db_v4_user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '9348'),
+        'HOST': os.environ.get('DB_HOST', 'structural-db'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+
         'OPTIONS': {
             'charset': 'utf8mb4',  # Ensures support for all characters (e.g., emojis, special characters)
         },

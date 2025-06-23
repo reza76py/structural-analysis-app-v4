@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: structural-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: space_truss_db_v4
+      MYSQL_USER: space_truss_db_v4_user
+      MYSQL_PASSWORD: 9348
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    container_name: structural-backend
+    command: >
+      sh -c "./wait-for-it.sh db:3306 --timeout=60 --strict --
+      python manage.py migrate &&
+      gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: space_truss_db_v4
+      DB_USER: space_truss_db_v4_user
+      DB_PASSWORD: 9348
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: structural-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

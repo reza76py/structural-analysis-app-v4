@@ -1,0 +1,33 @@
+# Byte-compiled / cache
+**/__pycache__/
+*.py[cod]
+*.pyo
+
+# Migrations (optional if regenerating)
+*/migrations/
+!*/migrations/__init__.py
+
+# OS / IDE junk
+.DS_Store
+.vscode/
+.idea/
+
+# Python virtual environments
+venv/
+env/
+
+# Logs / outputs
+*.log
+
+# Tests (if not needed in container)
+**/tests.py
+**/test_*.py
+
+# Git
+.git
+.gitignore
+
+# Docker / local only
+Dockerfile.backend
+Dockerfile.frontend
+.dockerignore

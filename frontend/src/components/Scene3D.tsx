@@ -9,7 +9,7 @@ import Scene3DNodes from "./Scene3DNodes";
 import Scene3DElements from "./Scene3DElements";
 import Scene3DSupports from "./Scene3DSupports";
 import Scene3DLoads from "./Scene3DLoads";
-import "../styles/styles_scene3d.css";
+import "../styles/styles_scene3D.css";
 
 // ✅ Props type
 type Scene3DProps = {
