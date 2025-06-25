@@ -1,27 +1,63 @@
-# Node dependencies
-node_modules
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+# # Node dependencies
+# node_modules
+# npm-debug.log
+# yarn-debug.log
+# yarn-error.log
 
-# Vite output and cache
-dist
-.vite
+# # Vite output and cache
+# dist
+# .vite
+
+# # IDE/editor files
+# .vscode
+# .idea
+
+# # OS/system files
+# .DS_Store
+# Thumbs.db
+
+# # Optional: Exclude unused asset and load input subfolders (if unused in build)
+# src/assets/react.svg
+# public/vite.svg
+# src/components/load/  # Remove this line if you're actively using `load/` components
+
+# # Git and environment files
+# .git
+# .gitignore
+# .env
+
+
+
+
+
+
+
+
+
+# Node dependencies
+node_modules/
+*.log
+
+# Build output
+dist/
+.vite/
 
 # IDE/editor files
-.vscode
-.idea
+.vscode/
+.idea/
 
-# OS/system files
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Optional: Exclude unused asset and load input subfolders (if unused in build)
-src/assets/react.svg
-public/vite.svg
-src/components/load/  # Remove this line if you're actively using `load/` components
-
-# Git and environment files
+# Git
 .git
 .gitignore
+
+# Environment
 .env
+
+# Optional: unused assets or folders
+src/assets/react.svg
+public/vite.svg
+src/components/load/
