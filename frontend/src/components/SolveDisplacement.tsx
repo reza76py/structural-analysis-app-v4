@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import axios from "axios";
 
 type Displacement = {
@@ -21,8 +21,14 @@ const SolveDisplacement: FC = () => {
                 "http://127.0.0.1:8000/api/solve-displacement/",
             );
             setDisplacements(response.data.displacement_vector);
-        } catch (err: any) {
-            setError("❌ Error solving displacements.");
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setError(`❌ Error solving displacements: ${err.message}`);
+            } else if (err instanceof Error) {
+                setError(`❌ Error solving displacements: ${err.message}`);
+            } else {
+                setError("❌ Error solving displacements.");
+            }
             console.error(err);
         } finally {
             setLoading(false);

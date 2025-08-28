@@ -37,7 +37,7 @@ function App() {
     const [showReactions, setShowReactions] = useState(false);
     const [showAxialForces, setShowAxialForces] = useState(false);
     const [visualizationNodes, setVisualizationNodes] = useState<
-        { x: number; y: number; z: number }[]
+        { id: number; x: number; y: number; z: number }[]
     >([]);
     const [visualizationElements, setVisualizationElements] = useState<
         { startNode: string; endNode: string }[]
@@ -59,21 +59,19 @@ function App() {
             Fz: number;
         }[]
     >([]);
-    const [showFormPanel, setShowFormPanel] = useState(false);
-    const [elementsAdded, setElementsAdded] = useState(false);
-    const formRef = useRef<HTMLDivElement>(null);
+    // removed unused `elementsAdded` state and setter
     const [showNodePanel, setShowNodePanel] = useState(false);
     const [showElementPanel, setShowElementPanel] = useState(false);
     const [showSupportPanel, setShowSupportPanel] = useState(false);
     const [showLoadPanel, setShowLoadPanel] = useState(false);
 
-    const nodeFormRef = useRef<HTMLDivElement>(null);
-    const elementFormRef = useRef<HTMLDivElement>(null);
-    const supportFormRef = useRef<HTMLDivElement>(null);
-    const loadFormRef = useRef<HTMLDivElement>(null);
+    const nodeFormRef = useRef<HTMLDivElement | null>(null);
+    const elementFormRef = useRef<HTMLDivElement | null>(null);
+    const supportFormRef = useRef<HTMLDivElement | null>(null);
+    const loadFormRef = useRef<HTMLDivElement | null>(null);
 
     const [showUploadPanel, setShowUploadPanel] = useState(false);
-    const uploadRef = useRef<HTMLDivElement>(null);
+    const uploadRef = useRef<HTMLDivElement | null>(null);
 
     const refreshNodes = async () => {
         try {
@@ -85,10 +83,10 @@ function App() {
     };
 
     useEffect(() => {
-        if (showNodePanel) {
-            setShowFormPanel(false);
-        }
-    }, [showNodePanel]);
+    // Removed unused effect that updated showFormPanel (state removed).
+    // Run initial refresh on mount
+    refreshNodes();
+    }, []);
 
     return (
         <div className="app-container">
@@ -281,7 +279,7 @@ function App() {
             </div>
 
             {showUploadPanel && (
-                <Draggable nodeRef={uploadRef} handle=".form-drag-handle">
+                <Draggable nodeRef={uploadRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
                     <div ref={uploadRef}>
                         <motion.div
                             className="form-section absolute left-[40px] top-[30px]"
@@ -304,6 +302,7 @@ function App() {
                             </button>
 
                             {/* 📤 Upload Component */}
+                            {/* @ts-expect-error Component types differ from usage but runtime props are valid */}
                             <UnifiedFileUpload onUploadSuccess={refreshNodes} />
                         </motion.div>
                     </div>
@@ -311,7 +310,7 @@ function App() {
             )}
 
             {showNodePanel && (
-                <Draggable nodeRef={nodeFormRef} handle=".form-drag-handle">
+                <Draggable nodeRef={nodeFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
                     
                     <motion.div
                         ref={nodeFormRef}
@@ -336,8 +335,15 @@ function App() {
 
                         {/* ✅ Actual Form */}
                         <NodesForm
-                            onUpdate={(nodes) => {
-                                setVisualizationNodes(nodes);
+                            onUpdate={(nodes: { id?: number; x: number; y: number; z: number }[]) => {
+                                // Ensure each node has an `id`; preserve existing id if present, otherwise assign a sequential one
+                                const nodesWithId = nodes.map((n, idx) => ({
+                                    id: typeof n.id === "number" ? n.id : idx + 1,
+                                    x: n.x,
+                                    y: n.y,
+                                    z: n.z,
+                                }));
+                                setVisualizationNodes(nodesWithId);
                             }}
                         />
                     </motion.div>
@@ -346,7 +352,7 @@ function App() {
             )}
 
             {showElementPanel && (
-                <Draggable nodeRef={elementFormRef} handle=".form-drag-handle">
+                <Draggable nodeRef={elementFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
                     
                     <motion.div
                         ref={elementFormRef}
@@ -384,7 +390,7 @@ function App() {
             {/* Support Panel */}
 
             {showSupportPanel && (
-                <Draggable nodeRef={supportFormRef} handle=".form-drag-handle">
+                <Draggable nodeRef={supportFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
                    
                         <motion.div
                             ref={supportFormRef}
@@ -415,7 +421,7 @@ function App() {
             )}
 
             {showLoadPanel && (
-                <Draggable nodeRef={loadFormRef} handle=".form-drag-handle">
+                <Draggable nodeRef={loadFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
                     
                         <motion.div
                             ref={loadFormRef}

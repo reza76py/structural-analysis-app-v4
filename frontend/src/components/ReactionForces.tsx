@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import axios from "axios";
 
 const ReactionForces: FC = () => {
@@ -16,9 +16,17 @@ const ReactionForces: FC = () => {
                 "http://127.0.0.1:8000/api/solve-reaction/",
             );
             setReactions(response.data.reaction_forces);
-        } catch (err: any) {
-            console.error(err);
-            setError("❌ Failed to fetch reaction forces.");
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.error(err);
+                setError(err.message || "❌ Failed to fetch reaction forces.");
+            } else if (err instanceof Error) {
+                console.error(err);
+                setError(err.message);
+            } else {
+                console.error(err);
+                setError("❌ Failed to fetch reaction forces.");
+            }
         } finally {
             setLoading(false);
         }

@@ -1,11 +1,11 @@
 // ✅ React + Three.js imports
 import React from "react";
 import { useEffect, useRef, useState } from "react";
+// @ts-expect-error: three/examples/jsm controls don't always ship type declarations in all setups
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
 
 // ✅ Component imports
-import Scene3DNodes from "./Scene3DNodes";
 import Scene3DElements from "./Scene3DElements";
 import Scene3DSupports from "./Scene3DSupports";
 import Scene3DLoads from "./Scene3DLoads";
@@ -32,12 +32,13 @@ type Scene3DProps = {
 
 type NodeInfo = { x: number; y: number; z: number };
 
-function isNodeInfo(obj: any): obj is NodeInfo {
+function isNodeInfo(obj: unknown): obj is NodeInfo {
+    if (typeof obj !== "object" || obj === null) return false;
+    const o = obj as Record<string, unknown>;
     return (
-        obj &&
-        typeof obj.x === "number" &&
-        typeof obj.y === "number" &&
-        typeof obj.z === "number"
+        typeof o.x === "number" &&
+        typeof o.y === "number" &&
+        typeof o.z === "number"
     );
 }
 
