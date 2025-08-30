@@ -1,6 +1,6 @@
 """
 Django settings for backend project
-Works for local Docker and production (Coolify) via environment variables.
+Works for production (Coolify) and local Docker via environment variables.
 """
 
 from pathlib import Path
@@ -13,21 +13,20 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-secret-change-me")
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
 # Comma-separated list in prod, safe defaults for local
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
+ALLOWED_HOSTS = [
+    host.strip() for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "localhost,127.0.0.1"
+    ).split(",") if host.strip()
+]
 
-# Frontend origin(s) for CORS/CSRF (comma-separated). Default to local Vite ports.
-FRONTEND_ORIGINS = os.environ.get(
-    "FRONTEND_ORIGINS",
-    "http://localhost:5173,http://localhost:5174"
-).split(",")
-
-# If you know your prod domains, set these envs in Coolify:
-#   ALLOWED_HOSTS=api.spacetruss.rezteche.com
-#   FRONTEND_ORIGINS=https://spacetruss.rezteche.com
-#   (And optionally add https://api.spacetruss.rezteche.com to CSRF too.)
+# Frontend origin(s) for CORS/CSRF (comma-separated).
+FRONTEND_ORIGINS = [
+    origin.strip() for origin in os.environ.get(
+        "FRONTEND_ORIGINS",
+        "http://localhost:5173,http://localhost:5174"
+    ).split(",") if origin.strip()
+]
 
 # --- Installed apps / middleware ---------------------------------------------
 INSTALLED_APPS = [
@@ -44,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # keep first
+    "corsheaders.middleware.CorsMiddleware",  # must stay first
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -80,7 +79,7 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME", "space_truss_db_v4"),
         "USER": os.environ.get("DB_USER", "space_truss_db_v4_user"),
         "PASSWORD": os.environ.get("DB_PASSWORD", "9348"),
-        "HOST": os.environ.get("DB_HOST", "structural-db"),  # docker-compose service name locally / internal hostname in Coolify
+        "HOST": os.environ.get("DB_HOST", "structural-db"),
         "PORT": os.environ.get("DB_PORT", "3306"),
         "OPTIONS": {"charset": "utf8mb4"},
     }
@@ -111,14 +110,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # --- CORS / CSRF --------------------------------------------------------------
 CORS_ALLOWED_ORIGINS = FRONTEND_ORIGINS
 
-# For HTTPS domains; extend from env if provided
+# Extra trusted origins for CSRF (e.g., production HTTPS domains)
 _csrf_extra = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 CSRF_TRUSTED_ORIGINS = [
-    *[o.replace("http://", "https://") for o in FRONTEND_ORIGINS if o.startswith("https://")],
-    *([x for x in _csrf_extra.split(",") if x] if _csrf_extra else []),
+    *[o for o in FRONTEND_ORIGINS if o.startswith("https://")],
+    *([x.strip() for x in _csrf_extra.split(",") if x.strip()] if _csrf_extra else []),
 ]
 
-# --- Security toggles for prod (optional; off by default) ---------------------
+# --- Security toggles for prod -----------------------------------------------
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true"
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "false").lower() == "true"

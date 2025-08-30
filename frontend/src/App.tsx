@@ -73,14 +73,18 @@ function App() {
     const [showUploadPanel, setShowUploadPanel] = useState(false);
     const uploadRef = useRef<HTMLDivElement | null>(null);
 
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+
     const refreshNodes = async () => {
-        try {
-            const res = await axios.get("http://127.0.0.1:8000/api/nodes/");
-            setVisualizationNodes(res.data);
-        } catch (err) {
-            console.error("❌ Failed to refresh nodes:", err);
-        }
-    };
+    try {
+        const res = await axios.get(`${API_BASE}/api/nodes/`);
+        setVisualizationNodes(res.data);
+    } catch (err) {
+        console.error("❌ Failed to refresh nodes:", err);
+    }
+};
+
 
     useEffect(() => {
     // Removed unused effect that updated showFormPanel (state removed).
