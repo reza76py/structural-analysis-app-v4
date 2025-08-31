@@ -11,9 +11,11 @@ from .views.apply_boundary_conditions import ApplyBoundaryConditionsView
 from .views.solve_displacement import SolveDisplacementView
 from .views.solve_reaction import SolveReactionView
 from .views.internal_axial_forces import InternalAxialForceView
+from django.http import JsonResponse
 
 
-
+def health_check(request):
+    return JsonResponse({"status": "ok", "service": "backend"})
 
 urlpatterns = [
     path("api/nodes/", NodeView.as_view(), name="nodes-api"),
@@ -30,5 +32,7 @@ urlpatterns = [
     path("api/apply-boundary-conditions/", ApplyBoundaryConditionsView.as_view(), name="apply-boundary-conditions"),
     path("api/solve-displacement/", SolveDisplacementView.as_view(), name="solve-displacement"),
     path("api/solve-reaction/", SolveReactionView.as_view(), name="solve-reaction"),
-    path("api/internal-axial-forces/", InternalAxialForceView.as_view(), name="internal-axial-forces")
+    path("api/internal-axial-forces/", InternalAxialForceView.as_view(), name="internal-axial-forces"),
+    path('api/health/', health_check),
 ]
+

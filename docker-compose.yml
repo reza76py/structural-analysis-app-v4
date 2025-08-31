@@ -10,10 +10,23 @@ services:
       MYSQL_USER: space_truss_db_v4_user
       MYSQL_PASSWORD: 9348
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_INITDB_SKIP_TZINFO: 1
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+      MYSQL_INNODB_BUFFER_POOL_SIZE: 128M
     ports:
       - "3311:3306"
     volumes:
       - db_data:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+  
 
   backend:
     build:
@@ -21,9 +34,14 @@ services:
       dockerfile: Dockerfile.backend
     container_name: structural-backend
     command: >
-      sh -c "./wait-for-it.sh db:3306 --timeout=60 --strict --
+      bash -c "
+      while ! nc -z db 3306; do
+        echo 'Waiting for MySQL...';
+        sleep 2;
+      done;
       python manage.py migrate &&
-      gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
+      gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2
+      "
     volumes:
       - ./backend:/app
     ports:
@@ -37,6 +55,22 @@ services:
       DB_USER: space_truss_db_v4_user
       DB_PASSWORD: 9348
 
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
   frontend:
     build:
       context: ./frontend
@@ -47,7 +81,17 @@ services:
     ports:
       - "5173:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+  
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
 volumes:
   db_data:
