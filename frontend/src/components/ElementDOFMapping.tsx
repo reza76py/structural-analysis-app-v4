@@ -20,13 +20,13 @@ const ElementDOFMappingTable: FC = () => {
             try {
                 // 🟢 Fetch all DOF indices for elements
                 const dofRes = await axios.get(
-                    "http://127.0.0.1:8000/api/dof-indices/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/dof-indices/",
                 );
                 const elementDOFs: ElementDOF[] = dofRes.data.dof_indices;
 
                 // 🟢 Get all nodes to determine ordering
                 const nodesRes = await axios.get(
-                    "http://127.0.0.1:8000/api/nodes/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/nodes/",
                 );
                 const coords = nodesRes.data.map(
                     (n: { x: number; y: number; z: number }) =>

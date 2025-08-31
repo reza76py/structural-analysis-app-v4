@@ -15,7 +15,7 @@ const TransformationMatrixTable = () => {
         const fetchTransformationMatrix = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/elements/transformation-matrix/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/elements/transformation-matrix/",
                 );
                 setData(response.data.transformation_matrices);
             } catch (error) {

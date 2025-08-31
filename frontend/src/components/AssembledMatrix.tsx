@@ -9,7 +9,7 @@ const AssembledMatrix: FC = () => {
         const fetchMatrix = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/assemble-global-stiffness/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/assemble-global-stiffness/",
                 );
                 setMatrix(response.data.matrix); // We'll adjust this key next step based on API response shape
             } catch (error) {

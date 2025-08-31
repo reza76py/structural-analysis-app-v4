@@ -36,7 +36,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         const fetchNodes = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/nodes/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/nodes/",
                 );
                 setNodes(response.data);
             } catch (error) {
@@ -47,7 +47,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         const fetchSupports = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/supports/",
+                    "${import.meta.env.VITE_API_BASE_URL}/api/supports/",
                 );
                 setSupports(response.data);
                 onUpdate(response.data);
@@ -77,7 +77,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         setLoading(true);
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/api/supports/",
+                "${import.meta.env.VITE_API_BASE_URL}/api/supports/",
                 {
                     node_coordinate: selectedNode,
                     x_restrained: restrictions.x,
@@ -101,7 +101,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
     const handleDeleteAllSupports = async () => {
         setLoading(true);
         try {
-            await axios.delete("http://127.0.0.1:8000/api/supports/");
+            await axios.delete("${import.meta.env.VITE_API_BASE_URL}/api/supports/");
             setSupports([]);
             onUpdate([]);
         } catch (error) {

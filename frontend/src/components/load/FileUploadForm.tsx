@@ -41,7 +41,7 @@ const FileUploadForm = () => {
     formData.append("file_type", ext);
 
     try {
-      const response = await axios.post(`http://127.0.0.1:8000${endpoint}`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
