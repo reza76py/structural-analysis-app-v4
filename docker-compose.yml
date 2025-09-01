@@ -15,7 +15,7 @@ services:
       MYSQL_COLLATION: utf8mb4_unicode_ci
       MYSQL_INNODB_BUFFER_POOL_SIZE: 128M
     ports:
-      - "3311:3306"
+      - "3312:3306"
     volumes:
       - db_data:/var/lib/mysql
     deploy:
@@ -45,7 +45,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "8001:8000"
+      - "8002:8000"
     depends_on:
       - db
     environment:
@@ -79,7 +79,7 @@ services:
       - VITE_API_BASE_URL=https://api.spacetruss.rezteche.com
     container_name: structural-frontend
     ports:
-      - "5173:80"
+      - "5174:80"
     depends_on:
       backend:
         condition: service_healthy
