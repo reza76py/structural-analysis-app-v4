@@ -1,3 +1,83 @@
+# version: '3.9'
+
+# services:
+#   db:
+#     image: mysql:8.0
+#     container_name: structural-db
+#     restart: always
+#     environment:
+#       MYSQL_DATABASE: space_truss_db_v4
+#       MYSQL_USER: space_truss_db_v4_user
+#       MYSQL_PASSWORD: 9348
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_INITDB_SKIP_TZINFO: 1
+#       MYSQL_CHARSET: utf8mb4
+#       MYSQL_COLLATION: utf8mb4_unicode_ci
+#       MYSQL_INNODB_BUFFER_POOL_SIZE: 128M
+#     ports:
+#       - "3312:3306"
+#     volumes:
+#       - db_data:/var/lib/mysql
+
+#   backend:
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile.backend
+#     container_name: structural-backend
+#     command: >
+#       bash -c "
+#       while ! nc -z db 3306; do
+#         echo 'Waiting for MySQL...';
+#         sleep 2;
+#       done;
+#       python manage.py migrate &&
+#       gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2
+#       "
+#     volumes:
+#       - ./backend:/app
+#     ports:
+#       - "8002:8000"
+#     depends_on:
+#       - db
+#     environment:
+#       DB_HOST: db
+#       DB_PORT: 3306
+#       DB_NAME: space_truss_db_v4
+#       DB_USER: space_truss_db_v4_user
+#       DB_PASSWORD: 9348
+#       DJANGO_DEBUG: "true"
+#       ALLOWED_HOSTS: "localhost,127.0.0.1,backend"
+#       FRONTEND_ORIGINS: "http://localhost:5174"
+
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 5
+#       start_period: 60s
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile.frontend
+#       args:
+#         - VITE_API_BASE_URL=http://localhost:8002
+#     container_name: structural-frontend
+#     ports:
+#       - "5174:80"
+#     depends_on:
+#       - backend
+
+# volumes:
+#   db_data:
+
+
+
+
+
+
+
+
 version: '3.9'
 
 services:
@@ -18,6 +98,11 @@ services:
       - "3312:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   backend:
     build:
@@ -38,7 +123,8 @@ services:
     ports:
       - "8002:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       DB_HOST: db
       DB_PORT: 3306
@@ -48,9 +134,8 @@ services:
       DJANGO_DEBUG: "true"
       ALLOWED_HOSTS: "localhost,127.0.0.1,backend"
       FRONTEND_ORIGINS: "http://localhost:5174"
-
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]  # Ensure you have this endpoint
       interval: 30s
       timeout: 10s
       retries: 5
@@ -66,7 +151,8 @@ services:
     ports:
       - "5174:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
 volumes:
   db_data:

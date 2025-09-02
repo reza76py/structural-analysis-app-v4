@@ -4,6 +4,8 @@ from rest_framework import status
 from .models import Node, Elements
 from .serializers import NodeSerializer
 from .calculations.element_length import calculate_element_length
+from django.http import JsonResponse
+from django.views import View
 
 class NodeView(APIView):
 
@@ -61,3 +63,7 @@ class ElementView(APIView):
             "endNode": end_node_str,
             "length": length
         }, status=status.HTTP_201_CREATED)
+    
+class HealthCheckView(View):
+    def get(self, request):
+        return JsonResponse({"status": "ok", "message": "Service is healthy"})

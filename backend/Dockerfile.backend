@@ -1,3 +1,53 @@
+
+# # ----------------------------------------
+# # Base image
+# FROM python:3.11-slim
+
+# # ----------------------------------------
+# # Runtime env (prod)
+# ENV PYTHONDONTWRITEBYTECODE=1 \
+#     PYTHONUNBUFFERED=1 \
+#     DJANGO_SETTINGS_MODULE=backend.settings
+
+# # ----------------------------------------
+# # Set working directory
+# WORKDIR /app
+
+# # ----------------------------------------
+# # System deps (MySQL client headers, build tools, and netcat)
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     build-essential \
+#     default-libmysqlclient-dev \
+#     libpq-dev \
+#     pkg-config \
+#     netcat-openbsd \
+#   && rm -rf /var/lib/apt/lists/*
+
+# # ----------------------------------------
+# # Install Python deps
+# COPY requirements.txt .
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# # ----------------------------------------
+# # Copy project files
+# COPY . .
+
+# # ----------------------------------------
+# # Collect static into STATIC_ROOT (/app/staticfiles)
+# RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
+
+# # ----------------------------------------
+# # Expose app port
+# EXPOSE 8000
+
+# # ----------------------------------------
+# # Start server with gunicorn
+# CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+
+
+
+
 # ----------------------------------------
 # Base image
 FROM python:3.11-slim
@@ -20,6 +70,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     pkg-config \
     netcat-openbsd \
+    # Added curl for health checks
+    curl \
   && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------

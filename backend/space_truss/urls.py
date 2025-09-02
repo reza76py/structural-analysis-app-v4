@@ -12,6 +12,7 @@ from .views.solve_displacement import SolveDisplacementView
 from .views.solve_reaction import SolveReactionView
 from .views.internal_axial_forces import InternalAxialForceView
 from django.http import JsonResponse
+from .views import HealthCheckView
 
 
 def health_check(request):
@@ -34,5 +35,7 @@ urlpatterns = [
     path("api/solve-reaction/", SolveReactionView.as_view(), name="solve-reaction"),
     path("api/internal-axial-forces/", InternalAxialForceView.as_view(), name="internal-axial-forces"),
     path('api/health/', health_check),
+    path('api/health/', HealthCheckView.as_view(), name='health-check'),
+
 ]
 
