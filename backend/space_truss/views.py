@@ -4,6 +4,13 @@ from rest_framework import status
 from .models import Node, Elements
 from .serializers import NodeSerializer
 from .calculations.element_length import calculate_element_length
+from django.http import JsonResponse
+from django.views import View
+
+
+class HealthCheckView(View):
+    def get(self, request):
+        return JsonResponse({"status": "ok", "message": "Service is healthy"})
 
 class NodeView(APIView):
 
