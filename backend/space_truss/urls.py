@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.urls import path
 from .views.nodes import NodeView
 from .views.elements import ElementView, ElementDirectionCosinesView, ElementTransformationMatrixView, ElementLocalStiffnessMatrixView, ElementGlobalStiffnessPerElementView
@@ -11,9 +12,9 @@ from .views.apply_boundary_conditions import ApplyBoundaryConditionsView
 from .views.solve_displacement import SolveDisplacementView
 from .views.solve_reaction import SolveReactionView
 from .views.internal_axial_forces import InternalAxialForceView
-from .views import HealthCheckView
 
-
+def health_check(request):
+    return JsonResponse({"status": "ok", "service": "backend"})
 
 urlpatterns = [
     path("api/nodes/", NodeView.as_view(), name="nodes-api"),
@@ -31,5 +32,5 @@ urlpatterns = [
     path("api/solve-displacement/", SolveDisplacementView.as_view(), name="solve-displacement"),
     path("api/solve-reaction/", SolveReactionView.as_view(), name="solve-reaction"),
     path("api/internal-axial-forces/", InternalAxialForceView.as_view(), name="internal-axial-forces"),
-    path('api/health/', HealthCheckView.as_view(), name='health-check'),
+    path('api/health/', health_check, name='health-check'),
 ]

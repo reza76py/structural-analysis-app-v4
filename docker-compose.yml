@@ -18,28 +18,18 @@ services:
       - "3312:3306"
     volumes:
       - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend
     container_name: structural-backend
-    command: >
-      sh -c "./wait-for-it.sh db:3306 --timeout=60 --strict --
-      python manage.py migrate &&
-      gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2"
     volumes:
       - ./backend:/app
     ports:
       - "8002:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     environment:
       DB_HOST: db
       DB_PORT: 3306
@@ -49,25 +39,16 @@ services:
       DJANGO_DEBUG: "true"
       ALLOWED_HOSTS: "localhost,127.0.0.1,backend"
       FRONTEND_ORIGINS: "http://localhost:5174"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
-      args:
-        - VITE_API_BASE_URL=http://localhost:8002
     container_name: structural-frontend
     ports:
       - "5174:80"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
 
 volumes:
   db_data:
