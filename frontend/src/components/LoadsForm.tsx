@@ -46,7 +46,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         const fetchNodes = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/nodes/",
+                    "https://spacetruss.rezteche.com:8002/api/nodes/",
                 );
                 setNodes(response.data);
             } catch (error) {
@@ -62,7 +62,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         const fetchLoads = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/loads/",
+                    "https://spacetruss.rezteche.com:8002/api/loads/",
                 );
                 setLoads(response.data);
                 onUpdate(response.data); // <-- Send to parent
@@ -114,7 +114,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         }
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/loads/", {
+            const response = await axios.post("https://spacetruss.rezteche.com:8002/api/loads/", {
                 node_coordinate: selectedNode,
                 Fx,
                 Fy,
@@ -139,7 +139,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         if (!window.confirm("⚠️ Are you sure you want to delete all loads?")) return;
 
         try {
-            await axios.delete("http://127.0.0.1:8000/api/loads/");
+            await axios.delete("https://spacetruss.rezteche.com:8002/api/loads/");
             setLoads([]);
             onUpdate([]); // <-- Clear visualization
         } catch (error) {

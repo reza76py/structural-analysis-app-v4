@@ -135,8 +135,8 @@ const DofIndicesTable: FC = () => {
         const fetchData = async () => {
             try {
                 const [dofRes, loadRes] = await Promise.all([
-                    axios.get("http://127.0.0.1:8000/api/dof-indices/"),
-                    axios.get("http://127.0.0.1:8000/api/load-vector/"),
+                    axios.get("https://spacetruss.rezteche.com:8002/api/dof-indices/"),
+                    axios.get("https://spacetruss.rezteche.com:8002/api/load-vector/"),
                 ]);
 
                 const dofData: ElementDOF[] = dofRes.data.dof_indices;

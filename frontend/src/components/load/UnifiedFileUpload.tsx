@@ -50,7 +50,7 @@ const UnifiedFileUpload = () => {
     formData.append("file_type", ext);
 
     try {
-        const response = await axios.post(`http://127.0.0.1:8000${endpoint}`, formData, {
+        const response = await axios.post(`https://spacetruss.rezteche.com:8002${endpoint}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

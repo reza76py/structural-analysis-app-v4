@@ -75,7 +75,7 @@ function App() {
 
     const refreshNodes = async () => {
         try {
-            const res = await axios.get("http://127.0.0.1:8000/api/nodes/");
+            const res = await axios.get("https://spacetruss.rezteche.com:8002/api/nodes/");
             setVisualizationNodes(res.data);
         } catch (err) {
             console.error("❌ Failed to refresh nodes:", err);

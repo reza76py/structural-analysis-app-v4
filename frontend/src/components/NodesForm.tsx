@@ -63,7 +63,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const fetchNodes = async (): Promise<void> => {
         try {
             const response = await axios.get(
-                "http://127.0.0.1:8000/api/nodes/",
+                "https://spacetruss.rezteche.com:8002/api/nodes/",
             );
             console.log("✅ Fetched Nodes from API:", response.data); // ✅ Debug log
 
@@ -94,7 +94,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
         setIsSaving(true);
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/api/nodes/",
+                "https://spacetruss.rezteche.com:8002/api/nodes/",
                 { nodes },
             );
             if (response.status === 201) {
@@ -111,7 +111,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const handleDeleteAllNodes = async (): Promise<void> => {
         setIsDeleting(true);
         try {
-            await axios.delete("http://127.0.0.1:8000/api/nodes/");
+            await axios.delete("https://spacetruss.rezteche.com:8002/api/nodes/");
             setDbNodes([]);
             setNodes([]);
             setShowElementForm(false);

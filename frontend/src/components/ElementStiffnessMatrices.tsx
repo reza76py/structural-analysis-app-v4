@@ -16,7 +16,7 @@ const ElementStiffnessMatrices: FC = () => {
         const fetchMatrices = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:8000/api/elements/local-stiffness/",
+                    "https://spacetruss.rezteche.com:8002/api/elements/local-stiffness/",
                 );
                 setMatrices(response.data.local_stiffness_matrices);
             } catch (error) {
