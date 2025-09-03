@@ -36,17 +36,19 @@ services:
       DB_NAME: space_truss_db_v4
       DB_USER: space_truss_db_v4_user
       DB_PASSWORD: 9348
-      DJANGO_DEBUG: "true"
-      ALLOWED_HOSTS: "localhost,127.0.0.1,backend"
-      FRONTEND_ORIGINS: "http://localhost:5174"
+      DJANGO_DEBUG: "false"  # Set to false in production
+      ALLOWED_HOSTS: "spacetruss.rezteche.com,localhost,127.0.0.1,backend"
+      FRONTEND_ORIGINS: "https://spacetruss.rezteche.com"
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
+      args:
+        - VITE_API_BASE_URL=https://spacetruss.rezteche.com:8002
     container_name: structural-frontend
     ports:
-      - "5174:80"
+      - "80:80"
     depends_on:
       - backend
 
