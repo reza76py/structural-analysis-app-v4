@@ -63,9 +63,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
     const fetchNodes = async (): Promise<void> => {
         try {
-            const response = await axios.get(
-                `${API_URL}/api/nodes/`,
-            );
+            const response = await axios.get(`${API_URL}/api/nodes/`);
             console.log("✅ Fetched Nodes from API:", response.data); // ✅ Debug log
 
             setDbNodes(response.data);
@@ -94,10 +92,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
         setIsSaving(true);
         try {
-            const response = await axios.post(
-                `${API_URL}/api/nodes/`,
-                { nodes },
-            );
+            const response = await axios.post(`${API_URL}/api/nodes/`, { nodes });
             if (response.status === 201) {
                 setNodes([]);
                 await fetchNodes();

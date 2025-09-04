@@ -26,9 +26,7 @@ const ElementDOFMappingTable: FC = () => {
                 const elementDOFs: ElementDOF[] = dofRes.data.dof_indices;
 
                 // 🟢 Get all nodes to determine ordering
-                const nodesRes = await axios.get(
-                    `${API_URL}/api/nodes/`,
-                );
+                const nodesRes = await axios.get(`${API_URL}/api/nodes/`);
                 const coords = nodesRes.data.map(
                     (n: { x: number; y: number; z: number }) =>
                         `${n.x},${n.y},${n.z}`,

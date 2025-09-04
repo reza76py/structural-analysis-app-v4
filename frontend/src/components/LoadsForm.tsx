@@ -46,9 +46,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
     useEffect(() => {
         const fetchNodes = async () => {
             try {
-                const response = await axios.get(
-                    `${API_URL}/api/nodes/`,
-                );
+                const response = await axios.get(`${API_URL}/api/nodes/`);
                 setNodes(response.data);
             } catch (error) {
                 console.error("Error fetching nodes:", error);

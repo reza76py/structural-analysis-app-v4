@@ -37,7 +37,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         const fetchNodes = async () => {
             try {
                 const response = await axios.get(
-                    `${API_URL}/api/nodes/`,
+                    `${API_URL}/api/nodes/`
                 );
                 setNodes(response.data);
             } catch (error) {
