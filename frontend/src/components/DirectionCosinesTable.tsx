@@ -18,7 +18,7 @@ const DirectionCosinesTable = () => {
         const fetchDirectionCosines = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/elements/direction-cosines/",
+                    "${API_URL}/api/elements/direction-cosines/",
                 );
                 setData(response.data.direction_cosines);
             } catch (error) {

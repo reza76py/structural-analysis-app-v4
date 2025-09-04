@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+const API_URL = (globalThis as unknown as { process?: { env?: { REACT_APP_API_URL?: string } } }).process?.env?.REACT_APP_API_URL ?? "";
 import "../../styles/styles_upload_files.css";
 
 
@@ -50,7 +51,7 @@ const UnifiedFileUpload = () => {
     formData.append("file_type", ext);
 
     try {
-        const response = await axios.post(`https://spacetruss.rezteche.com:8002${endpoint}`, formData, {
+        const response = await axios.post(`${API_URL}/api/${endpoint}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

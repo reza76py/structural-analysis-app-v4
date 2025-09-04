@@ -44,7 +44,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
     const fetchElements = async (): Promise<void> => {
         try {
             const response = await axios.get(
-                "https://spacetruss.rezteche.com:8002/api/elements/",
+                "${API_URL}/api/elements/",
             );
             setDbElements(response.data.elements);
             onUpdate(response.data.elements); // Update parent component
@@ -86,7 +86,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
 
         try {
             const response = await axios.post(
-                "https://spacetruss.rezteche.com:8002/api/elements/",
+                "${API_URL}/api/elements/",
                 {
                     startNode: selectedNodes.start,
                     endNode: selectedNodes.end,
@@ -114,7 +114,7 @@ const ElementsForm: FC<ElementsFormProps> = ({ nodes, onUpdate }) => {
         setLoadingState((prev) => ({ ...prev, deleting: true }));
 
         try {
-            await axios.delete("https://spacetruss.rezteche.com:8002/api/elements/");
+            await axios.delete("${API_URL}/api/elements/");
             setDbElements([]);
             onUpdate([]); // Fixed prop name here
             setShowForm(true);

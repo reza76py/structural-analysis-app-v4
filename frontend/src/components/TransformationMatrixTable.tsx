@@ -15,7 +15,7 @@ const TransformationMatrixTable = () => {
         const fetchTransformationMatrix = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/elements/transformation-matrix/",
+                    "${API_URL}/api/elements/transformation-matrix/",
                 );
                 setData(response.data.transformation_matrices);
             } catch (error) {

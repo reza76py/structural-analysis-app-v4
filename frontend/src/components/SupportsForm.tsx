@@ -48,7 +48,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         const fetchSupports = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/supports/",
+                    "${API_URL}/api/supports/",
                 );
                 setSupports(response.data);
                 onUpdate(response.data);
@@ -78,7 +78,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
         setLoading(true);
         try {
             const response = await axios.post(
-                "https://spacetruss.rezteche.com:8002/api/supports/",
+                "${API_URL}/api/supports/",
                 {
                     node_coordinate: selectedNode,
                     x_restrained: restrictions.x,
@@ -102,7 +102,7 @@ const SupportsForm: FC<SupportsFormProps> = ({ onUpdate }) => {
     const handleDeleteAllSupports = async () => {
         setLoading(true);
         try {
-            await axios.delete("https://spacetruss.rezteche.com:8002/api/supports/");
+            await axios.delete("${API_URL}/api/supports/");
             setSupports([]);
             onUpdate([]);
         } catch (error) {

@@ -10,7 +10,7 @@ const AssembledMatrix: FC = () => {
         const fetchMatrix = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/assemble-global-stiffness/",
+                    "${API_URL}/api/assemble-global-stiffness/",
                 );
                 setMatrix(response.data.matrix); // We'll adjust this key next step based on API response shape
             } catch (error) {

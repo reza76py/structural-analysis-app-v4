@@ -17,7 +17,7 @@ const InternalAxialForces: FC = () => {
         const fetchForces = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/internal-axial-forces/",
+                    "${API_URL}/api/internal-axial-forces/",
                 );
                 setForces(response.data.internal_axial_forces);
             } catch (err: unknown) {

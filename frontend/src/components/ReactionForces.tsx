@@ -13,7 +13,7 @@ const ReactionForces: FC = () => {
         setError("");
         try {
             const response = await axios.get(
-                "https://spacetruss.rezteche.com:8002/api/solve-reaction/",
+                "${API_URL}/api/solve-reaction/",
             );
             setReactions(response.data.reaction_forces);
         } catch (err: unknown) {

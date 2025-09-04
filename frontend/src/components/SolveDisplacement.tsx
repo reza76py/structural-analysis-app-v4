@@ -18,7 +18,7 @@ const SolveDisplacement: FC = () => {
         setError("");
         try {
             const response = await axios.get(
-                "https://spacetruss.rezteche.com:8002/api/solve-displacement/",
+                "${API_URL}/api/solve-displacement/",
             );
             setDisplacements(response.data.displacement_vector);
         } catch (err: unknown) {

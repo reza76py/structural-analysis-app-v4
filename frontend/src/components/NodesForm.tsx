@@ -92,7 +92,8 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
 
         setIsSaving(true);
         try {
-            const response = await axios.post(`${API_URL}/api/nodes/`, { nodes });
+            const nodeData = nodes.map(({ x, y, z }) => ({ x, y, z }));
+            const response = await axios.post(`${API_URL}/api/nodes/`, nodeData);
             if (response.status === 201) {
                 setNodes([]);
                 await fetchNodes();
@@ -107,7 +108,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const handleDeleteAllNodes = async (): Promise<void> => {
         setIsDeleting(true);
         try {
-            await axios.delete(`${API_URL}/api/nodes/`);
+            await axios.delete(`${API_URL}/api/nodes/`, { data: {} });
             setDbNodes([]);
             setNodes([]);
             setShowElementForm(false);

@@ -61,7 +61,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         const fetchLoads = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/loads/",
+                    "${API_URL}/api/loads/",
                 );
                 setLoads(response.data);
                 onUpdate(response.data); // <-- Send to parent
@@ -113,7 +113,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         }
 
         try {
-            const response = await axios.post("https://spacetruss.rezteche.com:8002/api/loads/", {
+            const response = await axios.post("${API_URL}/api/loads/", {
                 node_coordinate: selectedNode,
                 Fx,
                 Fy,
@@ -138,7 +138,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         if (!window.confirm("⚠️ Are you sure you want to delete all loads?")) return;
 
         try {
-            await axios.delete("https://spacetruss.rezteche.com:8002/api/loads/");
+            await axios.delete("${API_URL}/api/loads/");
             setLoads([]);
             onUpdate([]); // <-- Clear visualization
         } catch (error) {

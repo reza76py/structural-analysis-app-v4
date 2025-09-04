@@ -21,7 +21,7 @@ const ElementDOFMappingTable: FC = () => {
             try {
                 // 🟢 Fetch all DOF indices for elements
                 const dofRes = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/dof-indices/",
+                    "${API_URL}/api/dof-indices/",
                 );
                 const elementDOFs: ElementDOF[] = dofRes.data.dof_indices;
 

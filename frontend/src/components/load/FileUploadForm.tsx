@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../../styles/styles_upload_files.css";
 
+declare const process: { env: { REACT_APP_API_URL?: string } };
+const API_URL = process.env.REACT_APP_API_URL || "";
+
 const FileUploadForm = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<string>("");
@@ -41,7 +44,7 @@ const FileUploadForm = () => {
     formData.append("file_type", ext);
 
     try {
-      const response = await axios.post(`https://spacetruss.rezteche.com:8002${endpoint}`, formData, {
+      const response = await axios.post(`${API_URL}/api/${endpoint}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -11,7 +11,7 @@ const BoundaryConditionsResult: FC = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/apply-boundary-conditions/",
+                    "${API_URL}/api/apply-boundary-conditions/",
                 );
                 const { K_modified, P_modified, restrained_dofs } = res.data;
 

@@ -18,7 +18,7 @@ const ElementGlobalStiffnessMatrices = () => {
         const fetchMatrices = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/elements/global-stiffness-per-element/",
+                    "${API_URL}/api/elements/global-stiffness-per-element/",
                 );
                 setElementMatrices(
                     response.data.element_global_stiffness_matrices,
