@@ -22,6 +22,7 @@ import AppResult from "./components/AppResult";
 
 import "./styles/styles_App.css";
 import ElementsForm from "./components/ElementsForm";
+import { API_URL } from "./config";
 
 function App() {
     const [showDirectionCosines, setShowDirectionCosines] = useState(false);
@@ -75,7 +76,7 @@ function App() {
 
     const refreshNodes = async () => {
         try {
-            const res = await axios.get("https://spacetruss.rezteche.com:8002/api/nodes/");
+            const res = await axios.get(`${API_URL}/nodes/`);
             setVisualizationNodes(res.data);
         } catch (err) {
             console.error("❌ Failed to refresh nodes:", err);

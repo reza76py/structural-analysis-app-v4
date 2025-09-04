@@ -1,6 +1,7 @@
 import React from "react";
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 type ElementDOF = {
     id: number;
@@ -26,7 +27,7 @@ const ElementDOFMappingTable: FC = () => {
 
                 // 🟢 Get all nodes to determine ordering
                 const nodesRes = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/nodes/",
+                    `${API_URL}/api/nodes/`,
                 );
                 const coords = nodesRes.data.map(
                     (n: { x: number; y: number; z: number }) =>

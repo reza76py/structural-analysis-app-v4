@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/styles_loadsForm.css";
+import { API_URL } from "../config";
 
 // ✅ Types
 type NodeType = {
@@ -46,7 +47,7 @@ const LoadsForm: FC<LoadsFormProps> = ({ onUpdate }) => {
         const fetchNodes = async () => {
             try {
                 const response = await axios.get(
-                    "https://spacetruss.rezteche.com:8002/api/nodes/",
+                    `${API_URL}/api/nodes/`,
                 );
                 setNodes(response.data);
             } catch (error) {

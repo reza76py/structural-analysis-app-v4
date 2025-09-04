@@ -4,6 +4,7 @@ import axios from "axios";
 import ElementsForm from "./ElementsForm";
 import "../styles/styles_nodesForm.css";
 import "../styles/styles_elementsForm.css";
+import { API_URL } from "../config";
 
 type NodeType = {
     id: number;
@@ -63,7 +64,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const fetchNodes = async (): Promise<void> => {
         try {
             const response = await axios.get(
-                "https://spacetruss.rezteche.com:8002/api/nodes/",
+                `${API_URL}/api/nodes/`,
             );
             console.log("✅ Fetched Nodes from API:", response.data); // ✅ Debug log
 
@@ -94,7 +95,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
         setIsSaving(true);
         try {
             const response = await axios.post(
-                "https://spacetruss.rezteche.com:8002/api/nodes/",
+                `${API_URL}/api/nodes/`,
                 { nodes },
             );
             if (response.status === 201) {
@@ -111,7 +112,7 @@ const NodesForm = ({ onUpdate }: NodesFormProps) => {
     const handleDeleteAllNodes = async (): Promise<void> => {
         setIsDeleting(true);
         try {
-            await axios.delete("https://spacetruss.rezteche.com:8002/api/nodes/");
+            await axios.delete(`${API_URL}/api/nodes/`);
             setDbNodes([]);
             setNodes([]);
             setShowElementForm(false);
