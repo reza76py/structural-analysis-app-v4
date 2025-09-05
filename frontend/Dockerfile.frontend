@@ -1,40 +1,4 @@
 
-# FROM node:20 AS build
-
-# WORKDIR /app
-
-# # Install dependencies
-# COPY package*.json ./
-# RUN npm ci
-
-# # Copy all source
-# COPY . .
-
-# # Inject API base URL for Vite (set in Coolify build-time envs)
-# ARG VITE_API_BASE_URL
-# ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
-
-# # Build production files with the environment variable
-# RUN VITE_API_BASE_URL=$VITE_API_BASE_URL npm run build
-
-# # ----------------------------------------
-# # Stage 2: Serve with Nginx
-# FROM nginx:alpine
-
-# # Copy build files from previous stage
-# COPY --from=build /app/dist /usr/share/nginx/html
-
-# # Expose HTTP port
-# EXPOSE 80
-
-# # Start nginx
-# CMD ["nginx", "-g", "daemon off;"]
-
-
-
-
-
-# Stage 1: Build the frontend with Node
 FROM node:20 AS build
 
 WORKDIR /app
@@ -46,9 +10,22 @@ RUN npm ci
 # Copy all source
 COPY . .
 
-# Inject correct API variable name
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
+# Inject API base URL for Vite (set in Coolify build-time envs)
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-# Build using the correct env
-RUN npm run build
+# Build production files with the environment variable
+RUN VITE_API_BASE_URL=$VITE_API_BASE_URL npm run build
+
+# ----------------------------------------
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
+
+# Copy build files from previous stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose HTTP port
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

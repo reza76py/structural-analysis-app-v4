@@ -16,9 +16,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)j8!6#d(-(sip6=!0^c&8!3p%ps4r1)0pb2+tzoo40qqmfr$4)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'false').lower() == 'true'
+
+ALLOWED_HOSTS = [
+    'spacetruss.rezteche.com',
+    'localhost',
+    '127.0.0.1',
+    'backend'
+]
 
 
 # Application definition
@@ -139,3 +148,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174", # Allow React frontend (if using Vite)
     "https://spacetruss.rezteche.com",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://spacetruss.rezteche.com",
+]
+
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
