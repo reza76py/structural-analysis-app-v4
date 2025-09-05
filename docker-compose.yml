@@ -40,15 +40,28 @@ services:
       ALLOWED_HOSTS: "localhost,127.0.0.1,backend"
       FRONTEND_ORIGINS: "http://localhost:5174"
 
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.frontend
+  #   container_name: structural-frontend
+  #   ports:
+  #     - "5174:80"
+  #   depends_on:
+  #     - backend
+
+
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.frontend
-    container_name: structural-frontend
-    ports:
-      - "5174:80"
-    depends_on:
-      - backend
+  build:
+    context: ./frontend
+    dockerfile: Dockerfile.frontend
+    args:
+      VITE_API_URL: https://api.spacetruss.rezteche.com
+  ports:
+    - "5174:80"
+  depends_on:
+    - backend
+
 
 volumes:
   db_data:
