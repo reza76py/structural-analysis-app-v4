@@ -6,9 +6,9 @@ services:
     container_name: structural-db
     restart: always
     environment:
-      MYSQL_DATABASE: space_truss_db_v4
-      MYSQL_USER: space_truss_db_v4_user
-      MYSQL_PASSWORD: 9348
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3311:3306"
@@ -30,12 +30,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: space_truss_db_v4
-      DB_USER: space_truss_db_v4_user
-      DB_PASSWORD: 9348
+    env_file:
+      - .env
 
   frontend:
     build:
@@ -46,6 +42,8 @@ services:
       - "5173:80"
     depends_on:
       - backend
+    env_file:
+      - .env
 
 volumes:
   db_data:
