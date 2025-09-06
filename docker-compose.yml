@@ -1,57 +1,4 @@
-# version: '3.9'
-
-# services:
-#   db:
-#     image: mysql:8.0
-#     container_name: structural-db
-#     restart: always
-#     environment:
-#       MYSQL_DATABASE: ${DB_NAME}
-#       MYSQL_USER: ${DB_USER}
-#       MYSQL_PASSWORD: ${DB_PASSWORD}
-#       MYSQL_ROOT_PASSWORD: root
-#     ports:
-#       - "3311:3306"
-#     volumes:
-#       - db_data:/var/lib/mysql
-
-#   backend:
-#     build:
-#       context: ./backend
-#       dockerfile: Dockerfile.backend
-#     container_name: structural-backend
-#     command: >
-#       sh -c "./wait-for-it.sh db:3306 --timeout=60 --strict --
-#       python manage.py migrate &&
-#       gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
-#     volumes:
-#       - ./backend:/app
-
-#     depends_on:
-#       - db
-#     env_file:
-#       - .env
-
-#   frontend:
-#     build:
-#       context: ./frontend
-#       dockerfile: Dockerfile.frontend
-#     container_name: structural-frontend
-#     ports:
-#       - "5173:80"
-#     depends_on:
-#       - backend
-#     env_file:
-#       - .env
-
-# volumes:
-#   db_data:
-
-
-
-
-
-version: '3.9'  # Added quotes around version
+version: '3.9'
 
 services:
   db:
@@ -77,24 +24,25 @@ services:
       sh -c "./wait-for-it.sh db:3306 --timeout=60 --strict --
       python manage.py migrate &&
       gunicorn backend.wsgi:application --bind 0.0.0.0:8000"
-    # Removed development volume mount
+    volumes:
+      - ./backend:/app
+
     depends_on:
       - db
     env_file:
       - .env
-    environment:  # Added environment variables
-      DB_HOST: db
-      DB_PORT: 3306
 
   frontend:
     build:
-      context: ./frontend  # Fixed path
+      context: ./frontend
       dockerfile: Dockerfile.frontend
     container_name: structural-frontend
     ports:
       - "5173:80"
     depends_on:
       - backend
+    env_file:
+      - .env
 
 volumes:
   db_data:

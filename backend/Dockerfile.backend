@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
 
 # ----------------------------------------
 # Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+
 
 # ----------------------------------------
 # Copy all Django project files
@@ -35,7 +35,3 @@ RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
 # ----------------------------------------
 # Expose app port
 EXPOSE 8000
-
-# ----------------------------------------
-# Start server using wait-for-it to ensure MySQL is ready
-CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
