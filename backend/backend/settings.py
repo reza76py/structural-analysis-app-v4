@@ -10,16 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # === SECURITY WARNING: Keep the secret key used in production secret! ===
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY", 
-    "django-insecure-change-me"
-)
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret")
 
 # === DEBUG MODE ===
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
 # === ALLOWED HOSTS ===
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
 
 
 # === INSTALLED APPS ===
@@ -71,16 +68,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # === DATABASE SETTINGS ===
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'space_truss_db_v4'),
-        'USER': os.environ.get('DB_USER', 'space_truss_db_v4_user'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', '9348'),
-        'HOST': os.environ.get('DB_HOST', 'structural-db'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT", "3306"),
     }
 }
 
@@ -119,5 +113,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # === CORS ===
+
 CORS_ALLOWED_ORIGINS = os.environ.get("FRONTEND_ORIGINS", "").split(",")
 CORS_ALLOW_ALL_ORIGINS = False
