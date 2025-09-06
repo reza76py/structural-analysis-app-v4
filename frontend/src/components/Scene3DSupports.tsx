@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import "../api/axiosInterceptor";
+
 
 type SupportType = {
     id: number;

@@ -4,6 +4,8 @@ import axios from "axios";
 import ElementsForm from "./ElementsForm";
 import "../styles/styles_nodesForm.css";
 import "../styles/styles_elementsForm.css";
+import "../api/axiosInterceptor";
+
 
 type NodeType = {
     id: number;

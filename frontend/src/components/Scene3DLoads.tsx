@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import "../api/axiosInterceptor";
+
 
 type LoadType = {
     node_coordinate: string;

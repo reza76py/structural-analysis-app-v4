@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
 import axios from "axios";
+import "../api/axiosInterceptor";
+
 
 type Displacement = {
     dof: number;

@@ -1,6 +1,8 @@
 import React from "react";
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
+import "../api/axiosInterceptor";
+
 
 const BoundaryConditionsResult: FC = () => {
     const [K, setK] = useState<number[][]>([]);

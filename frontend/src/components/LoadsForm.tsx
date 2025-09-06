@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/styles_loadsForm.css";
+import "../api/axiosInterceptor";
+
 
 // ✅ Types
 type NodeType = {

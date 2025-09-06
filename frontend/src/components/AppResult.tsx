@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import "../styles/styles_App.css";
 import { Resizable } from "re-resizable";
 import { createPortal } from "react-dom";
+import "../api/axiosInterceptor";
+
 
 // ✅ Components
 import DirectionCosinesTable from "./DirectionCosinesTable";

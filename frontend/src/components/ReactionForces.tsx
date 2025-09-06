@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
 import axios from "axios";
+import "../api/axiosInterceptor";
+
 
 const ReactionForces: FC = () => {
     const [reactions, setReactions] = useState<

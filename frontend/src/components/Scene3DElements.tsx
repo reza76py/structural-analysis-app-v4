@@ -1,6 +1,8 @@
 // 📍 File: src/components/Scene3DElements.tsx
 
 import * as THREE from "three";
+import "../api/axiosInterceptor";
+
 
 type ElementType = {
     startNode: string; // e.g., "1.0,2.0,3.0"

@@ -10,6 +10,8 @@ import Scene3DElements from "./Scene3DElements";
 import Scene3DSupports from "./Scene3DSupports";
 import Scene3DLoads from "./Scene3DLoads";
 import "../styles/styles_scene3D.css";
+import "../api/axiosInterceptor";
+
 
 // ✅ Props type
 type Scene3DProps = {

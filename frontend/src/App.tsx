@@ -22,6 +22,8 @@ import AppResult from "./components/AppResult";
 
 import "./styles/styles_App.css";
 import ElementsForm from "./components/ElementsForm";
+import "./api/axiosInterceptor";
+
 
 function App() {
     const [showDirectionCosines, setShowDirectionCosines] = useState(false);

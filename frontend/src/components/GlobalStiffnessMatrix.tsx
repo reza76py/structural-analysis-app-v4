@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/styles_global_stiffness_per_elemen.css";
+import "../api/axiosInterceptor";
+
 
 type ElementMatrix = {
     id: number;
