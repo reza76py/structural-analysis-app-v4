@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Use this script to test if a given TCP host/port are available
+# wait-for-it.sh — Wait for a TCP host:port to become available
 
 WAITFORIT_cmdname=${0##*/}
 
@@ -12,7 +12,7 @@ Usage:
     $WAITFORIT_cmdname host:port [-s] [-t timeout] [-- command args]
     -h HOST | --host=HOST       Host or IP under test
     -p PORT | --port=PORT       TCP port under test
-                                Alternatively, you specify the host and port as host:port
+                                Alternatively, specify host and port as host:port
     -s | --strict               Only execute subcommand if the test succeeds
     -q | --quiet                Don't output any status messages
     -t TIMEOUT | --timeout=TIMEOUT
@@ -51,7 +51,6 @@ wait_for()
 
 wait_for_wrapper()
 {
-    # In order to support SIGINT during timeout: http://unix.stackexchange.com/a/57692
     if [[ $WAITFORIT_QUIET -eq 1 ]]; then
         timeout $WAITFORIT_BUSYTIMEFLAG $WAITFORIT_TIMEOUT $0 --quiet --child --host=$WAITFORIT_HOST --port=$WAITFORIT_PORT --timeout=$WAITFORIT_TIMEOUT &
     else
@@ -67,7 +66,7 @@ wait_for_wrapper()
     return $WAITFORIT_RESULT
 }
 
-# process arguments
+# Process arguments
 while [[ $# -gt 0 ]]
 do
     case "$1" in
@@ -91,7 +90,6 @@ do
         ;;
         -h)
         WAITFORIT_HOST="$2"
-        if [[ $WAITFORIT_HOST == "" ]]; then break; fi
         shift 2
         ;;
         --host=*)
@@ -100,7 +98,6 @@ do
         ;;
         -p)
         WAITFORIT_PORT="$2"
-        if [[ $WAITFORIT_PORT == "" ]]; then break; fi
         shift 2
         ;;
         --port=*)
@@ -109,7 +106,6 @@ do
         ;;
         -t)
         WAITFORIT_TIMEOUT="$2"
-        if [[ $WAITFORIT_TIMEOUT == "" ]]; then break; fi
         shift 2
         ;;
         --timeout=*)
@@ -141,15 +137,13 @@ WAITFORIT_STRICT=${WAITFORIT_STRICT:-0}
 WAITFORIT_CHILD=${WAITFORIT_CHILD:-0}
 WAITFORIT_QUIET=${WAITFORIT_QUIET:-0}
 
-# Check to see if timeout is from busybox?
+# Check if timeout is from busybox (Alpine)
 WAITFORIT_TIMEOUT_PATH=$(type -p timeout)
 WAITFORIT_TIMEOUT_PATH=$(realpath $WAITFORIT_TIMEOUT_PATH 2>/dev/null || readlink -f $WAITFORIT_TIMEOUT_PATH)
 
 WAITFORIT_BUSYTIMEFLAG=""
 if [[ $WAITFORIT_TIMEOUT_PATH =~ "busybox" ]]; then
     WAITFORIT_ISBUSY=1
-    # Check if busybox timeout uses -t flag
-    # (recent Alpine versions don't support -t anymore)
     if timeout &>/dev/stdout | grep -q -e '-t '; then
         WAITFORIT_BUSYTIMEFLAG="-t"
     fi
@@ -157,6 +151,7 @@ else
     WAITFORIT_ISBUSY=0
 fi
 
+# Main execution
 if [[ $WAITFORIT_CHILD -gt 0 ]]; then
     wait_for
     WAITFORIT_RESULT=$?

@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
 
 # ----------------------------------------
 # Install Python dependencies
-CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
-
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # ----------------------------------------
 # Copy all Django project files
@@ -35,3 +35,6 @@ RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
 # ----------------------------------------
 # Expose app port
 EXPOSE 8000
+
+# ✅ Wait for DB and run Gunicorn
+CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
