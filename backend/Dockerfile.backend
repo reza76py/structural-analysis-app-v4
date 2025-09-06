@@ -18,16 +18,19 @@ RUN apt-get update && apt-get install -y \
 
 # ----------------------------------------
 # Install Python dependencies
-COPY requirements.txt ./
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ----------------------------------------
-# Copy all Django project files
+# Copy ALL files (including wait-for-it.sh)
 COPY . .
 
 # ----------------------------------------
-# Make sure wait-for-it.sh is executable
-RUN chmod +x wait-for-it.sh
+# Explicitly verify and set permissions on wait-for-it.sh
+RUN ls -la wait-for-it.sh && \
+    chmod +x wait-for-it.sh && \
+    echo "Wait-for-it.sh permissions:" && \
+    ls -la wait-for-it.sh
 
 # ----------------------------------------
 # Collect static files
@@ -38,5 +41,5 @@ RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
 EXPOSE 8000
 
 # ----------------------------------------
-# Wait for DB, then run gunicorn
-CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Use absolute path to wait-for-it.sh
+CMD ["/app/wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
