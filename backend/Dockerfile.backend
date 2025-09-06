@@ -23,7 +23,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # ----------------------------------------
 # Copy all Django project files
 COPY . .
+
+# ✅ Copy and make wait-for-it.sh executable
 COPY wait-for-it.sh ./wait-for-it.sh
+RUN chmod +x ./wait-for-it.sh
 
 # ----------------------------------------
 # Collect static files (optional if you use Django admin)
@@ -34,6 +37,5 @@ RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
 EXPOSE 8000
 
 # ----------------------------------------
-# Start server using gunicorn
-# http://localhost:8000/
-CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Start server using wait-for-it to ensure MySQL is ready
+CMD ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
