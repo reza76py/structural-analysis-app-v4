@@ -1,28 +1,18 @@
-"""
-This is for working locally DOCKER
-"""
-
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+load_dotenv()  # Load .env file if it exists
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# === SECURITY SETTINGS ===
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "your-default-fallback-secret")
+DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)j8!6#d(-(sip6=!0^c&8!3p%ps4r1)0pb2+tzoo40qqmfr$4)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
+# === INSTALLED APPS ===
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,6 +26,7 @@ INSTALLED_APPS = [
     'file_input',
 ]
 
+# === MIDDLEWARE ===
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # MUST be first!
     'django.middleware.common.CommonMiddleware',
@@ -67,74 +58,40 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# === DATABASE ===
 DATABASES = {
     'default': {
-        # 'NAME': 'space_truss_db_v4',
-        # 'USER': 'space_truss_db_v4_user',
-        # 'PASSWORD': '9348',
-        # 'HOST': 'localhost',
-        # 'PORT': '3306',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('DB_NAME', 'space_truss_db_v4'),
         'USER': os.environ.get('DB_USER', 'space_truss_db_v4_user'),
         'PASSWORD': os.environ.get('DB_PASSWORD', '9348'),
-        'HOST': os.environ.get('DB_HOST', 'structural-db'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '3306'),
-
         'OPTIONS': {
-            'charset': 'utf8mb4',  # Ensures support for all characters (e.g., emojis, special characters)
+            'charset': 'utf8mb4',
         },
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# === PASSWORD VALIDATION ===
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
+# === LOCALIZATION ===
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
+# === STATIC FILES ===
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React default
-    "http://localhost:5174", # Allow React frontend (if using Vite)
-]
+# === CORS ===
+CORS_ALLOWED_ORIGINS = os.environ.get("FRONTEND_ORIGINS", "http://localhost:5173").split(",")
