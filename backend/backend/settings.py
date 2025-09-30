@@ -10,7 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "your-default-fallback-secret")
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+# Hosts: allow localhost for dev + your subdomains for production
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost,127.0.0.1,api.spacetruss.rezteche.com,spacetruss.rezteche.com"
+).split(",")
 
 # === INSTALLED APPS ===
 INSTALLED_APPS = [
@@ -88,10 +92,13 @@ USE_I18N = True
 USE_TZ = True
 
 # === STATIC FILES ===
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # === CORS ===
-CORS_ALLOWED_ORIGINS = os.environ.get("FRONTEND_ORIGINS", "http://localhost:5173").split(",")
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    "FRONTEND_ORIGINS",
+    "http://localhost:5173,https://spacetruss.rezteche.com"
+).split(",")
