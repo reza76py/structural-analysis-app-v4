@@ -1,4 +1,18 @@
-.upload-files {
+/* .upload-files {
     @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-xl text-white text-[10px];
   }
-  
+   */
+
+
+.upload-files {
+    @apply bg-black/70        /* dark semi-transparent background */
+           backdrop-blur-md
+           border border-white/30
+           rounded-xl
+           p-4
+           shadow-xl
+           text-white
+           text-xs            /* readability */
+           relative
+           z-50;              /* ensure it's above 3D canvas */
+}

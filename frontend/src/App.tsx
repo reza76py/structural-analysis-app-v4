@@ -83,9 +83,9 @@ function App() {
     };
 
     useEffect(() => {
-    // Removed unused effect that updated showFormPanel (state removed).
-    // Run initial refresh on mount
-    refreshNodes();
+        // Removed unused effect that updated showFormPanel (state removed).
+        // Run initial refresh on mount
+        refreshNodes();
     }, []);
 
     return (
@@ -279,39 +279,44 @@ function App() {
             </div>
 
             {showUploadPanel && (
-                <Draggable nodeRef={uploadRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                    <div ref={uploadRef}>
-                        <motion.div
-                            className="form-section absolute left-[40px] top-[30px]"
-                            style={{ width: "250px" }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
+                <Draggable
+                    nodeRef={
+                        uploadRef as unknown as React.RefObject<HTMLElement>
+                    }
+                    handle=".form-drag-handle"
+                >
+                    <motion.div
+                        ref={uploadRef}
+                        className="form-section absolute left-[40px] top-[30px] z-[9999]"
+                        style={{ width: "250px" }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                    >
+                        {/* Drag Handle */}
+                        <div className="form-drag-handle">📁 Upload File</div>
+
+                        {/* Close Button */}
+                        <button
+                            className="text-sm text-red-600 absolute top-1 right-1"
+                            onClick={() => setShowUploadPanel(false)}
                         >
-                            {/* ✅ Drag Handle */}
-                            <div className="form-drag-handle">
-                                📁 Upload File
-                            </div>
+                            ✕
+                        </button>
 
-                            {/* ❌ Close Button */}
-                            <button
-                                className="text-sm text-red-600 absolute top-1 right-1"
-                                onClick={() => setShowUploadPanel(false)}
-                            >
-                                ✕
-                            </button>
-
-                            {/* 📤 Upload Component */}
-                            {/* @ts-expect-error Component types differ from usage but runtime props are valid */}
-                            <UnifiedFileUpload onUploadSuccess={refreshNodes} />
-                        </motion.div>
-                    </div>
+                        {/* Upload Component */}
+                        <UnifiedFileUpload onUploadSuccess={refreshNodes} />
+                    </motion.div>
                 </Draggable>
             )}
 
             {showNodePanel && (
-                <Draggable nodeRef={nodeFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                    
+                <Draggable
+                    nodeRef={
+                        nodeFormRef as unknown as React.RefObject<HTMLElement>
+                    }
+                    handle=".form-drag-handle"
+                >
                     <motion.div
                         ref={nodeFormRef}
                         className="form-section absolute left-[40px] top-[60px]"
@@ -321,9 +326,7 @@ function App() {
                         exit={{ opacity: 0, y: -20 }}
                     >
                         {/* ✅ Drag Handle */}
-                        <div className="form-drag-handle">
-                            🧱 Node Input
-                        </div>
+                        <div className="form-drag-handle">🧱 Node Input</div>
 
                         {/* ❌ Close Button */}
                         <button
@@ -335,10 +338,20 @@ function App() {
 
                         {/* ✅ Actual Form */}
                         <NodesForm
-                            onUpdate={(nodes: { id?: number; x: number; y: number; z: number }[]) => {
+                            onUpdate={(
+                                nodes: {
+                                    id?: number;
+                                    x: number;
+                                    y: number;
+                                    z: number;
+                                }[],
+                            ) => {
                                 // Ensure each node has an `id`; preserve existing id if present, otherwise assign a sequential one
                                 const nodesWithId = nodes.map((n, idx) => ({
-                                    id: typeof n.id === "number" ? n.id : idx + 1,
+                                    id:
+                                        typeof n.id === "number"
+                                            ? n.id
+                                            : idx + 1,
                                     x: n.x,
                                     y: n.y,
                                     z: n.z,
@@ -347,13 +360,16 @@ function App() {
                             }}
                         />
                     </motion.div>
-                    
                 </Draggable>
             )}
 
             {showElementPanel && (
-                <Draggable nodeRef={elementFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                    
+                <Draggable
+                    nodeRef={
+                        elementFormRef as unknown as React.RefObject<HTMLElement>
+                    }
+                    handle=".form-drag-handle"
+                >
                     <motion.div
                         ref={elementFormRef}
                         className="form-section absolute left-[40px] top-[90px]"
@@ -363,9 +379,7 @@ function App() {
                         exit={{ opacity: 0, y: -20 }}
                     >
                         {/* ✅ Drag Handle */}
-                        <div className="form-drag-handle">
-                            🧩 Element Input
-                        </div>
+                        <div className="form-drag-handle">🧩 Element Input</div>
 
                         {/* ❌ Close Button */}
                         <button
@@ -383,71 +397,72 @@ function App() {
                             }
                         />
                     </motion.div>
-                   
                 </Draggable>
             )}
 
             {/* Support Panel */}
 
             {showSupportPanel && (
-                <Draggable nodeRef={supportFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                   
-                        <motion.div
-                            ref={supportFormRef}
-                            className="form-section absolute left-[480px] top-[120px]"
-                            style={{ width: "250px" }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
+                <Draggable
+                    nodeRef={
+                        supportFormRef as unknown as React.RefObject<HTMLElement>
+                    }
+                    handle=".form-drag-handle"
+                >
+                    <motion.div
+                        ref={supportFormRef}
+                        className="form-section absolute left-[480px] top-[120px]"
+                        style={{ width: "250px" }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                    >
+                        {/* ✅ Drag Handle */}
+                        <div className="form-drag-handle">🧷 Support Input</div>
+
+                        {/* ❌ Close Button */}
+                        <button
+                            className="text-sm text-red-600 absolute top-1 right-1"
+                            onClick={() => setShowSupportPanel(false)}
                         >
-                            {/* ✅ Drag Handle */}
-                            <div className="form-drag-handle">
-                                🧷 Support Input
-                            </div>
+                            ✕
+                        </button>
 
-                            {/* ❌ Close Button */}
-                            <button
-                                className="text-sm text-red-600 absolute top-1 right-1"
-                                onClick={() => setShowSupportPanel(false)}
-                            >
-                                ✕
-                            </button>
-
-                            {/* 🧱 Support Form */}
-                            <SupportsForm onUpdate={setVisualizationSupports} />
-                        </motion.div>
-                    
+                        {/* 🧱 Support Form */}
+                        <SupportsForm onUpdate={setVisualizationSupports} />
+                    </motion.div>
                 </Draggable>
             )}
 
             {showLoadPanel && (
-                <Draggable nodeRef={loadFormRef as unknown as React.RefObject<HTMLElement>} handle=".form-drag-handle">
-                    
-                        <motion.div
-                            ref={loadFormRef}
-                            className="form-section absolute left-[750px] top-[120px]"
-                            style={{ width: "250px" }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
+                <Draggable
+                    nodeRef={
+                        loadFormRef as unknown as React.RefObject<HTMLElement>
+                    }
+                    handle=".form-drag-handle"
+                >
+                    <motion.div
+                        ref={loadFormRef}
+                        className="form-section absolute left-[750px] top-[120px]"
+                        style={{ width: "250px" }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                    >
+                        {/* ✅ Drag Handle */}
+                        <div className="form-drag-handle">🎯 Load Input</div>
+
+                        {/* ❌ Close Button */}
+                        <button
+                            className="text-sm text-red-600 absolute top-1 right-1"
+                            onClick={() => setShowLoadPanel(false)}
                         >
-                            {/* ✅ Drag Handle */}
-                            <div className="form-drag-handle">
-                                🎯 Load Input
-                            </div>
+                            ✕
+                        </button>
 
-                            {/* ❌ Close Button */}
-                            <button
-                                className="text-sm text-red-600 absolute top-1 right-1"
-                                onClick={() => setShowLoadPanel(false)}
-                            >
-                                ✕
-                            </button>
-
-                            {/* 💼 Loads Form */}
-                            <LoadsForm onUpdate={setVisualizationLoads} />
-                        </motion.div>
-                    
+                        {/* 💼 Loads Form */}
+                        <LoadsForm onUpdate={setVisualizationLoads} />
+                    </motion.div>
                 </Draggable>
             )}
 
