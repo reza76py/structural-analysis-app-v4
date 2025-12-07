@@ -3,7 +3,10 @@
 *.pyc
 __pycache__/
 *.DS_Store
-*.env
+
+# Allow .env to be committed
+# (removed: .env, .env.server, .env.*.local)
+!.env
 
 # Python
 venv/
@@ -23,6 +26,8 @@ node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+
+# Ignore environment variations
 .env.local
 .env.development
 .env.production
